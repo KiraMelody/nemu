@@ -1,0 +1,9 @@
+# This file will be included by the Makefile under the project directory.
+
+FLOAT_OBJ := $(FLOAT:.a=.o)
+
+$(FLOAT): $(FLOAT_OBJ)
+	ar r $(FLOAT) $(FLOAT_OBJ)
+
+# TODO: write a rule for generating $(FLOAT_OBJ)
+
