@@ -38,6 +38,39 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args) {
+	int num=0;
+	int str_end=strlen (args); 
+	int i;
+	for (i=0;i<str_end;i++)
+	{
+		num=num*10+args[i]-'0';
+	}
+	if (str_end == 0)num=1;
+	cpu_exec(num);
+	return 0;
+}
+
+static int cmd_info(char *args) {
+	return 0;
+}
+
+static int cmd_p(char *args) {
+	return 0;
+}
+static int cmd_x(char *args) {
+	return 0;	
+}
+static int cmd_w(char *args) {
+	return 0;
+}
+static int cmd_d(char *args) {
+	return 0;
+}
+static int cmd_bt(char *args) {
+	return 0;
+}
+
 static struct {
 	char *name;
 	char *description;
@@ -46,7 +79,13 @@ static struct {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
-
+	{ "si", "Step into implementation of N instructions after the suspension of execution.When N is notgiven,the default is 1.", cmd_si},
+	{ "info", "r for print register state\nw for print watchpoint information", cmd_info},
+	{ "p", "Expression evaluation", cmd_p},
+	{ "x", "Calculate the value of the expression and regard the result as the starting memory address.", cmd_x},
+	{ "w", "Stop the execution of the program if the result of the expression has changed.", cmd_w},
+	{ "d", "Delete the Nth watchpoint", cmd_d},
+	{ "bt", "Print stack frame chain", cmd_bt}
 	/* TODO: Add more commands */
 
 };
