@@ -53,11 +53,17 @@ static int cmd_si(char *args) {
 
 static int cmd_info(char *args) {
 	int i;
+	if (args[0] == 'r') {
 	for (i=R_EAX;i<=R_EDI;i++)
 	{
 		printf ("%s\t0x%x\n",regsl[i],reg_l(i));
 	}
 	printf ("eip\t0x%x\n",cpu.eip);
+	}
+	else if (args[0] == 'w') {
+	
+	}
+	else assert (0);
 	return 0;
 }
 
