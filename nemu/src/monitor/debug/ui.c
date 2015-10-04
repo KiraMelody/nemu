@@ -46,7 +46,6 @@ static int cmd_si(char *args) {
 	{
 		num=num*10+args[i]-'0';
 	}
-printf ("notice :\t%d\n",num);
 	if (str_end == 0)num=1;
 	cpu_exec(num);
 	return 0;
