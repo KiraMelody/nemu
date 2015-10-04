@@ -52,6 +52,12 @@ static int cmd_si(char *args) {
 }
 
 static int cmd_info(char *args) {
+	int i;
+	for (i=R_EAX;i<=R_EDI;i++)
+	{
+		printf ("%s\t0x%x\n",regsl[i],reg_l(i));
+	}
+	printf ("eip\t0x%x\n",cpu.eip);
 	return 0;
 }
 
