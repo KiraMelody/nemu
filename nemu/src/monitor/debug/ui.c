@@ -71,6 +71,13 @@ static int cmd_p(char *args) {
 	return 0;
 }
 static int cmd_x(char *args) {
+	int n;
+	swaddr_t start_address;
+	int i;
+	sscanf (args,"%d %x",&n,&start_address);
+	for (i=1;i<=n;i++)
+	printf ("%d ",swaddr_read (start_address,4));
+	printf ("\n");
 	return 0;	
 }
 static int cmd_w(char *args) {
