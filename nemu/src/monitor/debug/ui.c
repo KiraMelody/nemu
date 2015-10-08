@@ -56,9 +56,9 @@ static int cmd_info(char *args) {
 	if (args[0] == 'r') {
 	for (i=R_EAX;i<=R_EDI;i++)
 	{
-		printf ("%s\t0x%x\n",regsl[i],reg_l(i));
+		printf ("%s\t0x%08x\n",regsl[i],reg_l(i));
 	}
-	printf ("eip\t0x%x\n",cpu.eip);
+	printf ("eip\t0x%08x\n",cpu.eip);
 	}
 	else if (args[0] == 'w') {
 	
@@ -74,11 +74,11 @@ static int cmd_x(char *args) {
 	int n;
 	swaddr_t start_address;
 	int i;
-	sscanf (args,"%d %X",&n,&start_address);
-	printf ("0x%X: ",start_address);
+	sscanf (args,"%d %08x",&n,&start_address);
+	printf ("0x%08x: ",start_address);
 	for (i=1;i<=n;i++)
 	{
-		printf ("0x%x ",swaddr_read (start_address,4));
+		printf ("0x%08x ",swaddr_read (start_address,4));
 		start_address+=4;
 	}
 	printf ("\n");
