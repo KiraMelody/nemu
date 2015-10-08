@@ -75,8 +75,12 @@ static int cmd_x(char *args) {
 	swaddr_t start_address;
 	int i;
 	sscanf (args,"%d %x",&n,&start_address);
+	printf ("0x%x: ",start_address);
 	for (i=1;i<=n;i++)
-	printf ("%d ",swaddr_read (start_address,4));
+	{
+		printf ("0x%x ",swaddr_read (start_address,4));
+		start_address++;
+	}
 	printf ("\n");
 	return 0;	
 }
