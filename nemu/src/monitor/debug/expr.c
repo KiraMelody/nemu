@@ -163,9 +163,11 @@ int dominant_operator (int l,int r)
 	return oper;
 }
 uint32_t eval(int l,int r) {
+	printf ("really\n");
 	if (l > r)Assert (l>r,"something happened!\n");
 	if (l == r) {
 	uint32_t num = 0;
+	printf ("ok\n");
 	if (token[l].type == NUMBER)
 		sscanf(token[l].str,"%d",&num);
 	if (token[l].type == HNUMBER)
