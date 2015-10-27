@@ -163,7 +163,7 @@ int dominant_operator (int l,int r)
 	return oper;
 }
 uint32_t eval(int l,int r) {
-	if (l > r)return 0;
+	if (l > r)Assert (l>r,"something happened!\n");
 	if (l == r) {
 	uint32_t num = 0;
 	if (token[l].type == NUMBER)
@@ -172,6 +172,7 @@ uint32_t eval(int l,int r) {
 		sscanf(token[l].str,"%x",&num);
 	if (token[l].type == REGISTER)
 		{
+			printf ("find it!\n");
 			if (strlen (token[l].str) == 3) {
 			int i;
 			for (i = R_EAX; i <= R_EDI; i ++)
