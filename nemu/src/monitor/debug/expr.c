@@ -164,7 +164,7 @@ int dominant_operator (int l,int r)
 }
 uint32_t eval(int l,int r) {
 	printf ("really %d %d\n",l,r);
-	if (l > r)Assert (l>r,"something happened!\n");
+	if (l > r){Assert (l>r,"something happened!\n");return 0;}
 	if (l == r) {
 	uint32_t num = 0;
 	printf ("ok\n");
@@ -203,6 +203,7 @@ uint32_t eval(int l,int r) {
  	else {
 		int op = dominant_operator (l,r);
  		if (l == op) {
+			printf ("wrong way\n");
 			uint32_t val = eval (l + 1,r);
 			switch (token[op].type)
  			{
