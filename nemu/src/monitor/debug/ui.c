@@ -57,10 +57,10 @@ static int cmd_info(char *args) {
 	for (i=R_EAX;i<=R_EDI;i++)
 	{
 		printf ("%s\t0x%08x\n",regsl[i],reg_l(i));
-	}
+ 	}
 	printf ("eip\t0x%08x\n",cpu.eip);
-	}
-	else if (args[0] == 'w') {
+ 	}
+ 	else if (args[0] == 'w') {
 	
 	}
 	else assert (0);
@@ -68,6 +68,12 @@ static int cmd_info(char *args) {
 }
 
 static int cmd_p(char *args) {
+	swaddr_t addr;
+	bool suc;
+	addr = expr (args,&suc);
+	if (suc)
+		printf ("0x%08x",swaddr_read (addr,4));
+	else assert (0);
 	return 0;
 }
 static int cmd_x(char *args) {
@@ -139,7 +145,7 @@ static int cmd_help(char *args) {
 }
 
 void ui_mainloop() {
-	while(1) {
+ 	while(1) {
 		char *str = rl_gets();
 		char *str_end = str + strlen(str);
 
@@ -149,9 +155,9 @@ void ui_mainloop() {
 
 		/* treat the remaining string as the arguments,
 		 * which may need further parsing
-		 */
+ 		 */
 		char *args = cmd + strlen(cmd) + 1;
-		if(args >= str_end) {
+ 		if(args >= str_end) {
 			args = NULL;
 		}
 
@@ -165,8 +171,8 @@ void ui_mainloop() {
 			if(strcmp(cmd, cmd_table[i].name) == 0) {
 				if(cmd_table[i].handler(args) < 0) { return; }
 				break;
-			}
-		}
+ 			}
+ 		}
 
 		if(i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
 	}
