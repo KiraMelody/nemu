@@ -163,7 +163,7 @@ int dominant_operator (int l,int r)
 	return oper;
 }
 uint32_t eval(int l,int r) {
-	printf ("really\n");
+	printf ("really %d %d\n",l,r);
 	if (l > r)Assert (l>r,"something happened!\n");
 	if (l == r) {
 	uint32_t num = 0;
@@ -226,8 +226,9 @@ uint32_t eval(int l,int r) {
 			default:
 			break;
   		}
-		return 0;
+		Assert (1,"strange!\n");
   	}
+	return 0;
 }
 uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
