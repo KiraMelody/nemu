@@ -22,7 +22,7 @@ static struct rule {
 	 */
 	{"\\d+",NUMBER,0},					// number
 	{"0[xX][0-9a-fA-F]+",HNUMBER,0},	// 16 number
-	{"\\$[a-zA-Z]+",REGISTER,0},			// register
+	{"\\$[a-zA-Z]+",REGISTER,0},		// register
 	{"(",'(',7},						// left bracket
 	{")",')',7},						// right bracket
 	{"!=",NEQ,3},						// not equal	
@@ -96,8 +96,6 @@ static bool make_token(char *e) {
 				 * to record the token in the array ``tokens''. For certain 
 				 * types of tokens, some extra actions should be performed.
 				 */
-				token[nr_token].type = rules[i].token_type;
-				strcpy (token[nr_token].str,substr_start);				
 				switch(rules[i].token_type) {
 					case NOTYPE: break;
 					case REGISTER:
@@ -176,7 +174,7 @@ uint32_t eval(int l,int r) {
 			int i;
 			for (i = R_EAX; i <= R_EDI; i ++)
 				if (strcmp (token[l].str,regsl[i]) == 0)break;
-				printf ("%s",regsl[i]);
+				printf ("find %s",regsl[i]);
 			num = reg_l(i);
  			}
  			else if (strlen (token[l].str) == 2) {
