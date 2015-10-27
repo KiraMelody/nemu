@@ -22,7 +22,7 @@ static struct rule {
 	 */
 	{"\\d+",NUMBER,0},					// number
 	{"0[xX][0-9a-fA-F]+",HNUMBER,0},	// 16 number
-	{"$[a-zA-Z]+",REGISTER,0},			// register
+	{"\\$[a-zA-Z]+",REGISTER,0},			// register
 	{"(",'(',7},						// left bracket
 	{")",')',7},						// right bracket
 	{"!=",NEQ,3},						// not equal	
@@ -102,6 +102,7 @@ static bool make_token(char *e) {
 				switch(rules[i].token_type) {
 					case NOTYPE: break;
 					case REGISTER:
+						printf ("find\n");
 						token[nr_token].type = rules[i].token_type;
 						token[nr_token].priority = rules[i].priority; 
 						strcpy (token[nr_token].str,substr_start+1);
