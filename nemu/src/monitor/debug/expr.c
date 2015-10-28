@@ -180,8 +180,9 @@ uint32_t eval(int l,int r) {
 			int i;
 			for (i = R_EAX; i <= R_EDI; i ++)
 				if (strcmp (token[l].str,regsl[i]) == 0)break;
-				printf ("find %s",regsl[i]);
+				printf ("find %s\n",regsl[i]);
 			num = reg_l(i);
+			printf ("it's %d\n",num);
  			}
  			else if (strlen (token[l].str) == 2) {
  			if (token[l].str[1] == 'x' || token[l].str[1] == 'p' || token[l].str[1] == 'i') {
