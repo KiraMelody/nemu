@@ -23,8 +23,8 @@ static struct rule {
 	{"\\b[0-9]+\\b",NUMBER,0},					// number
 	{"\\b0[xX][0-9a-fA-F]+\\b",HNUMBER,0},	// 16 number
 	{"\\$[a-zA-Z]+",REGISTER,0},		// register
-	{"(",'(',7},						// left bracket
-	{")",')',7},						// right bracket
+//	{"(",'(',7},						// left bracket
+//	{")",')',7},						// right bracket
 	{"!=",NEQ,3},						// not equal	
 	{"!",'!',6},						// not
 	{"\\*",'*',5},						// mul
@@ -98,7 +98,7 @@ static bool make_token(char *e) {
 				 * to record the token in the array ``tokens''. For certain 
 				 * types of tokens, some extra actions should be performed.
 				 */
-				 printf ("get switch : %d\n",rules[i].token_type);
+				printf ("get switch : %d\n",rules[i].token_type);
 				switch(rules[i].token_type) {
 					case NOTYPE: break;
 					case REGISTER:
