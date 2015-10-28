@@ -166,7 +166,7 @@ void ui_mainloop() {
 		extern void sdl_clear_event_queue(void);
 		sdl_clear_event_queue();
 #endif
-
+		printf ("get!\n");
 		int i;
 		for(i = 0; i < NR_CMD; i ++) {
 			if(strcmp(cmd, cmd_table[i].name) == 0) {
