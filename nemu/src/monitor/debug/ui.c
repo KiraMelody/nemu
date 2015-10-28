@@ -42,7 +42,7 @@ static int cmd_si(char *args) {
 	int num=0;
 	printf ("get si!");
 	if (args == NULL)num = 1;
-	sscanf (args,"%d",&num);
+	else sscanf (args,"%d",&num);
 	cpu_exec(num);
 	return 0;
 }
