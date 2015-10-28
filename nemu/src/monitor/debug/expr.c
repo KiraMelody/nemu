@@ -33,9 +33,9 @@ static struct rule {
 	{"-",'-',4},						// sub
 	{"==", EQ,3},						// equal
 	{"&&",AND,2},						// and
-	{"||",OR,1},						// or
-	{"(",'(',7},                        // left bracket   
-	{")",')',7},                        // right bracket 
+	{"\\|\\|",OR,1},						// or
+	{"\\(",'(',7},                        // left bracket   
+	{"\\)",')',7},                        // right bracket 
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
