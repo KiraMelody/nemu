@@ -149,9 +149,9 @@ int dominant_operator (int l,int r)
 		bool key = true;
 		for (j = i - 1; j >= l ;j --)
 		{ 
-			if (token[i].type == '(' && !cnt){key = false;break;}
-			if (token[i].type == '(')cnt --;
-			if (token[i].type == ')')cnt ++; 
+			if (token[j].type == '(' && !cnt){key = false;break;}
+			if (token[j].type == '(')cnt --;
+			if (token[j].type == ')')cnt ++; 
 		}
 		if (!key)continue;
 		if (token[i].priority <= min_priority){min_priority = token[i].priority;oper = i;}
