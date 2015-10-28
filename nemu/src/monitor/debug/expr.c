@@ -87,7 +87,7 @@ static bool make_token(char *e) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
-				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+			//	Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
 				 * to record the token in the array ``tokens''. For certain 
@@ -195,10 +195,11 @@ uint32_t eval(int l,int r) {
 		int op = dominant_operator (l,r);
  		if (l == op) {
 			uint32_t val = eval (l + 1,r);
+			printf ("%d",val);
 			switch (token[op].type)
  			{
-				case '*':return swaddr_read (val,4);
-				case '-':return -val;
+				case POINTOR:return swaddr_read (val,4);
+				case MINUS:return -val;
 				case '!':return !val;
 			} 
 		}
@@ -217,7 +218,6 @@ uint32_t eval(int l,int r) {
 			default:
 			break;
   		}
-		Assert (1,"strange!\n");
   	}
 	return 0;
 }
