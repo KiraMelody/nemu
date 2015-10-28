@@ -20,8 +20,8 @@ static struct rule {
 	/* TODO: Add more rules.
 	 * Pay attention to the precedence level of different rules.
 	 */
-	{"\\d+",NUMBER,0},					// number
-	{"0[xX][0-9a-fA-F]+",HNUMBER,0},	// 16 number
+	{"\\b[0-9]+\\b",NUMBER,0},					// number
+	{"\\b0[xX][0-9a-fA-F]+\\b",HNUMBER,0},	// 16 number
 	{"\\$[a-zA-Z]+",REGISTER,0},		// register
 	{"(",'(',7},						// left bracket
 	{")",')',7},						// right bracket
@@ -82,7 +82,7 @@ static bool make_token(char *e) {
 	regmatch_t pmatch;
 	printf ("Get make_token!\n");
 	nr_token = 0;
-
+	printf ("%s\n",e);
 	while(e[position] != '\0') {
 		/* Try all rules one by one. */
 		for(i = 0; i < NR_REGEX; i ++) {
