@@ -195,7 +195,7 @@ uint32_t eval(int l,int r) {
 		int op = dominant_operator (l,r);
  		if (l == op) {
 			uint32_t val = eval (l + 1,r);
-			printf ("\n%d\n",val);
+			printf ("it's %d\n",val);
 			switch (token[op].type)
  			{
 				case POINTOR:return swaddr_read (val,4);
