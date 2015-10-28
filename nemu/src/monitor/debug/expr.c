@@ -23,8 +23,6 @@ static struct rule {
 	{"\\b[0-9]+\\b",NUMBER,0},					// number
 	{"\\b0[xX][0-9a-fA-F]+\\b",HNUMBER,0},	// 16 number
 	{"\\$[a-zA-Z]+",REGISTER,0},		// register
-//	{"(",'(',7},						// left bracket
-//	{")",')',7},						// right bracket
 	{"!=",NEQ,3},						// not equal	
 	{"!",'!',6},						// not
 	{"\\*",'*',5},						// mul
@@ -36,7 +34,8 @@ static struct rule {
 	{"==", EQ,3},						// equal
 	{"&&",AND,2},						// and
 	{"||",OR,1},						// or
-
+	{"(",'(',7},                        // left bracket   
+	{")",')',7},                        // right bracket 
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
