@@ -242,8 +242,6 @@ uint32_t expr(char *e, bool *success) {
   	}
 	/* TODO: Insert codes to evaluate the expression. */	
 	*success = true;
-	if (token[0].type == '*' || (nr_token == 1 && token[0].type == REGISTER))
 	return eval (0,nr_token-1);
-	else return swaddr_read (eval (0,nr_token-1),4);
 }
 
