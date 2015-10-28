@@ -87,6 +87,7 @@ static bool make_token(char *e) {
 		/* Try all rules one by one. */
 		for(i = 0; i < NR_REGEX; i ++) {
 			printf ("try %d\n",i);
+			printf ("%s\n",e+position);
 			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
@@ -98,7 +99,6 @@ static bool make_token(char *e) {
 				 * types of tokens, some extra actions should be performed.
 				 */
 				 printf ("get switch : %d\n",rules[i].token_type);
-				 printf ("%d\n",REGISTER);
 				switch(rules[i].token_type) {
 					case NOTYPE: break;
 					case REGISTER:
@@ -111,7 +111,7 @@ static bool make_token(char *e) {
 						token[nr_token].type = rules[i].token_type;
 						token[nr_token].priority = rules[i].priority;
 						strcpy (token[nr_token].str,substr_start);
-						nr_token++;
+						nr_token ++;
 				}
 
 				break;
