@@ -117,7 +117,6 @@ static bool make_token(char *e) {
 			return false;
 		}
  	}
-	printf ("nr_token = %d\n",nr_token);
 	return true; 
 }
 bool check_parentheses (int l,int r)
@@ -159,7 +158,6 @@ int dominant_operator (int l,int r)
 	return oper;
 }
 uint32_t eval(int l,int r) {
-	printf ("really %d %d\n",l,r);
 	if (l > r){Assert (l>r,"something happened!\n");return 0;}
 	if (l == r) {
 	uint32_t num = 0;
@@ -206,7 +204,6 @@ uint32_t eval(int l,int r) {
 		}
 		uint32_t val1 = eval (l,op - 1);
 		uint32_t val2 = eval (op + 1,r);
-		printf ("val1 = %d, val2 = %d\n",val1,val2);
 		switch (token[op].type)
 		{
 			case '+':return val1 + val2;
