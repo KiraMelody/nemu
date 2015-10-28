@@ -40,7 +40,6 @@ static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
 	int num=0;
-	printf ("get si!");
 	if (args == NULL)num = 1;
 	else sscanf (args,"%d",&num);
 	cpu_exec(num);
@@ -162,11 +161,9 @@ void ui_mainloop() {
 		extern void sdl_clear_event_queue(void);
 		sdl_clear_event_queue();
 #endif
-		printf ("get!\n");
 		int i;
 		for(i = 0; i < NR_CMD; i ++) {
 			if(strcmp(cmd, cmd_table[i].name) == 0) {
-				printf ("it's %s\n",cmd);
 				if(cmd_table[i].handler(args) < 0) { return; }
 				break;
  			}
