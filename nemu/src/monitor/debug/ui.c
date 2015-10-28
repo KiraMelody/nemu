@@ -42,6 +42,7 @@ static int cmd_si(char *args) {
 	int num=0;
 	int str_end=strlen (args); 
 	int i;
+	if (args == NULL)str_end = 1;
 	for (i=0;i<str_end;i++)
 	{
 		num=num*10+args[i]-'0';
