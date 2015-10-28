@@ -182,7 +182,7 @@ uint32_t eval(int l,int r) {
 				if (strcmp (token[l].str,regsl[i]) == 0)break;
 				printf ("find %s\n",regsl[i]);
 			num = reg_l(i);
-			for (i=1;i<=8;i++)
+			for (i=0;i<8;i++)
 				printf ("%s\t0x%08x\n",regsl[i],reg_l(i));
 			printf ("it's %d\n",num);
  			}
