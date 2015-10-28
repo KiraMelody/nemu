@@ -79,14 +79,10 @@ static bool make_token(char *e) {
 	int position = 0;
 	int i;
 	regmatch_t pmatch;
-	printf ("Get make_token!\n");
 	nr_token = 0;
-	printf ("%s\n",e);
 	while(e[position] != '\0') {
 		/* Try all rules one by one. */
 		for(i = 0; i < NR_REGEX; i ++) {
-			printf ("try %d\n",i);
-			printf ("%s\n",e+position);
 			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
@@ -97,7 +93,6 @@ static bool make_token(char *e) {
 				 * to record the token in the array ``tokens''. For certain 
 				 * types of tokens, some extra actions should be performed.
 				 */
-				printf ("get switch : %d\n",rules[i].token_type);
 				switch(rules[i].token_type) {
 					case NOTYPE: break;
 					case REGISTER:
@@ -202,7 +197,6 @@ uint32_t eval(int l,int r) {
  	else {
 		int op = dominant_operator (l,r);
  		if (l == op) {
-			printf ("wrong way\n");
 			uint32_t val = eval (l + 1,r);
 			switch (token[op].type)
  			{
@@ -237,11 +231,11 @@ uint32_t expr(char *e, bool *success) {
   	}
 	int i;
 	for (i = 0;i < nr_token; i ++) {
- 		if (token[i].type == '*' && (i == 0 || (token[i - 1].type != NUMBER || token[i - 1].type != HNUMBER))) {
+ 		if (token[i].type == '*' && (i == 0 || (token[i - 1].type != NUMBER && token[i - 1].type != HNUMBER && token[i - 1].type != REGISTER))) {
 			token[i].type = POINTOR;
 			token[i].priority = 7;
 		}
-		if (token[i].type == '-' && (i == 0 || (token[i - 1].type != NUMBER || token[i - 1].type != HNUMBER))) {
+		if (token[i].type == '-' && (i == 0 || (token[i - 1].type != NUMBER && token[i - 1].type != HNUMBER && token[i - 1].type != REGISTER))) {
 			token[i].type = MINUS;
 			token[i].priority = 7;
  		}
