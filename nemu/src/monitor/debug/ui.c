@@ -68,12 +68,11 @@ static int cmd_info(char *args) {
 }
 
 static int cmd_p(char *args) {
-	swaddr_t addr;
+	uint32_t num ;
 	bool suc;
-	addr = expr (args,&suc);
-	printf ("address = %d 0x%x\n",addr,addr);
+	num = expr (args,&suc);
 	if (suc)
-		printf ("0x%08x\n",swaddr_read (addr,4));
+		printf ("0x%08x\n",num);
 	else assert (0);
 	return 0;
 }

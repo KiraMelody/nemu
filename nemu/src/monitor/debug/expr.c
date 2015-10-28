@@ -175,16 +175,11 @@ uint32_t eval(int l,int r) {
 		sscanf(token[l].str,"%x",&num);
 	if (token[l].type == REGISTER)
 		{
-			printf ("find it!\n");
 			if (strlen (token[l].str) == 3) {
 			int i;
 			for (i = R_EAX; i <= R_EDI; i ++)
 				if (strcmp (token[l].str,regsl[i]) == 0)break;
-				printf ("find %s\n",regsl[i]);
 			num = reg_l(i);
-			for (i=0;i<8;i++)
-				printf ("%s\t0x%08x\n",regsl[i],reg_l(i));
-			printf ("it's %d\n",num);
  			}
  			else if (strlen (token[l].str) == 2) {
  			if (token[l].str[1] == 'x' || token[l].str[1] == 'p' || token[l].str[1] == 'i') {
@@ -203,7 +198,7 @@ uint32_t eval(int l,int r) {
 		}
 		return num;
 	}
-	else if (check_parentheses (l,r) == true)return eval (l+1,r-1);
+	else if (check_parentheses (l,r) == true)return eval (l + 1,r - 1);
  	else {
 		int op = dominant_operator (l,r);
  		if (l == op) {
@@ -253,7 +248,8 @@ uint32_t expr(char *e, bool *success) {
   	}
 	/* TODO: Insert codes to evaluate the expression. */	
 	*success = true;
-	printf ("get eval!\n");
+	if (token[0].type == '*' || (nr_token == 1 && token[0].type == REGISTER))
 	return eval (0,nr_token-1);
+	else return swaddr_read (eval (0,nr_token-1),4);
 }
 
