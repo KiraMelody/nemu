@@ -75,7 +75,12 @@ static int cmd_x(char *args) {
 	int n;
 	swaddr_t start_address;
 	int i;
-	sscanf (args,"%d %08x",&n,&start_address);
+	bool suc;
+	char *cmd = strtok(args, " ");
+	sscanf (cmd,"%d",&n);
+	args = cmd + strlen(cmd) + 1;
+	start_address = expr (args,&suc);
+	if (!suc)assert (1);
 	printf ("0x%08x: ",start_address);
 	for (i=1;i<=n;i++)
 	{
