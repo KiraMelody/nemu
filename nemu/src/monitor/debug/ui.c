@@ -41,6 +41,7 @@ static int cmd_si(char *args) {
 	int num=0;
 	if (args == NULL)num = 1;
 	else sscanf (args,"%d",&num);
+	printf ("here is si\n");
 	cpu_exec(num);
 	return 0;
 }
@@ -107,6 +108,7 @@ static int cmd_b(char *args) {
 	if (!suc)assert (1);
 	sprintf (args,"$eip == *0x%x",addr);
 	printf ("Breakpoint %d at 0x%x\n",breakpoint_counter,addr);
+	breakpoint_counter++;
 	WP *f;
 	f = new_wp();
 	f->val = expr (args,&suc);
