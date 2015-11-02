@@ -37,7 +37,7 @@ void free_wp (WP *wp)
 	f->next = f->next->next;
 	wp->next = free_;
 	wp->val = 0;
-	wp->expr = NULL;
+	wp->expr[0] = '\0';
 	free_ = wp;
 }
 bool check_wp()
