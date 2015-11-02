@@ -173,7 +173,7 @@ uint32_t eval(int l,int r) {
 				if (strcmp (token[l].str,regsl[i]) == 0)break;
 			if (i > R_EDI)
 				if (strcmp (token[l].str,"eip") == 0)
-					num = cpu.eip;
+					{num = cpu.eip;printf ("match eip\n");}
 				else Assert (1,"no this register!\n");
 			else num = reg_l(i);
  			}
@@ -226,7 +226,8 @@ uint32_t eval(int l,int r) {
 			break;
   		}
   	}
-	return 0;
+	Assert (1,"NO MATCH");
+	return -1;
 }
 uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
