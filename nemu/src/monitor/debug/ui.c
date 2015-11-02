@@ -91,6 +91,14 @@ static int cmd_x(char *args) {
 	return 0;	
 }
 static int cmd_w(char *args) {
+	WP *f;
+	bool suc;
+	f = new_wp();
+	printf ("Watchpoint %d:\n",f->NO);
+	f->val = expr (args,&suc);
+	strcpy (f->expr,args);
+	if (!suc)assert (1);
+	printf ("Value : %d\n",f->val);
 	return 0;
 }
 static int cmd_d(char *args) {
