@@ -42,7 +42,6 @@ static int cmd_si(char *args) {
 	if (args == NULL)num = 1;
 	else sscanf (args,"%d",&num);
 	cpu_exec(num);
-	printf ("si %d",num);
 	return 0;
 }
 
@@ -113,7 +112,6 @@ static int cmd_b(char *args) {
 	f = new_wp();
 	f->val = expr (args,&suc);
 	strcpy (f->expr,args);
-	printf ("%s\n",f->expr);
 	return 0;
 }
 static int cmd_d(char *args) {
