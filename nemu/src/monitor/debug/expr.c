@@ -99,6 +99,7 @@ static bool make_token(char *e) {
 						token[nr_token].type = rules[i].token_type;
 						token[nr_token].priority = rules[i].priority; 
 						strncpy (token[nr_token].str,substr_start+1,substr_len-1);
+						printf ("register %s\n",token[nr_token].str);
 						nr_token ++;
 						break; 
 					default:
@@ -167,7 +168,7 @@ uint32_t eval(int l,int r) {
 		sscanf(token[l].str,"%x",&num);
 	if (token[l].type == REGISTER)
 		{
-			printf ("chkeck %s\n",token[l].str);
+			printf ("check %s\n",token[l].str);
 			if (strlen (token[l].str) == 3) {
 			int i;
 			for (i = R_EAX; i <= R_EDI; i ++)
@@ -212,7 +213,7 @@ uint32_t eval(int l,int r) {
 		}
 		uint32_t val1 = eval (l,op - 1);
 		uint32_t val2 = eval (op + 1,r);
-		printf ("1 = %d,2 = %d",val1,val2);
+		printf ("1 = %d,2 = %d\n",val1,val2);
 		switch (token[op].type)
 		{
 			case '+':return val1 + val2;
