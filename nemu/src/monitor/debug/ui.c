@@ -97,7 +97,7 @@ static int cmd_w(char *args) {
 	printf ("Watchpoint %d:\n",f->NO);
 	f->val = expr (args,&suc);
 	strcpy (f->expr,args);
-	if (!suc)assert (1);
+	if (!suc)Assert (1,"wrong\n");
 	printf ("Value : %d\n",f->val);
 	return 0;
 }
