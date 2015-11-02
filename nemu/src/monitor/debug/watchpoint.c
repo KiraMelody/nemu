@@ -21,6 +21,7 @@ void init_wp_list() {
 /* TODO: Implement the functionality of watchpoint */
 WP* new_wp()
 {
+	printf ("new_wp\n");
 	WP *f;
 	f = free_;
 	free_ = free_->next;
