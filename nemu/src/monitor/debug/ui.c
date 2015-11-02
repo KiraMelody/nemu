@@ -41,8 +41,8 @@ static int cmd_si(char *args) {
 	int num=0;
 	if (args == NULL)num = 1;
 	else sscanf (args,"%d",&num);
-	printf ("here is si\n");
 	cpu_exec(num);
+	printf ("si %d",num);
 	return 0;
 }
 
