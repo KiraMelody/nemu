@@ -198,6 +198,7 @@ uint32_t eval(int l,int r) {
 	else if (check_parentheses (l,r) == true)return eval (l + 1,r - 1);
  	else {
 		int op = dominant_operator (l,r);
+		printf ("op = %s\n",token[op].str);
  		if (l == op) {
 			uint32_t val = eval (l + 1,r);
 			switch (token[op].type)
