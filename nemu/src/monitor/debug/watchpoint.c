@@ -36,6 +36,8 @@ void free_wp (WP *wp)
 	if (f->next == NULL)assert (0);
 	f->next = f->next->next;
 	wp->next = free_;
+	wp->val = 0;
+	wp->expr = NULL;
 	free_ = wp;
 }
 bool check_wp()
@@ -58,4 +60,10 @@ bool check_wp()
 		}
 	}
 	return key;
+}
+void delete_wp(int num)
+{
+	WP *f;
+	f = &wp_list[num];
+	free_wp (f);
 }

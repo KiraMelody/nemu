@@ -171,7 +171,11 @@ uint32_t eval(int l,int r) {
 			int i;
 			for (i = R_EAX; i <= R_EDI; i ++)
 				if (strcmp (token[l].str,regsl[i]) == 0)break;
-			num = reg_l(i);
+			if (i > R_EDI)
+				if (strcmp (token[l].str,"eip") == 0)
+					num = cpu.eip;
+				else Assert (1,"no this register!\n");
+			else num = reg_l(i);
  			}
  			else if (strlen (token[l].str) == 2) {
  			if (token[l].str[1] == 'x' || token[l].str[1] == 'p' || token[l].str[1] == 'i') {

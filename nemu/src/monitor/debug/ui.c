@@ -101,7 +101,18 @@ static int cmd_w(char *args) {
 	printf ("Value : %d\n",f->val);
 	return 0;
 }
+static int cmd_b(char *args) {
+	bool suc;
+	uint32_t addr = expr (args,&suc);
+	if (!suc)assert (1);
+	sprintf (args,"$eip == %d",addr);
+	cmd_w (args);
+	return 0;
+}
 static int cmd_d(char *args) {
+	int num;
+	num = sscanf (args,"%d",&num);
+	delete_wp (num);
 	return 0;
 }
 static int cmd_bt(char *args) {
@@ -118,6 +129,7 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 	{ "si", "Step into implementation of N instructions after the suspension of execution.When N is notgiven,the default is 1.", cmd_si},
 	{ "info", "r for print register state\nw for print watchpoint information", cmd_info},
+	{ "b", "Breakpoint + *ADDR.", cmd_b},
 	{ "p", "Expression evaluation", cmd_p},
 	{ "x", "Calculate the value of the expression and regard the result as the starting memory address.", cmd_x},
 	{ "w", "Stop the execution of the program if the result of the expression has changed.", cmd_w},
