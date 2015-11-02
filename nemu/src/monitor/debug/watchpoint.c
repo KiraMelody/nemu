@@ -51,7 +51,7 @@ bool check_wp()
 	bool suc;
 	while (f != NULL)
 	{
-		printf ("f -> %d\n",f->NO);
+	//	printf ("f -> %d\n",f->NO);
 		uint32_t tmp_expr = expr (f->expr,&suc);
 		if (!suc)assert (1);
 		if (tmp_expr != f->val)
