@@ -48,6 +48,7 @@ bool check_wp()
 {
 	WP *f;
 	f = head;
+	printf ("f.NO = %d\n",f->NO);
 	bool key = true;
 	bool suc;
 	while (f != NULL)
@@ -61,8 +62,8 @@ bool check_wp()
 			printf ("Watchpoint %d: %s\n",f->NO,f->expr);
 			printf ("Old value = %d\n",f->val);
 			printf ("New value = %d\n",tmp_expr);
-			f = f->next;
 		}
+		f = f->next;
 	}
 	return key;
 }
