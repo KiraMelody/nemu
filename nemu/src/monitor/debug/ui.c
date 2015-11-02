@@ -98,6 +98,7 @@ static int cmd_w(char *args) {
 	f->val = expr (args,&suc);
 	printf ("\n OK %d\n",suc);
 	strcpy (f->expr,args);
+	printf ("%s\n",f->expr);
 	if (!suc)Assert (1,"wrong\n");
 	printf ("Value : %d\n",f->val);
 	return 0;
