@@ -103,9 +103,10 @@ static int cmd_w(char *args) {
 }
 static int cmd_b(char *args) {
 	bool suc;
-	uint32_t addr = expr (args,&suc);
+	swaddr_t addr;
+	addr = expr (args+1,&suc);
 	if (!suc)assert (1);
-	sprintf (args,"$eip == *%d",addr);
+	sprintf (args,"$eip == *0x%x",addr);
 	printf ("%s\n",args);
 	cmd_w (args);
 	return 0;
