@@ -207,7 +207,7 @@ uint32_t eval(int l,int r) {
 				case POINTOR:return swaddr_read (val,4);
 				case MINUS:return -val;
 				case '!':return !val;
-				default :assert (1);
+				default :Assert (1,"default\n");
 			} 
 		}
 		uint32_t val1 = eval (l,op - 1);
