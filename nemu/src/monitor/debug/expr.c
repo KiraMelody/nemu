@@ -198,10 +198,9 @@ uint32_t eval(int l,int r) {
 	else if (check_parentheses (l,r) == true)return eval (l + 1,r - 1);
  	else {
 		int op = dominant_operator (l,r);
-		printf ("op = %s\n",token[op].str);
  		if (l == op) {
 			uint32_t val = eval (l + 1,r);
-			printf ("val = %d, add = %d\n",val,swaddr_read (val,4));
+		//	printf ("val = %d, add = %d\n",val,swaddr_read (val,4));
 			switch (token[op].type)
  			{
 				case POINTOR:return swaddr_read (val,4);
@@ -212,7 +211,7 @@ uint32_t eval(int l,int r) {
 		}
 		uint32_t val1 = eval (l,op - 1);
 		uint32_t val2 = eval (op + 1,r);
-		printf ("1 = %d,2 = %d",val1,val2);
+		//printf ("1 = %d,2 = %d",val1,val2);
 		switch (token[op].type)
 		{
 			case '+':return val1 + val2;
