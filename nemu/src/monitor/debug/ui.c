@@ -105,7 +105,7 @@ static int cmd_b(char *args) {
 	swaddr_t addr;
 	addr = expr (args+1,&suc);
 	if (!suc)assert (1);
-	sprintf (args,"$eip == *0x%x",addr);
+	sprintf (args,"$eip == 0x%x",addr);
 	printf ("Breakpoint %d at 0x%x\n",breakpoint_counter,addr);
 	breakpoint_counter++;
 	WP *f;
