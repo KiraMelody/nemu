@@ -72,7 +72,7 @@ void cpu_exec(volatile uint32_t n) {
 			printf("%s\n", asm_buf);
 		}
 #endif
-
+		printf ("exec to %d\n",n);
 		/* TODO: check watchpoints here. */
 		if (!check_wp())nemu_state = STOP;
 		if(nemu_state != RUNNING) { return; }
