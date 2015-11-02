@@ -172,6 +172,7 @@ uint32_t eval(int l,int r) {
 			for (i = R_EAX; i <= R_EDI; i ++)
 				if (strcmp (token[l].str,regsl[i]) == 0)break;
 			num = reg_l(i);
+			printf ("it's %s\n",regsl[i]);
  			}
  			else if (strlen (token[l].str) == 2) {
  			if (token[l].str[1] == 'x' || token[l].str[1] == 'p' || token[l].str[1] == 'i') {
@@ -186,6 +187,7 @@ uint32_t eval(int l,int r) {
 					if (strcmp (token[l].str,regsb[i]) == 0)break;
 				num = reg_b(i);
 			}
+			else assert (1);
 			}
 		}
 		return num;
