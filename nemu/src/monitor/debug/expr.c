@@ -167,6 +167,7 @@ uint32_t eval(int l,int r) {
 		sscanf(token[l].str,"%x",&num);
 	if (token[l].type == REGISTER)
 		{
+			printf ("chkeck %s\n",token[l].str);
 			if (strlen (token[l].str) == 3) {
 			int i;
 			for (i = R_EAX; i <= R_EDI; i ++)
