@@ -88,7 +88,6 @@ static bool make_token(char *e) {
 				int substr_len = pmatch.rm_eo;
 
 				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
-				position += substr_len;
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
 				 * to record the token in the array ``tokens''. For certain 
 				 * types of tokens, some extra actions should be performed.
@@ -98,8 +97,8 @@ static bool make_token(char *e) {
 					case REGISTER:
 						token[nr_token].type = rules[i].token_type;
 						token[nr_token].priority = rules[i].priority; 
-						strncpy (token[nr_token].str,substr_start+1,substr_len-1);
-						printf ("register %d %s\n",substr_len,token[nr_token].str);
+						strncpy (token[nr_token].str,e + position + 1 , substr_len -1);
+//						printf ("register %d %.*s\n",substr_len-1, e + position -1);
 						nr_token ++;
 						break; 
 					default:
@@ -109,7 +108,7 @@ static bool make_token(char *e) {
 						printf ("%s\n",token[nr_token].str);
 						nr_token ++;
 				}
-
+				position += substr_len;
 				break;
  			}
  		}
