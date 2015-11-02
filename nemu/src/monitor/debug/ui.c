@@ -105,12 +105,12 @@ static int cmd_b(char *args) {
 	swaddr_t addr;
 	addr = expr (args+1,&suc);
 	if (!suc)assert (1);
-	printf ("%s\n",args);
+	sprintf (args,"$eip == *0x%x",addr);
 	printf ("Breakpoint %d at 0x%x\n",breakpoint_counter,addr);
 	breakpoint_counter++;
 	WP *f;
 	f = new_wp();
-	sprintf (args,"$eip == *0x%x",addr);
+	printf ("%s\n",args);
 	f->val = expr (args,&suc);
 	strcpy (f->expr,args);
 	return 0;
