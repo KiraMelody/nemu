@@ -87,7 +87,7 @@ static bool make_token(char *e) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
-				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+//				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
 				 * to record the token in the array ``tokens''. For certain 
@@ -167,13 +167,11 @@ uint32_t eval(int l,int r) {
 		sscanf(token[l].str,"%x",&num);
 	if (token[l].type == REGISTER)
 		{
-			printf ("REGISTER %s\n",token[l].str);
 			if (strlen (token[l].str) == 3) {
 			int i;
 			for (i = R_EAX; i <= R_EDI; i ++)
 				if (strcmp (token[l].str,regsl[i]) == 0)break;
 			num = reg_l(i);
-			printf ("it's %s\n",regsl[i]);
  			}
  			else if (strlen (token[l].str) == 2) {
  			if (token[l].str[1] == 'x' || token[l].str[1] == 'p' || token[l].str[1] == 'i') {
@@ -208,7 +206,6 @@ uint32_t eval(int l,int r) {
 		}
 		uint32_t val1 = eval (l,op - 1);
 		uint32_t val2 = eval (op + 1,r);
-		printf ("1 = %d,2 = %d\n",val1,val2);
 		switch (token[op].type)
 		{
 			case '+':return val1 + val2;
