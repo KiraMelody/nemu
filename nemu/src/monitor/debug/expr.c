@@ -201,6 +201,7 @@ uint32_t eval(int l,int r) {
 		printf ("op = %s\n",token[op].str);
  		if (l == op) {
 			uint32_t val = eval (l + 1,r);
+			printf ("val = %d\n",val);
 			switch (token[op].type)
  			{
 				case POINTOR:return swaddr_read (val,4);
