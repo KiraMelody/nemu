@@ -88,7 +88,7 @@ static bool make_token(char *e) {
 				char *tmp = e + position + 1;
 				int substr_len = pmatch.rm_eo;
 				printf ("%s\n",tmp);
-				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+//				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
 				 * to record the token in the array ``tokens''. For certain 
 				 * types of tokens, some extra actions should be performed.
@@ -98,10 +98,8 @@ static bool make_token(char *e) {
 					case REGISTER:
 						token[nr_token].type = rules[i].token_type;
 						token[nr_token].priority = rules[i].priority; 
-						printf ("%s\n",token [nr_token].str);
 						strncpy (token[nr_token].str,tmp,substr_len-1);
 						token [nr_token].str[substr_len-1]='\0';
-						printf ("register %d %s\n",substr_len-1, token [nr_token].str);
 						nr_token ++;
 						break; 
 					default:
@@ -109,7 +107,6 @@ static bool make_token(char *e) {
 						token[nr_token].priority = rules[i].priority;
 						strncpy (token[nr_token].str,substr_start,substr_len);
 						token[nr_token].str[substr_len]='\0';
-						printf ("%s\n",token[nr_token].str);
 						nr_token ++;
 				}
 				position += substr_len;
@@ -172,14 +169,13 @@ uint32_t eval(int l,int r) {
 		sscanf(token[l].str,"%x",&num);
 	if (token[l].type == REGISTER)
 		{
-			printf ("check %s\n",token[l].str);
 			if (strlen (token[l].str) == 3) {
 			int i;
 			for (i = R_EAX; i <= R_EDI; i ++)
 				if (strcmp (token[l].str,regsl[i]) == 0)break;
 			if (i > R_EDI)
 				if (strcmp (token[l].str,"eip") == 0)
-					{num = cpu.eip;printf ("match eip\n");}
+					num = cpu.eip;
 				else Assert (1,"no this register!\n");
 			else num = reg_l(i);
  			}
@@ -206,7 +202,7 @@ uint32_t eval(int l,int r) {
 		int op = dominant_operator (l,r);
  		if (l == op) {
 			uint32_t val = eval (l + 1,r);
-			printf ("val = %d, add = %d\n",val,swaddr_read (val,4));
+		//	printf ("val = %d, add = %d\n",val,swaddr_read (val,4));
 			switch (token[op].type)
  			{
 				case POINTOR:return swaddr_read (val,4);
@@ -217,7 +213,7 @@ uint32_t eval(int l,int r) {
 		}
 		uint32_t val1 = eval (l,op - 1);
 		uint32_t val2 = eval (op + 1,r);
-		printf ("1 = %d,2 = %d\n",val1,val2);
+	//	printf ("1 = %d,2 = %d\n",val1,val2);
 		switch (token[op].type)
 		{
 			case '+':return val1 + val2;
@@ -226,7 +222,7 @@ uint32_t eval(int l,int r) {
 			case '/':return val1 / val2;
 			case EQ:return val1 == val2;
 			case NEQ:return val1 != val2;
-				case AND:return val1 && val2;
+			case AND:return val1 && val2;
 			case OR:return val1 || val2;
 			default:
 			break;
