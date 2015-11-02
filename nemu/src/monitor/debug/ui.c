@@ -105,7 +105,8 @@ static int cmd_b(char *args) {
 	bool suc;
 	uint32_t addr = expr (args,&suc);
 	if (!suc)assert (1);
-	sprintf (args,"$eip == %d",addr);
+	sprintf (args,"$eip == *%d",addr);
+	printf ("%s\n",args);
 	cmd_w (args);
 	return 0;
 }
