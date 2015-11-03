@@ -33,8 +33,11 @@ void free_wp (WP *wp)
 	WP *f;
 	f = head;
 	while (f->next != NULL && f->next->NO != wp->NO)f = f->next;
-	if (f->next == NULL)assert (0);
-	f->next = f->next->next;
+	if (f->next == NULL)
+	{
+		if (f->NO == wp->NO)head = head->next;
+	}
+	else f->next = f->next->next;
 	wp->next = free_;
 	wp->val = 0;
 	wp->expr[0] = '\0';
