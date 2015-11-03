@@ -199,7 +199,7 @@ uint32_t eval(int l,int r) {
 	else if (check_parentheses (l,r) == true)return eval (l + 1,r - 1);
  	else {
 		int op = dominant_operator (l,r);
-		printf ("op = %d\n",op);
+//		printf ("op = %d\n",op);
  		if (l == op) {
 			uint32_t val = eval (l + 1,r);
 			switch (token[op].type)
@@ -212,7 +212,7 @@ uint32_t eval(int l,int r) {
 		}
 		uint32_t val1 = eval (l,op - 1);
 		uint32_t val2 = eval (op + 1,r);
-		printf ("1 = %d,2 = %d\n",val1,val2);
+//		printf ("1 = %d,2 = %d\n",val1,val2);
 		switch (token[op].type)
 		{
 			case '+':return val1 + val2;
@@ -227,7 +227,7 @@ uint32_t eval(int l,int r) {
 			break;
   		}
   	}
-	Assert (1,"NO MATCH");
+	assert (1);
 	return -1000000;
 }
 uint32_t expr(char *e, bool *success) {
