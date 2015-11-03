@@ -26,6 +26,7 @@ WP* new_wp()
 	free_ = free_->next;
 	f->next = head;
 	head = f;
+	if (head->next == NULL)printf ("yeyeye\n");
 	return f;
 }
 void free_wp (WP *wp)
