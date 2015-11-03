@@ -45,9 +45,9 @@ void free_wp (WP *wp)
 	f = head;
 	printf ("%d %d\n",f->NO,f->next->NO);
 	if (head == NULL)assert (0);
-	if (head->next == NULL && head->NO == wp->NO)
+	if (head->NO == wp->NO)
 	{
-		head = NULL;
+		head = head->next;
 	}
 	else 
 	{
