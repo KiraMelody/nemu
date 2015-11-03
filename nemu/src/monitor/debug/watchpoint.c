@@ -26,7 +26,7 @@ WP* new_wp()
 	free_ = free_->next;
 	f->next = head;
 	head = f;
-	if (head->next == NULL)printf ("yeyeye\n");
+	if (head->next == NULL)printf (" %d yeyeye\n",head->NO);
 	return f;
 }
 void free_wp (WP *wp)
@@ -37,7 +37,8 @@ void free_wp (WP *wp)
 	if (f->next == NULL)
 	{
 		printf ("%d\n",f->NO);
-		if (f->NO == wp->NO)head = head->next;
+		if (head->NO == wp->NO)head = head->next;
+		if (head == NULL)printf ("NULL\n");
 	}
 	else if (f->next->NO == wp->NO)f->next = f->next->next;
 	else assert (0);
