@@ -78,6 +78,7 @@ bool check_wp()
 			if (f->b)
 			{
 				printf ("Hit breakpoint %d at 0x%08x\n",f->b,cpu.eip);
+				f = f->next;
 				continue;
 			}
 			printf ("Watchpoint %d: %s\n",f->NO,f->expr);
