@@ -239,11 +239,11 @@ uint32_t expr(char *e, bool *success) {
 	for (i = 0;i < nr_token; i ++) {
  		if (token[i].type == '*' && (i == 0 || (token[i - 1].type != NUMBER && token[i - 1].type != HNUMBER && token[i - 1].type != REGISTER && token[i - 1].type !=')'))) {
 			token[i].type = POINTOR;
-			token[i].priority = 7;
+			token[i].priority = 6;
 		}
 		if (token[i].type == '-' && (i == 0 || (token[i - 1].type != NUMBER && token[i - 1].type != HNUMBER && token[i - 1].type != REGISTER && token[i - 1].type !=')'))) {
 			token[i].type = MINUS;
-			token[i].priority = 7;
+			token[i].priority = 6;
  		}
   	}
 	/* TODO: Insert codes to evaluate the expression. */	
