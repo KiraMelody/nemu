@@ -228,7 +228,7 @@ uint32_t eval(int l,int r) {
   		}
   	}
 	Assert (1,"NO MATCH");
-	return -1;
+	return -1000000;
 }
 uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
