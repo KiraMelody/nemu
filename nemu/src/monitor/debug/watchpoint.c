@@ -87,6 +87,7 @@ void delete_wp(int num)
 {
 	WP *f;
 	f = &wp_list[num];
+	printf ("check %d\n",f->NO);
 	free_wp (f);
 }
 void info_wp()
