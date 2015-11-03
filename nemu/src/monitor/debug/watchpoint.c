@@ -39,6 +39,7 @@ void free_wp (WP *wp)
 	}
 	else if (f->next->NO == wp->NO)f->next = f->next->next;
 	else assert (0);
+	if (head == NULL)printf ("OK\n");
 	wp->next = free_;
 	wp->val = 0;
 	wp->expr[0] = '\0';
