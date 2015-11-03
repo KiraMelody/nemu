@@ -199,6 +199,7 @@ uint32_t eval(int l,int r) {
 	else if (check_parentheses (l,r) == true)return eval (l + 1,r - 1);
  	else {
 		int op = dominant_operator (l,r);
+		printf ("op = %d\n",op);
  		if (l == op) {
 			uint32_t val = eval (l + 1,r);
 //			printf ("val = %d, add = %d\n",val,swaddr_read (val,4));
