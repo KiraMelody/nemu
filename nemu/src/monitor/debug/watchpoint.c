@@ -1,6 +1,6 @@
 #include "monitor/watchpoint.h"
 #include "monitor/expr.h"
-
+#include "nemu.h"
 #define NR_WP 33
 
 static WP wp_list[NR_WP];
@@ -59,6 +59,7 @@ void free_wp (WP *wp)
 	}
 	wp->next = NULL;
 	wp->val = 0;
+	wp->b = 0;
 	wp->expr[0] = '\0';
 }
 bool check_wp()
@@ -69,12 +70,16 @@ bool check_wp()
 	bool suc;
 	while (f != NULL)
 	{
-	//	printf ("f -> %d\n",f->NO);
 		uint32_t tmp_expr = expr (f->expr,&suc);
 		if (!suc)assert (1);
 		if (tmp_expr != f->val)
 		{
 			key = false;
+			if (f->b)
+			{
+				printf ("Hit breakpoint %d at 0x%08x\n",f->b,cpu.eip);
+				continue;
+			}
 			printf ("Watchpoint %d: %s\n",f->NO,f->expr);
 			printf ("Old value = %d\n",f->val);
 			printf ("New value = %d\n",tmp_expr);

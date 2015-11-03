@@ -7,7 +7,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 void cpu_exec(uint32_t);
-int breakpoint_counter = 0;
+int breakpoint_counter = 1;
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -93,7 +93,7 @@ static int cmd_w(char *args) {
 	WP *f;
 	bool suc;
 	f = new_wp();
-	printf ("Watchpoint %d:\n",f->NO);
+	printf ("Watchpoint %d: %s\n",f->NO,args);
 	f->val = expr (args,&suc);
 	strcpy (f->expr,args);
 	if (!suc)Assert (1,"wrong\n");
@@ -111,14 +111,13 @@ static int cmd_b(char *args) {
 	WP *f;
 	f = new_wp();
 	f->val = expr (args,&suc);
+	f->b = breakpoint_counter;
 	strcpy (f->expr,args);
 	return 0;
 }
 static int cmd_d(char *args) {
 	int num;
-	printf ("ghost %s\n",args);
 	sscanf (args,"%d",&num);
-	printf ("d %d\n",num);
 	delete_wp (num);
 	return 0;
 }
