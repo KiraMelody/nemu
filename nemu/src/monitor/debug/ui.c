@@ -55,7 +55,7 @@ static int cmd_info(char *args) {
 	printf ("eip\t0x%08x\n",cpu.eip);
  	}
  	else if (args[0] == 'w') {
-	
+		info_wp();	
 	}
 	else assert (0);
 	return 0;
@@ -110,7 +110,6 @@ static int cmd_b(char *args) {
 	breakpoint_counter++;
 	WP *f;
 	f = new_wp();
-	printf ("%s\n",args);
 	f->val = expr (args,&suc);
 	strcpy (f->expr,args);
 	return 0;

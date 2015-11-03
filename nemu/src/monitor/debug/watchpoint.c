@@ -37,7 +37,8 @@ void free_wp (WP *wp)
 	{
 		if (f->NO == wp->NO)head = head->next;
 	}
-	else f->next = f->next->next;
+	else if (f->next->NO == wp->NO)f->next = f->next->next;
+	else assert (0);
 	wp->next = free_;
 	wp->val = 0;
 	wp->expr[0] = '\0';
@@ -70,4 +71,14 @@ void delete_wp(int num)
 	WP *f;
 	f = &wp_list[num];
 	free_wp (f);
+}
+void info_wp()
+{
+	WP *f;
+	f=head;
+	while (f!=NULL)
+	{
+		printf ("Watchpoint %d: %s = %d\n",f->NO,f->expr,f->val);
+		f = f->next;
+	}
 }
