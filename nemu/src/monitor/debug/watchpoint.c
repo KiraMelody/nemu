@@ -43,6 +43,7 @@ void free_wp (WP *wp)
 		p->next = wp;
 	}
 	f = head;
+	printf ("%d %d\n",f->NO,f->next->NO);
 	if (head == NULL)assert (0);
 	if (head->next == NULL && head->NO == wp->NO)
 	{
@@ -50,9 +51,8 @@ void free_wp (WP *wp)
 	}
 	else 
 	{
-		while (f->next != NULL && f->next->NO != wp->NO)f = f->next;
-	if (f->next == NULL)
-		printf ("what ghost\n");
+	while (f->next != NULL && f->next->NO != wp->NO)f = f->next;
+	if (f->next == NULL && f->NO == wp->NO)printf ("what ghost!");
 	else if (f->next->NO == wp->NO)f->next = f->next->next;
 	else assert (0);
 	if (head == NULL)printf ("*NULL\n");
