@@ -1,15 +1,15 @@
 #include "monitor/watchpoint.h"
 #include "monitor/expr.h"
 
-#define NR_WP 32
+#define NR_WP 33
 
 static WP wp_list[NR_WP];
 static WP *head, *free_;
 
 void init_wp_list() {
 	int i;
-	for(i = 0; i < NR_WP; i ++) {
-		wp_list[i].NO = i + 1;//modify original document
+	for(i = 1; i < NR_WP; i ++) {
+		wp_list[i].NO = i;//modify original document
 		wp_list[i].next = &wp_list[i + 1];
 	}
 	wp_list[NR_WP - 1].next = NULL;
