@@ -35,6 +35,7 @@ void free_wp (WP *wp)
 	while (f->next != NULL && f->next->NO != wp->NO)f = f->next;
 	if (f->next == NULL)
 	{
+		printf ("%d\n",f->NO);
 		if (f->NO == wp->NO)head = head->next;
 	}
 	else if (f->next->NO == wp->NO)f->next = f->next->next;
