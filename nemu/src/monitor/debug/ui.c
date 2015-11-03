@@ -116,6 +116,7 @@ static int cmd_b(char *args) {
 }
 static int cmd_d(char *args) {
 	int num;
+	printf ("ghost %s",args);
 	num = sscanf (args,"%d",&num);
 	printf ("d %d\n",num);
 	delete_wp (num);
