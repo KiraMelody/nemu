@@ -154,7 +154,7 @@ int dominant_operator (int l,int r)
 			if (token[j].type == ')')cnt ++; 
 		}
 		if (!key)continue;
-		if (token[i].priority < min_priority){min_priority = token[i].priority;oper = i;}
+		if (token[i].priority <= min_priority){min_priority = token[i].priority;oper = i;}
  	}
 	return oper;
 }
