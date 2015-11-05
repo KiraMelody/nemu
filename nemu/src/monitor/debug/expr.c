@@ -200,9 +200,10 @@ uint32_t eval(int l,int r) {
  	else {
 		int op = dominant_operator (l,r);
 //		printf ("op = %d\n",op);
- 		if (l == op) {
+ 		if (l == op || token [op].type == POINTOR || token [op].type == MINUS || token [op].type == '!')
+		{
 			uint32_t val = eval (l + 1,r);
-			switch (token[op].type)
+			switch (token[l].type)
  			{
 				case POINTOR:return swaddr_read (val,4);
 				case MINUS:return -val;
@@ -210,6 +211,7 @@ uint32_t eval(int l,int r) {
 				default :Assert (1,"default\n");
 			} 
 		}
+
 		uint32_t val1 = eval (l,op - 1);
 		uint32_t val2 = eval (op + 1,r);
 //		printf ("1 = %d,2 = %d\n",val1,val2);
