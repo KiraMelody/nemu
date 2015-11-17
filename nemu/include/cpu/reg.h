@@ -25,6 +25,7 @@ typedef union {
     	struct {
 		uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
 		swaddr_t eip;
+	union{
 		struct{
 			uint32_t :14;
 			uint32_t VM:1;
@@ -45,6 +46,8 @@ typedef union {
 			uint32_t :1;
 			uint32_t CF:1;
 		};
+		uint32_t eflags;
+	};
 	};
 } CPU_state;
 
