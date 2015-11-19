@@ -12,5 +12,8 @@ make_helper(sub_i2rm_v)
 make_helper(sub_r2rm_v)
 make_helper(sub_rm2r_v)
 */
+#if DATA_BYTE == 2 || DATA_BYTE == 4
+make_helper(sub_si2rm_v)
+#endif
 
 #endif
