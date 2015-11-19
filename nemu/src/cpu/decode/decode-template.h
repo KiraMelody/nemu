@@ -14,8 +14,7 @@ make_helper(concat(decode_i_, SUFFIX)) {
 	op_src->type = OP_TYPE_IMM;
 	op_src->imm = instr_fetch(eip, DATA_BYTE);
 	op_src->val = op_src->imm;
-	printf ("GET IMM\n");
-
+	printf ("GET IMM and len = %d\n",DATA_BYTE);
 #ifdef DEBUG
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->imm);
 #endif
@@ -71,7 +70,7 @@ static int concat3(decode_rm_, SUFFIX, _internal) (swaddr_t eip, Operand *rm, Op
 	rm->size = DATA_BYTE;
 	int len = read_ModR_M(eip, rm, reg);
 	reg->val = REG(reg->reg);
-	printf ("GET REG\n");
+	printf ("GET REG and len = %d\n",len);
 
 #ifdef DEBUG
 	snprintf(reg->str, OP_STR_SIZE, "%%%s", REG_NAME(reg->reg));
@@ -108,6 +107,7 @@ make_helper(concat(decode_i2a_, SUFFIX)) {
 make_helper(concat(decode_i_rm2r_, SUFFIX)) {
 	int len = decode_rm_internal(eip, op_src2, op_dest);
 	len += decode_i(eip + len);
+	printf ("i2rm len = %d\n",len);
 	return len;
 }
 
