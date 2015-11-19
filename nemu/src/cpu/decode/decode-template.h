@@ -14,6 +14,7 @@ make_helper(concat(decode_i_, SUFFIX)) {
 	op_src->type = OP_TYPE_IMM;
 	op_src->imm = instr_fetch(eip, DATA_BYTE);
 	op_src->val = op_src->imm;
+	printf ("GET IMM\n");
 
 #ifdef DEBUG
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->imm);
@@ -70,6 +71,7 @@ static int concat3(decode_rm_, SUFFIX, _internal) (swaddr_t eip, Operand *rm, Op
 	rm->size = DATA_BYTE;
 	int len = read_ModR_M(eip, rm, reg);
 	reg->val = REG(reg->reg);
+	printf ("GET REG\n");
 
 #ifdef DEBUG
 	snprintf(reg->str, OP_STR_SIZE, "%%%s", REG_NAME(reg->reg));
