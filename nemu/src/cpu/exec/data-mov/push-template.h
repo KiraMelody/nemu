@@ -5,7 +5,7 @@
 static void do_execute () {
 	REG (4) -= DATA_BYTE;
 	MEM_W (REG (4) , op_src->val);
-	print_asm_template1();
+	print_asm_no_template1();
 }
 
 make_instr_helper(i)
