@@ -24,6 +24,8 @@
 #include "logic/shrd.h"
 #include "logic/test.h"
 
+#include "prog-trans/call.h"
+
 #include "string/rep.h"
 
 #include "misc/misc.h"
