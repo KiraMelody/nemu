@@ -7,10 +7,8 @@ static void do_execute() {
 	OPERAND_W(op_dest, result);
 	int len = (DATA_BYTE << 3) - 1;
 	cpu.CF = op_dest->val < op_src->val;
-	int x = result >> len;
-	cpu.SF=x;
-    	x = x + (x & 1);
-    	cpu.OF=!x;
+	cpu.SF=result >> len;
+    	cpu.OF=(op_dest->val >= op_src->val && cpu.SF) || (op_dest->val < op_src->val && !cpu.SF);
 	cpu.ZF=!result;
 	result ^= result >>4;
 	result ^= result >>2;
