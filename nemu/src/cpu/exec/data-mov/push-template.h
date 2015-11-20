@@ -3,12 +3,8 @@
 #define instr push
 
 static void do_execute () {
-	//DATA_TYPE result = op_src->val + 1;
-	//OPERAND_W(op_src, result);
-
-	/* TODO: Update EFLAGS. */
-	//panic("please implement me");
-
+	REG (4) -= DATA_BYTE;
+	MEM_W (REG (4) , op_src->val);
 	print_asm_template1();
 }
 
