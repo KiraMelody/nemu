@@ -7,7 +7,7 @@ static void do_execute() {
 	cpu.CF=0;
 	cpu.OF=0;
 	cpu.ZF=!result;
-	print_asm_template2();
+	print_asm_no_template2();
 }
 make_instr_helper(i2a)
 make_instr_helper(i2rm)
