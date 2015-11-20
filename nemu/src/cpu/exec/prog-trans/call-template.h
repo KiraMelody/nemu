@@ -3,8 +3,9 @@
 #define instr call
 
 make_helper(exec);
-
+/*THIS IS WRONG*/
 static void do_execute() {
+	print_asm_template1();
 	uint32_t displacement = instr_fetch(cpu.eip + 1, DATA_BYTE);
 	printf ("0x%x + 0x%x\n",cpu.eip,displacement);
 	print_asm("call");
