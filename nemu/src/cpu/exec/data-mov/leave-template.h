@@ -3,9 +3,10 @@
 #define instr leave
 
 static void do_execute () {
-	//REG (4) -= DATA_BYTE;
-	//MEM_W (REG (4) , op_src->val);
-	print_asm_no_template1();
+	MEM_W (REG (4) , MEM_R (REG (5) ));
+	REG (5) += DATA_BYTE;
+	print_asm("leave");
 }
 
+make_instr_helper(n);
 #include "cpu/exec/template-end.h"

@@ -1,11 +1,5 @@
-#ifndef __INC_H__
-#define __INC_H__
+#ifndef __LEAVE_H__
+#define __LEAVE_H__
 
-make_helper(push_r_b);
-make_helper(push_rm_b);
-make_helper(push_i_b);
-
-make_helper(push_r_v);
-make_helper(push_rm_v);
-make_helper(push_i_v);
+make_helper(leave_n_v);
 #endif

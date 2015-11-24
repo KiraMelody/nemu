@@ -8,6 +8,9 @@
 #define decode_a concat(decode_a_, SUFFIX)
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
 
+make_helper(concat(decode_n_, SUFFIX)) {
+	return DATA_BYTE;
+}
 /* Ib, Iv */
 make_helper(concat(decode_i_, SUFFIX)) {
 	/* eip here is pointing to the immediate */
