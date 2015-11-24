@@ -38,7 +38,7 @@ void load_elf_tables(int argc, char *argv[]) {
 	assert(elf->e_machine == EM_386);					// Intel 80386 architecture
 	assert(elf->e_version == EV_CURRENT);				// current version
 
-
+	printf("get!\n");
 	/* Load symbol table and string table for future use */
 
 	/* Load section header table */
