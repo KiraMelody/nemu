@@ -13,4 +13,4 @@
 
 /* for instruction encoding overloading */
 
-make_helper_v(leave_i)
+make_helper_v(leave_n)

@@ -7,7 +7,7 @@ static void do_execute () {
 	REG (5) += DATA_BYTE;
 	print_asm("leave");
 }
-make_instr_helper(i)
+make_instr_helper(n)
 /*
 make_helper(concat(leave_n_, SUFFIX)) {
 	return DATA_BYTE;
