@@ -1,9 +1,6 @@
 #include "prefix/prefix.h"
 
-#include "data-mov/mov.h"
-#include "data-mov/xchg.h"
-#include "data-mov/push.h"
-#include "data-mov/leave.h"
+#include "data-mov/data-mov.h"
 
 #include "arith/arith.h"
 
