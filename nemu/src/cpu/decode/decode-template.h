@@ -5,11 +5,12 @@
 #define decode_r_internal concat3(decode_r_, SUFFIX, _internal)
 #define decode_rm_internal concat3(decode_rm_, SUFFIX, _internal)
 #define decode_i concat(decode_i_, SUFFIX)
+#define decode_n concat(decode_i_, SUFFIX)
 #define decode_a concat(decode_a_, SUFFIX)
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
 
 make_helper(concat(decode_n_, SUFFIX)) {
-	print_asm("leave");
+	//print_asm("leave");
 	return DATA_BYTE;
 }
 /* Ib, Iv */
