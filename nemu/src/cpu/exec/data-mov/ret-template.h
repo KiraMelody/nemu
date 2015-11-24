@@ -4,7 +4,7 @@
 
 static void do_execute () {
 	cpu.eip = MEM_R (REG (5));
-	printf ("%d!",cpu.eip);
+	printf ("%x!",cpu.eip);
 	REG (5) += DATA_BYTE;
 	print_asm("ret");
 }
