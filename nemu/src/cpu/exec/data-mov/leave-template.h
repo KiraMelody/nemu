@@ -8,9 +8,5 @@ static void do_execute () {
 	print_asm("leave");
 }
 make_instr_helper(n)
-/*
-make_helper(concat(leave_n_, SUFFIX)) {
-	return DATA_BYTE;
-}*/
 
 #include "cpu/exec/template-end.h"
