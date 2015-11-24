@@ -10,6 +10,7 @@
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
 
 make_helper(concat(decode_n_, SUFFIX)) {
+	printf ("fuck!");
 	return DATA_BYTE;
 }
 /* Ib, Iv */
