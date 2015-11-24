@@ -3,3 +3,4 @@
 #include "push.h"
 #include "leave.h"
 #include "ret.h"
+#include "lea.h"
