@@ -1,5 +1,5 @@
-#ifndef __PUSH_H__
-#define __PUSH_H__
+#ifndef __INC_H__
+#define __INC_H__
 
 make_helper(push_r_b);
 make_helper(push_rm_b);
