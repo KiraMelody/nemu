@@ -9,7 +9,7 @@
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
 
 make_helper(concat(decode_n_, SUFFIX)) {
-	printf ("leave!");
+	print_asm("leave");
 	return DATA_BYTE;
 }
 /* Ib, Iv */
