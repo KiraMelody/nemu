@@ -4,7 +4,7 @@
 
 
 static void do_execute() {
-	int32_t displacement = instr_fetch(cpu.eip + 1, DATA_BYTE);
+	DATA_TYPE_S displacement = op_src->val;
 	print_asm("jmp %x",cpu.eip + 1 + DATA_BYTE + displacement);
 	cpu.eip +=displacement;
 }
