@@ -14,12 +14,11 @@ static void do_execute () {
 	cpu.OF=0;
 	cpu.SF=result >> len;
     	cpu.ZF=!result;
+    	OPERAND_W(op_dest, dest);
 	result ^= result >>4;
 	result ^= result >>2;
 	result ^= result >>1;
 	cpu.PF=!(result & 1);
-	OPERAND_W(op_dest, dest);
-
 	/* There is no need to update EFLAGS, since no other instructions 
 	 * in PA will test the flags updated by this instruction.
 	 */

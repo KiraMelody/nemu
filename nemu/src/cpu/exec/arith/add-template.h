@@ -8,7 +8,6 @@ static void do_execute() {
 	int s1,s2;
 	s1=op_dest->val;
 	s2=op_src->val;
-	printf ("%d + %d = %d\n",op_dest->val,op_src->val,result);
 	int i,c = 0;
 	for (i=0;i<len;i++)
 	{

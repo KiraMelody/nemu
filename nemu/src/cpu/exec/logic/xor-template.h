@@ -9,13 +9,13 @@ static void do_execute () {
 	cpu.OF=0;
 	cpu.SF=result >> len;
     	cpu.ZF=!result;
+    	OPERAND_W(op_dest, result);
 	result ^= result >>4;
 	result ^= result >>2;
 	result ^= result >>1;
 	cpu.PF=!(result & 1);
 	/* TODO: Update EFLAGS. */
 	//panic("please implement me");
-	OPERAND_W(op_dest, result);
 	print_asm_template2();
 }
 
