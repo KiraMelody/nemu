@@ -1,6 +1,7 @@
 #include "mov.h"
 #include "xchg.h"
 #include "push.h"
+#include "pop.h"
 #include "leave.h"
 #include "ret.h"
 #include "lea.h"
