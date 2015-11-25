@@ -150,7 +150,7 @@ int dominant_operator (int l,int r)
 	int oper = l;
 	for (i = l; i <= r;i ++)
 	{
-		if (token[i].type == NUMBER || token[i].type == HNUMBER || token[i].type == REGISTER)
+		if (token[i].type == NUMBER || token[i].type == HNUMBER || token[i].type == REGISTER || token[i].type == MARK)
 			continue;
 		int cnt = 0;
 		bool key = true;
