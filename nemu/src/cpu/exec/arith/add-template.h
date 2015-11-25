@@ -3,11 +3,23 @@
 #define instr add
 
 static void do_execute() {
-	uint32_t result = op_dest->val + op_src->val;
+	int32_t result = op_dest->val + op_src->val;
 	int len = (DATA_BYTE << 3) - 1;
-	//cpu.CF = op_dest->val < op_src->val;
+	int s1,s2;
+	s1=op_dest->val;
+	s2=op_src->val;
+	printf ("result is %d\n",result);
+	int i,c = 0;
+	for (i=0;i<len;i++)
+	{
+		c = ((s1&1)+(s2&1)+c)&2;
+		s1>>=1;s2>>=1;
+	}
+	cpu.CF=c;
 	cpu.SF=result >> len;
-    	//cpu.OF=(op_dest->val >= op_src->val && cpu.SF) || (op_dest->val < op_src->val && !cpu.SF);
+	s1=op_dest->val>>len;
+	s2=op_src->val>>len;
+    	cpu.OF=(s1 == s2 && s1 != cpu.SF) ;
 	cpu.ZF=!result;
 	result ^= result >>4;
 	result ^= result >>2;

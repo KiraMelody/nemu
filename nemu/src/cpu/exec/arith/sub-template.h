@@ -3,12 +3,15 @@
 #define instr sub
 
 static void do_execute() {
-	uint32_t result = op_dest->val - op_src->val;
+	int32_t result = op_dest->val - op_src->val;
 	int len = (DATA_BYTE << 3) - 1;
 	cpu.CF = op_dest->val < op_src->val;
 	cpu.SF=result >> len;
-    	cpu.OF=(op_dest->val >= op_src->val && cpu.SF) || (op_dest->val < op_src->val && !cpu.SF);
-	cpu.ZF=!result;
+    	int s1,s2;
+	s1=op_dest->val>>len;
+	s2=op_src->val>>len;
+    	cpu.OF=(s1 != s2 && s2 == cpu.SF) ;
+    	cpu.ZF=!result;
 	result ^= result >>4;
 	result ^= result >>2;
 	result ^= result >>1;
