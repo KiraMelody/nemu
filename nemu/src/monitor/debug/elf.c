@@ -76,6 +76,7 @@ void load_elf_tables(int argc, char *argv[]) {
 			assert(ret == 1);
 		}
 	}
+	printf ("nr = %d\n",nr_symtab_entry);
 	free(sh);
 	free(shstrtab);
 
