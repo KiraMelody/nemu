@@ -219,7 +219,7 @@ uint32_t eval(int l,int r) {
 				{
 					sprintf (tmp,"0x%d",symtab[i].st_value);
 					sscanf (tmp,"%x",&num);
-					printf ("%d\n",num);
+					printf ("0x%x = %d\n",num,num);
 				}
 			}
 		}
