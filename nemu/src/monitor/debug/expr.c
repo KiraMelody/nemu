@@ -4,9 +4,10 @@
 #include <sys/types.h>
 #include <regex.h>
 #include <elf.h>
-
+#define max_string_long 32
+#define max_token_num 32
 enum {
-	NOTYPE = 256, EQ , NEQ , AND , OR , MINUS , POINTOR , NUMBER , HNUMBER , REGISTER
+	NOTYPE = 256, EQ , NEQ , AND , OR , MINUS , POINTOR , NUMBER , HNUMBER , REGISTER , MARK
 
 	/* TODO: Add more token types */
 
@@ -25,9 +26,10 @@ static struct rule {
 	/* TODO: Add more rules.
 	 * Pay attention to the precedence level of different rules.
 	 */
-	{"\\b[0-9]+\\b",NUMBER,0},					// number
-	{"\\b0[xX][0-9a-fA-F]+\\b",HNUMBER,0},	// 16 number
-	{"\\$[a-zA-Z]+",REGISTER,0},		// register
+	{"\\b[0-9]+\\b",NUMBER,0},				// number
+	{"\\b0[xX][0-9a-fA-F]+\\b",HNUMBER,0},		// 16 number
+	{"\\$[a-zA-Z]+",REGISTER,0},				// register
+	{"\\[a-zA-Z_][a-zA-Z_0-9]+" , MARK , 0},			//mark
 	{"!=",NEQ,3},						// not equal	
 	{"!",'!',6},						// not
 	{"\\*",'*',5},						// mul
@@ -65,11 +67,11 @@ void init_regex() {
 
 typedef struct ttt {
 	int type;
-	char str[32];
+	char str[max_string_long];
 	int priority;
 } Tokens;
 
-Tokens token[32];
+Tokens token[max_token_num];
 int nr_token;
 
 /*int	regcomp(regex_t *__restrict, const char *__restrict, int);
@@ -177,7 +179,7 @@ uint32_t eval(int l,int r) {
 			int i;
 			for (i = R_EAX; i <= R_EDI; i ++)
 				if (strcmp (token[l].str,regsl[i]) == 0)break;
-			if (i > R_EDI)
+				if (i > R_EDI)
 				if (strcmp (token[l].str,"eip") == 0)
 					num = cpu.eip;
 				else Assert (1,"no this register!\n");
@@ -199,6 +201,22 @@ uint32_t eval(int l,int r) {
 			else assert (1);
 			}
 		}
+	if (token[l].type == MARK)
+	{
+		int i;
+		for (i=0;i<nr_symtab_entry;i++)
+		{
+			if ((symtab[i].st_info&0xf) == 1)
+			{
+				char tmp [max_string_long];
+				int tmplen = symtab[i+1].st_name - symtab[i].st_name;
+				strncpy (tmp,strtab+symtab[i].st_name,tmplen);
+				printf ("tmp = %s\n",tmp);
+				if (strcmp (tmp,token[l].str) == 0)
+					return symtab[i].st_value;
+			}
+		}
+	}
 		return num;
 	}
 	else if (check_parentheses (l,r) == true)return eval (l + 1,r - 1);
@@ -244,11 +262,11 @@ uint32_t expr(char *e, bool *success) {
   	}
 	int i;
 	for (i = 0;i < nr_token; i ++) {
- 		if (token[i].type == '*' && (i == 0 || (token[i - 1].type != NUMBER && token[i - 1].type != HNUMBER && token[i - 1].type != REGISTER && token[i - 1].type !=')'))) {
+ 		if (token[i].type == '*' && (i == 0 || (token[i - 1].type != NUMBER && token[i - 1].type != HNUMBER && token[i - 1].type != REGISTER && token[i - 1].type != MARK && token[i - 1].type !=')'))) {
 			token[i].type = POINTOR;
 			token[i].priority = 6;
 		}
-		if (token[i].type == '-' && (i == 0 || (token[i - 1].type != NUMBER && token[i - 1].type != HNUMBER && token[i - 1].type != REGISTER && token[i - 1].type !=')'))) {
+		if (token[i].type == '-' && (i == 0 || (token[i - 1].type != NUMBER && token[i - 1].type != HNUMBER && token[i - 1].type != REGISTER && token[i - 1].type != MARK && token[i - 1].type !=')'))) {
 			token[i].type = MINUS;
 			token[i].priority = 6;
  		}
