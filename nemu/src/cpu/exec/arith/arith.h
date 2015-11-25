@@ -1,3 +1,4 @@
+#include "adc.h"
 #include "add.h"
 #include "dec.h"
 #include "inc.h"
