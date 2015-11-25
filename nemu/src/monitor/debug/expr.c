@@ -228,10 +228,11 @@ uint32_t eval(int l,int r) {
 	else if (check_parentheses (l,r) == true)return eval (l + 1,r - 1);
  	else {
 		int op = dominant_operator (l,r);
-//		printf ("op = %d\n",op);
+		printf ("op = %d\n",op);
  		if (l == op || token [op].type == POINTOR || token [op].type == MINUS || token [op].type == '!')
 		{
 			uint32_t val = eval (l + 1,r);
+			printf ("val = %d\n",val);
 			switch (token[l].type)
  			{
 				case POINTOR:return swaddr_read (val,4);
