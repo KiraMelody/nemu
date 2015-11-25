@@ -216,7 +216,11 @@ uint32_t eval(int l,int r) {
 				tmp [tmplen] = '\0';
 				printf ("tmp = %s\n",tmp);
 				if (strcmp (tmp,token[l].str) == 0)
-					return symtab[i].st_value;
+				{
+					sprintf (tmp,"%d",symtab[i].st_value);
+					sscanf (tmp,"%x",&num);
+					printf ("%d\n",num);
+				}
 			}
 		}
 	}
