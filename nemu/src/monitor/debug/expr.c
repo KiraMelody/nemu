@@ -29,7 +29,7 @@ static struct rule {
 	{"\\b[0-9]+\\b",NUMBER,0},				// number
 	{"\\b0[xX][0-9a-fA-F]+\\b",HNUMBER,0},		// 16 number
 	{"\\$[a-zA-Z]+",REGISTER,0},				// register
-	{"\\[a-zA-Z_][a-zA-Z_0-9]+" , MARK , 0},		// mark
+	{"\\b[a-zA-Z_][a-zA-Z_0-9]+" , MARK , 0},		// mark
 	{"!=",NEQ,3},						// not equal	
 	{"!",'!',6},						// not
 	{"\\*",'*',5},						// mul
