@@ -64,7 +64,7 @@ void load_elf_tables(int argc, char *argv[]) {
 			assert(ret == 1);
 			nr_symtab_entry = sh[i].sh_size / sizeof(symtab[0]);
 			for (j=0;j<nr_symtab_entry;j++)
-			printf("st_name [%d]= %d\n", j,symtab[j].st_name);
+			printf("st_value [%d]= %x\n", j,symtab[j].st_value);
 		}
 		else if(sh[i].sh_type == SHT_STRTAB && 
 				strcmp(shstrtab + sh[i].sh_name, ".strtab") == 0) {
@@ -72,11 +72,7 @@ void load_elf_tables(int argc, char *argv[]) {
 			strtab = malloc(sh[i].sh_size);
 			fseek(fp, sh[i].sh_offset, SEEK_SET);
 			ret = fread(strtab, sh[i].sh_size, 1, fp);
-			printf ("offset = %x\n",sh[i].sh_offset);
-			for (j=0;j<sh[i].sh_size;j++)
-				printf ("%c",*(strtab+j));
 			symtab[nr_symtab_entry].st_name = sh[i].sh_size;
-			printf ("\n");
 			assert(ret == 1);
 		}
 	}
