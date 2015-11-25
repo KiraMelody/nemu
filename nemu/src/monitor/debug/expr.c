@@ -217,9 +217,8 @@ uint32_t eval(int l,int r) {
 				printf ("tmp = %s\n",tmp);
 				if (strcmp (tmp,token[l].str) == 0)
 				{
-					sprintf (tmp,"0x%d",symtab[i].st_value);
-					sscanf (tmp,"%x",&num);
-					printf ("0x%x = %d\n",num,num);
+					num = symtab[i].st_value;
+					printf ("0x%x",num);
 				}
 			}
 		}
