@@ -3,7 +3,7 @@
 #define instr pop
 
 static void do_execute () {
-	printf ("reg (%d) = %d\n",op_dest->reg,MEM_R(REG (R_ESP)));
+	printf ("reg (%d) = %d\n",op_src->reg,MEM_R(REG (R_ESP)));
 	OPERAND_W (op_dest, MEM_R(REG (R_ESP)));
 	REG (R_ESP) += DATA_BYTE;
 	print_asm_no_template1();
