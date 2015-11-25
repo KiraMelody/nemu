@@ -72,6 +72,7 @@ void load_elf_tables(int argc, char *argv[]) {
 			ret = fread(strtab, sh[i].sh_size, 1, fp);
 			for (j=0;j<sh[i].sh_size;j++)
 				printf ("%c",*(strtab+j));
+			printf ("\n");
 			assert(ret == 1);
 		}
 	}
