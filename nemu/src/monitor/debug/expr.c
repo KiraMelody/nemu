@@ -3,6 +3,7 @@
 /* We use the POSIX regex functions to process regular expressions.  * Type 'man regex' for more information about POSIX regex functions.  */
 #include <sys/types.h>
 #include <regex.h>
+#include <elf.h>
 
 enum {
 	NOTYPE = 256, EQ , NEQ , AND , OR , MINUS , POINTOR , NUMBER , HNUMBER , REGISTER
@@ -10,6 +11,10 @@ enum {
 	/* TODO: Add more token types */
 
 };
+
+extern char *strtab;
+extern Elf32_Sym *symtab;
+extern int nr_symtab_entry;
 
 static struct rule {
 	char *regex;
