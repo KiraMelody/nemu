@@ -3,9 +3,9 @@
 #define instr ret
 
 static void do_execute () {
-	printf ("%x : %x",REG (R_ESP),MEM_R (REG (R_ESP)));
-	cpu.eip = MEM_R (REG (R_ESP));
 	REG (R_ESP) += DATA_BYTE;
+	cpu.eip = MEM_R (REG (R_ESP));
+	printf ("%x : %x",REG (R_ESP),MEM_R (REG (R_ESP)));
 	print_asm("ret");
 }
 make_instr_helper(n)
