@@ -209,6 +209,7 @@ uint32_t eval(int l,int r) {
 			if ((symtab[i].st_info&0xf) == 1)
 			{
 				char tmp [max_string_long];
+				printf ("i=%d\n",i);
 				int tmplen = symtab[i+1].st_name - symtab[i].st_name;
 				printf ("len = %d\n",tmplen);
 				strncpy (tmp,strtab+symtab[i].st_name,tmplen);
