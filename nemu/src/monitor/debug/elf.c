@@ -53,7 +53,7 @@ void load_elf_tables(int argc, char *argv[]) {
 	ret = fread(shstrtab, sh[elf->e_shstrndx].sh_size, 1, fp);
 	assert(ret == 1);
 
-	int i,j;//change
+	int i;
 	for(i = 0; i < elf->e_shnum; i ++) {
 		if(sh[i].sh_type == SHT_SYMTAB && 
 				strcmp(shstrtab + sh[i].sh_name, ".symtab") == 0) {
@@ -63,8 +63,6 @@ void load_elf_tables(int argc, char *argv[]) {
 			ret = fread(symtab, sh[i].sh_size, 1, fp);
 			assert(ret == 1);
 			nr_symtab_entry = sh[i].sh_size / sizeof(symtab[0]);
-			for (j=0;j<nr_symtab_entry;j++)
-			printf("st_value [%d]= %x\n", j,symtab[j].st_value);
 		}
 		else if(sh[i].sh_type == SHT_STRTAB && 
 				strcmp(shstrtab + sh[i].sh_name, ".strtab") == 0) {
@@ -76,7 +74,6 @@ void load_elf_tables(int argc, char *argv[]) {
 			assert(ret == 1);
 		}
 	}
-	printf ("nr = %d\n",nr_symtab_entry);
 	free(sh);
 	free(shstrtab);
 
