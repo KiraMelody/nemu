@@ -210,9 +210,9 @@ uint32_t eval(int l,int r) {
 			{
 				char tmp [max_string_long];
 				printf ("i=%d\n",i);
-				int tmplen = symtab[i+1].st_name - symtab[i].st_name;
+				int tmplen = symtab[i].st_name - symtab[i - 1].st_name;
 				printf ("len = %d\n",tmplen);
-				strncpy (tmp,strtab+symtab[i].st_name,tmplen);
+				strncpy (tmp,strtab+symtab[i - 1].st_name,tmplen);
 				printf ("tmp = %s\n",tmp);
 				if (strcmp (tmp,token[l].str) == 0)
 					return symtab[i].st_value;
