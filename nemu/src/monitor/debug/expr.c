@@ -218,7 +218,7 @@ uint32_t eval(int l,int r) {
 				if (strcmp (tmp,token[l].str) == 0)
 				{
 					num = symtab[i].st_value;
-					printf ("0x%x",num);
+					printf ("0x%x\n",num);
 				}
 			}
 		}
