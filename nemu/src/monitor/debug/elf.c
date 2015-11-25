@@ -61,8 +61,8 @@ void load_elf_tables(int argc, char *argv[]) {
 			symtab = malloc(sh[i].sh_size);
 			fseek(fp, sh[i].sh_offset, SEEK_SET);
 			ret = fread(symtab, sh[i].sh_size, 1, fp);
+			printf("stname = %d\n", symtab->st_name);
 			assert(ret == 1);
-			printf ("!!%d",i);
 			nr_symtab_entry = sh[i].sh_size / sizeof(symtab[0]);
 		}
 		else if(sh[i].sh_type == SHT_STRTAB && 
