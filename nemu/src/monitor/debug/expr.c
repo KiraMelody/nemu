@@ -260,7 +260,7 @@ uint32_t eval(int l,int r) {
   		}
   	}
 	assert (1);
-	return -1000000;
+	return -123456;
 }
 uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
