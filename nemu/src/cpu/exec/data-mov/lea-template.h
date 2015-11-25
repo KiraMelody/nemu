@@ -3,8 +3,8 @@
 #define instr lea
 
 static void do_execute() {
-	printf ("%d to %d \n",op_src->val,op_dest->val);
 	OPERAND_W(op_dest, op_src->val);
+	printf ("dest = %d \n",op_dest->val);
 	print_asm_template2();
 }
 
