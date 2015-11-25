@@ -3,6 +3,7 @@
 #define instr ret
 
 static void do_execute () {
+	printf ("%x : %x",REG (R_ESP),MEM_R (REG (R_ESP)));
 	cpu.eip = MEM_R (REG (R_ESP));
 	REG (R_ESP) += DATA_BYTE;
 	print_asm("ret");
