@@ -3,8 +3,8 @@
 #define instr ret
 
 static void do_execute () {
-	cpu.eip = MEM_R (REG (R_EBP));
-	REG (R_EBP) += DATA_BYTE;
+	cpu.eip = MEM_R (REG (R_ESP));
+	REG (R_ESP) += DATA_BYTE;
 	print_asm("ret");
 }
 make_instr_helper(n)
