@@ -21,11 +21,11 @@ static void do_execute() {
 	s2=op_src->val>>len;
     	cpu.OF=(s1 == s2 && s1 != cpu.SF) ;
 	cpu.ZF=!result;
+	OPERAND_W(op_dest, result);
 	result ^= result >>4;
 	result ^= result >>2;
 	result ^= result >>1;
 	cpu.PF=!(result & 1);
-	OPERAND_W(op_dest, result);
 	print_asm_no_template2();
 }
 #if DATA_BYTE == 2 || DATA_BYTE == 4
