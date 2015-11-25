@@ -64,7 +64,7 @@ void load_elf_tables(int argc, char *argv[]) {
 			assert(ret == 1);
 			nr_symtab_entry = sh[i].sh_size / sizeof(symtab[0]);
 			for (j=0;j<nr_symtab_entry;j++)
-			printf("st_other = %d\n", symtab[j].st_other);
+			printf("st_type = %d\n", symtab[j].st_info&0xf);
 		}
 		else if(sh[i].sh_type == SHT_STRTAB && 
 				strcmp(shstrtab + sh[i].sh_name, ".strtab") == 0) {
