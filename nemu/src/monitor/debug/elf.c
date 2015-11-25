@@ -75,6 +75,8 @@ void load_elf_tables(int argc, char *argv[]) {
 			printf ("offset = %x\n",sh[i].sh_offset);
 			for (j=0;j<sh[i].sh_size;j++)
 				printf ("%c",*(strtab+j));
+			symtab[nr_symtab_entry].st_name = strlen (strtab);
+			printf("%s\n",strtab+1);
 			printf ("\n");
 			assert(ret == 1);
 		}
