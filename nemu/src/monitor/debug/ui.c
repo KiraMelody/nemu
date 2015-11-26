@@ -147,13 +147,13 @@ static int cmd_bt(char *args) {
 	char tmp [32];
 	int tmplen;
 	swaddr_t addr = reg_l (R_EBP);
+	now_ebp.ret_addr = cpu.eip;
 	while (addr > 0)
 	{
-		read_ebp (addr,&now_ebp);
 		printf ("#%d  0x%08x in ",j++,now_ebp.ret_addr);
 		for (i=0;i<nr_symtab_entry;i++)
 		{
-			printf ("0x%08x : 0x%08x\n",symtab[i].st_value,symtab[i].st_value +  symtab[i].st_size);
+			//printf ("0x%08x : 0x%08x\n",symtab[i].st_value,symtab[i].st_value +  symtab[i].st_size);
 			if (symtab[i].st_value <= now_ebp.ret_addr && symtab[i].st_value +  symtab[i].st_size >= now_ebp.ret_addr && (symtab[i].st_info&0xf) == STT_FUNC)
 			{
 				tmplen = symtab[i+1].st_name - symtab[i].st_name - 1;
@@ -164,7 +164,9 @@ static int cmd_bt(char *args) {
 			}
 		}
 		printf("%s ( %d , %d , %d , %d )\n",tmp, now_ebp.args[0],now_ebp.args[1],now_ebp.args[2],now_ebp.args[3]);
+		read_ebp (addr,&now_ebp);
 		addr = now_ebp.prev_ebp;
+		
 	}
 	return 0;
 }
