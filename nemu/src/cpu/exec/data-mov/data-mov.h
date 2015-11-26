@@ -1,4 +1,5 @@
 #include "mov.h"
+#include "movzx.h"
 #include "xchg.h"
 #include "push.h"
 #include "pop.h"
