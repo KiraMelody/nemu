@@ -161,7 +161,7 @@ static int cmd_bt(char *args) {
 				break;
 			}
 		}
-		printf("%s\n",tmp);
+		printf("%s\t",tmp);
 		read_ebp (addr,&now_ebp);
 		if (strcmp (tmp,"main") == 0)printf ("( )\n");
 		else printf ("( %d , %d , %d , %d )\n", now_ebp.args[0],now_ebp.args[1],now_ebp.args[2],now_ebp.args[3]);
