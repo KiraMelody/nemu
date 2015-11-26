@@ -3,7 +3,7 @@
 #define instr and
 
 static void do_execute () {
-	DATA_TYPE_S result = op_dest->val & op_src->val;
+	DATA_TYPE result = op_dest->val & op_src->val;
 	int len = (DATA_BYTE << 3) - 1;
 	cpu.CF=0;
 	cpu.OF=0;

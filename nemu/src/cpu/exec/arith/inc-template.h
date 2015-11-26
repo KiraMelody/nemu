@@ -5,7 +5,7 @@
 static void do_execute () {
 	DATA_TYPE result = op_src->val + 1;
 	int len = (DATA_BYTE << 3) - 1;
-	cpu.OF=(op_src->val == ((1<<len)-1));
+	cpu.OF=(result < op_dest->val);
 	cpu.SF=result >> len;
 	cpu.ZF=!result;
 	OPERAND_W(op_src, result);

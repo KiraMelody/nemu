@@ -3,18 +3,10 @@
 #define instr adc
 
 static void do_execute() {
-	int32_t result = op_dest->val + op_src->val + cpu.CF;
+	DATA_TYPE result = op_dest->val + op_src->val + cpu.CF;
 	int len = (DATA_BYTE << 3) - 1;
 	int s1,s2;
-	s1=op_dest->val;
-	s2=op_src->val;
-	int i,c = cpu.CF;
-	for (i=0;i<len;i++)
-	{
-		c = ((s1&1)+(s2&1)+c)&2;
-		s1>>=1;s2>>=1;
-	}
-	cpu.CF=c;
+	cpu.CF=(result < op_dest->val);
 	cpu.SF=result >> len;
 	s1=op_dest->val>>len;
 	s2=op_src->val>>len;

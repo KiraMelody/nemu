@@ -5,9 +5,12 @@
 static void do_execute () {
 	DATA_TYPE result = op_src->val - 1;
 	int len = (DATA_BYTE << 3) - 1;
-	cpu.CF = op_dest->val < 1;
+	cpu.CF = op_src->val < 1;
 	cpu.SF=result >> len;
-    	cpu.OF=(op_dest->val >= 1 && cpu.SF) || (op_dest->val < 1 && !cpu.SF);
+    	int s1,s2;
+	s1=op_src->val>>len;
+	s2=0;
+    	cpu.OF=(s1 != s2 && s2 == cpu.SF) ;
 	cpu.ZF=!result;
 	OPERAND_W(op_src, result);
 	result ^= result >>4;
