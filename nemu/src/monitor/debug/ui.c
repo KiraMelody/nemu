@@ -149,18 +149,19 @@ static int cmd_bt(char *args) {
 	swaddr_t addr = reg_l (R_EBP);
 	while (addr > 0)
 	{
+		printf ("addr = 0x%08x\n",addr);
 		read_ebp (addr,&now_ebp);
-		printf ("#%d  0x%08x in",j++,now_ebp.prev_ebp);
+		printf ("#%d  0x%08x in ",j++,now_ebp.prev_ebp);
 		for (i=0;i<nr_symtab_entry;i++)
 		{
 			if (/*symtab[i].st_value <= addr && symtab[i].st_value +  symtab[i].st_size>= addr &&*/(symtab[i].st_info&0xf) == STT_FUNC)
 			{
-				
+				printf ("0x%08x",symtab[i].st_value);
 				tmplen = symtab[i+1].st_name - symtab[i].st_name - 1;
 				strncpy (tmp,strtab+symtab[i].st_name,tmplen);
 				tmp [tmplen] = '\0';
 				printf ("%s\n",tmp);
-				break;
+				//break;
 			}
 		}
 		printf("%s \n",tmp);
