@@ -139,7 +139,6 @@ static void read_ebp (swaddr_t addr , PartOfStackFrame *ebp)
 	for (i = 0;i < 4;i ++)
 	{
 		ebp -> args [i] = swaddr_read (addr + 8 + 4 * i , 4);
-		printf ("%x : %d\n",addr + 8 + 4 * i,ebp -> args [i]);
 	}
 }
 static int cmd_bt(char *args) {
@@ -154,13 +153,11 @@ static int cmd_bt(char *args) {
 		printf ("#%d  0x%08x in ",j++,now_ebp.ret_addr);
 		for (i=0;i<nr_symtab_entry;i++)
 		{
-			//printf ("0x%08x : 0x%08x\n",symtab[i].st_value,symtab[i].st_value +  symtab[i].st_size);
 			if (symtab[i].st_value <= now_ebp.ret_addr && symtab[i].st_value +  symtab[i].st_size >= now_ebp.ret_addr && (symtab[i].st_info&0xf) == STT_FUNC)
 			{
 				tmplen = symtab[i+1].st_name - symtab[i].st_name - 1;
 				strncpy (tmp,strtab+symtab[i].st_name,tmplen);
 				tmp [tmplen] = '\0';
-				//printf ("%s\n",tmp);
 				break;
 			}
 		}
