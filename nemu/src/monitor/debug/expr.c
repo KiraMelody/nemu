@@ -206,7 +206,7 @@ uint32_t eval(int l,int r) {
 		int i;
 		for (i=0;i<nr_symtab_entry;i++)
 		{
-			if ((symtab[i].st_info&0xf) == 1)
+			if ((symtab[i].st_info&0xf) == STT_OBJECT)
 			{
 				char tmp [max_string_long];
 				int tmplen = symtab[i+1].st_name - symtab[i].st_name - 1;

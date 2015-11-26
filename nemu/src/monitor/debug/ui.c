@@ -122,6 +122,29 @@ static int cmd_d(char *args) {
 	return 0;
 }
 static int cmd_bt(char *args) {
+	int i,j = 0;
+	char tmp [32];
+	int tmplen;
+	swaddr_t addr = reg_l (R_EBP);
+	while (addr > 0)
+	{
+		uint32_t pre_addr;
+		pre_addr = swaddr_read (addr + 4 , 4);
+		printf ("#%d  0x%8x in",j++,pre_addr);
+		for (i=0;i<nr_symtab_entry;i++)
+		{
+			if (symtab[i].st_value <= addr && symtab[i].st_value +  symtab[i].st_size>= addr &&(symtab[i].st_info&0xf) == STT_FUNC)
+			{
+				
+				tmplen = symtab[i+1].st_name - symtab[i].st_name - 1;
+				strncpy (tmp,strtab+symtab[i].st_name,tmplen);
+				tmp [tmplen] = '\0';
+				break;
+			}
+		}
+		printf("%s ",tmp);
+		addr = swaddr_read (addr , 4);
+	}
 	return 0;
 }
 
