@@ -139,6 +139,7 @@ static void read_ebp (swaddr_t addr , PartOfStackFrame *ebp)
 	for (i = 0;i < 4;i ++)
 	{
 		ebp -> args [i] = swaddr_read (addr + 8 + 4 * i , 4);
+		printf ("%x : %d",addr + 8 + 4 * i,ebp -> args [i]);
 	}
 }
 static int cmd_bt(char *args) {
