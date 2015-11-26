@@ -3,10 +3,16 @@
 #define instr push
 
 static void do_execute () {
+	if (DATA_BYTE == 1)
+	{
+		REG (R_ESP) -= 4;
+		MEM_W (reg_l (R_ESP) , op_src->val);
+	}
+	else
+	{
 	REG (R_ESP) -= DATA_BYTE;
 	MEM_W (REG (R_ESP) , op_src->val);
-	printf ("%d:%d\n",R_ESP,reg_l (R_ESP));
-	printf ("push %d to 0x%x\n",op_src->val,REG (R_ESP));
+	}
 	print_asm_no_template1();
 }
 
