@@ -8,6 +8,11 @@
 #include <readline/history.h>
 void cpu_exec(uint32_t);
 int breakpoint_counter = 1;
+typedef struct {
+    swaddr_t prev_ebp;
+    swaddr_t ret_addr;
+    uint32_t args[4];
+} PartOfStackFrame;
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -121,8 +126,19 @@ static int cmd_d(char *args) {
 	delete_wp (num);
 	return 0;
 }
+/*typedef struct {
+    swaddr_t prev_ebp;
+    swaddr_t ret_addr;
+    uint32_t args[4];
+} PartOfStackFrame;*/
+static void read_ebp (PartOfStackFrame *ebp)
+{
+
+}
 static int cmd_bt(char *args) {
 	int i,j = 0;
+	PartOfStackFrame now_ebp;
+	read_ebp (&now_ebp);
 	char tmp [32];
 	int tmplen;
 	swaddr_t addr = reg_l (R_EBP);
