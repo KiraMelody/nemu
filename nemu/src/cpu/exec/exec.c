@@ -40,7 +40,7 @@ make_group(group2_i_b,
 /* 0xc1 */
 make_group(group2_i_v,
 	inv, inv, inv, inv, 
-	inv, inv, inv, inv)
+	inv, inv, inv, sar_rm_imm_v)
 
 /* 0xd0 */
 make_group(group2_1_b,
