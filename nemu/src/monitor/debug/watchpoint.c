@@ -43,7 +43,7 @@ void free_wp (WP *wp)
 		p->next = wp;
 	}
 	f = head;
-	printf ("%d %d %d\n",f->NO,f->next->NO,wp->NO);
+	//printf ("%d %d %d\n",f->NO,f->next->NO,wp->NO);
 	if (head == NULL)assert (0);
 	if (head->NO == wp->NO)
 	{
@@ -55,7 +55,7 @@ void free_wp (WP *wp)
 	if (f->next == NULL && f->NO == wp->NO)printf ("what ghost!");
 	else if (f->next->NO == wp->NO)f->next = f->next->next;
 	else assert (0);
-	if (head == NULL)printf ("*NULL\n");
+	//if (head == NULL)printf ("*NULL\n");
 	}
 	wp->next = NULL;
 	wp->val = 0;
@@ -94,7 +94,6 @@ void delete_wp(int num)
 {
 	WP *f;
 	f = &wp_list[num];
-	printf ("check %d\n",f->NO);
 	free_wp (f);
 }
 void info_wp()
