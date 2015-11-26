@@ -3,9 +3,9 @@
 #define instr push
 
 static void do_execute () {
-	printf ("push %d\n",op_src->val);
 	REG (R_ESP) -= DATA_BYTE;
 	MEM_W (REG (R_ESP) , op_src->val);
+	printf ("push %d to %d\n",op_src->val,REG (R_ESP));
 	print_asm_no_template1();
 }
 
