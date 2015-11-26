@@ -133,12 +133,12 @@ static int cmd_d(char *args) {
 } PartOfStackFrame;*/
 static void read_ebp (swaddr_t addr , PartOfStackFrame *ebp)
 {
-	ebp -> prev_ebp = swaddr_read (addr + 4 , 4);
-	ebp -> ret_addr = swaddr_read (addr + 8 , 4);
+	ebp -> prev_ebp = swaddr_read (addr , 4);
+	ebp -> ret_addr = swaddr_read (addr + 4 , 4);
 	int i;
 	for (i = 0;i < 4;i ++)
 	{
-		ebp -> args [i] = swaddr_read (addr + 12 + 4 * i , 4);
+		ebp -> args [i] = swaddr_read (addr + 8 + 4 * i , 4);
 	}
 }
 static int cmd_bt(char *args) {
