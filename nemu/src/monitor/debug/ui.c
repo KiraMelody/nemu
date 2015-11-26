@@ -163,7 +163,9 @@ static int cmd_bt(char *args) {
 				break;
 			}
 		}
-		printf("%s ( %d , %d , %d , %d )\n",tmp, now_ebp.args[0],now_ebp.args[1],now_ebp.args[2],now_ebp.args[3]);
+		printf("%s ",tmp);
+		if (strcmp (tmp,"main") == 0)printf ("( )\n");
+		else printf ("( %d , %d , %d , %d )\n", now_ebp.args[0],now_ebp.args[1],now_ebp.args[2],now_ebp.args[3]);
 		read_ebp (addr,&now_ebp);
 		addr = now_ebp.prev_ebp;
 		
