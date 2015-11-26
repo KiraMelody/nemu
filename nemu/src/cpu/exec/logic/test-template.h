@@ -7,7 +7,6 @@ static void do_execute() {
 	cpu.CF=0;
 	cpu.OF=0;
 	cpu.ZF=!result;
-	printf ("test = %d\n",cpu.ZF);
 	print_asm_no_template2();
 }
 make_instr_helper(i2a)
