@@ -6,6 +6,8 @@
 
 #include "logic/logic.h"
 
+#include "setcc/setcc.h"
+
 #include "prog-trans/call.h"
 #include "prog-trans/jcc.h"
 
