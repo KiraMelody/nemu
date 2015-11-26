@@ -130,7 +130,7 @@ static int cmd_bt(char *args) {
 	{
 		uint32_t pre_addr;
 		pre_addr = swaddr_read (addr + 4 , 4);
-		printf ("#%d  0x%8x in",j++,pre_addr);
+		printf ("#%d  0x%08x in",j++,pre_addr);
 		for (i=0;i<nr_symtab_entry;i++)
 		{
 			if (symtab[i].st_value <= addr && symtab[i].st_value +  symtab[i].st_size>= addr &&(symtab[i].st_info&0xf) == STT_FUNC)
@@ -139,10 +139,11 @@ static int cmd_bt(char *args) {
 				tmplen = symtab[i+1].st_name - symtab[i].st_name - 1;
 				strncpy (tmp,strtab+symtab[i].st_name,tmplen);
 				tmp [tmplen] = '\0';
+				printf ("%s\n",tmp);
 				break;
 			}
 		}
-		printf("%s ",tmp);
+		printf("%s \n",tmp);
 		addr = swaddr_read (addr , 4);
 	}
 	return 0;
