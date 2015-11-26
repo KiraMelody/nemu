@@ -155,12 +155,12 @@ static int cmd_bt(char *args) {
 		{
 			if (symtab[i].st_value <= now_ebp.ret_addr && symtab[i].st_value +  symtab[i].st_size >= now_ebp.ret_addr && (symtab[i].st_info&0xf) == STT_FUNC)
 			{
-				printf ("0x%08x : 0x%08x\n",symtab[i].st_value,symtab[i].st_value +  symtab[i].st_size);
+				//printf ("0x%08x : 0x%08x\n",symtab[i].st_value,symtab[i].st_value +  symtab[i].st_size);
 				tmplen = symtab[i+1].st_name - symtab[i].st_name - 1;
 				strncpy (tmp,strtab+symtab[i].st_name,tmplen);
 				tmp [tmplen] = '\0';
-				printf ("%s\n",tmp);
-				//break;
+				//printf ("%s\n",tmp);
+				break;
 			}
 		}
 		printf("%s ( %d , %d , %d , %d )\n",tmp, now_ebp.args[0],now_ebp.args[1],now_ebp.args[2],now_ebp.args[3]);
