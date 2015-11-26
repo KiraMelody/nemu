@@ -112,11 +112,11 @@ static int cmd_b(char *args) {
 	if (!suc)assert (1);
 	sprintf (args,"$eip == 0x%x",addr);
 	printf ("Breakpoint %d at 0x%x\n",breakpoint_counter,addr);
-	breakpoint_counter++;
 	WP *f;
 	f = new_wp();
 	f->val = expr (args,&suc);
 	f->b = breakpoint_counter;
+	breakpoint_counter++;
 	strcpy (f->expr,args);
 	return 0;
 }
@@ -126,11 +126,6 @@ static int cmd_d(char *args) {
 	delete_wp (num);
 	return 0;
 }
-/*typedef struct {
-    swaddr_t prev_ebp;
-    swaddr_t ret_addr;
-    uint32_t args[4];
-} PartOfStackFrame;*/
 static void read_ebp (swaddr_t addr , PartOfStackFrame *ebp)
 {
 	ebp -> prev_ebp = swaddr_read (addr , 4);
