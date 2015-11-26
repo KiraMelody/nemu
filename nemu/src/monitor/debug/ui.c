@@ -131,25 +131,29 @@ static int cmd_d(char *args) {
     swaddr_t ret_addr;
     uint32_t args[4];
 } PartOfStackFrame;*/
-static void read_ebp (PartOfStackFrame *ebp)
+static void read_ebp (swaddr_t addr , PartOfStackFrame *ebp)
 {
-
+	ebp -> prev_ebp = swaddr_read (addr + 4 , 4);
+	ebp -> ret_addr = swaddr_read (addr + 8 , 4);
+	int i;
+	for (i = 0;i < 4;i ++)
+	{
+		ebp -> args [i] = swaddr_read (addr + 12 + 4 * i , 4);
+	}
 }
 static int cmd_bt(char *args) {
 	int i,j = 0;
 	PartOfStackFrame now_ebp;
-	read_ebp (&now_ebp);
 	char tmp [32];
 	int tmplen;
 	swaddr_t addr = reg_l (R_EBP);
 	while (addr > 0)
 	{
-		uint32_t pre_addr;
-		pre_addr = swaddr_read (addr + 4 , 4);
-		printf ("#%d  0x%08x in",j++,pre_addr);
+		read_ebp (addr,&now_ebp);
+		printf ("#%d  0x%08x in",j++,now_ebp.prev_ebp);
 		for (i=0;i<nr_symtab_entry;i++)
 		{
-			if (symtab[i].st_value <= addr && symtab[i].st_value +  symtab[i].st_size>= addr &&(symtab[i].st_info&0xf) == STT_FUNC)
+			if (/*symtab[i].st_value <= addr && symtab[i].st_value +  symtab[i].st_size>= addr &&*/(symtab[i].st_info&0xf) == STT_FUNC)
 			{
 				
 				tmplen = symtab[i+1].st_name - symtab[i].st_name - 1;
@@ -160,7 +164,7 @@ static int cmd_bt(char *args) {
 			}
 		}
 		printf("%s \n",tmp);
-		addr = swaddr_read (addr , 4);
+		addr = now_ebp.prev_ebp;
 	}
 	return 0;
 }
