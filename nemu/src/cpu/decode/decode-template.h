@@ -95,11 +95,11 @@ make_helper(concat(decode_r2rm_, SUFFIX)) {
  */
  //this has change
 make_helper(concat(decode_rm2r_, SUFFIX)) {
-	int len = decode_rm_internal(eip, op_src, op_dest);
+	/*int len = ;
 	int si = op_src->size;
 	op_src->size = op_dest->size;
-	op_dest->size = si;
-	return len;
+	op_dest->size = si;*/
+	return decode_rm_internal(eip, op_src, op_dest);
 }
 
 
