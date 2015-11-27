@@ -3,7 +3,9 @@
 #define instr movzx
 
 static void do_execute() {
-	OPERAND_W(op_dest, op_src->val);
+	DATA_TYPE result = op_src->val;
+	OPERAND_W(op_dest, result);
+	printf ("%d : %x -> %x\n",DATA_BYTE,op_src->val,result);
 	print_asm_template2();
 }
 
