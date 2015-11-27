@@ -3,6 +3,7 @@
 #define instr movzx
 
 static void do_execute() {
+	printf ("movzx %d\n",DATA_BYTE);
 	OPERAND_W(op_dest, op_src->val);
 	print_asm_template2();
 }
