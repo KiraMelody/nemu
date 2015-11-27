@@ -14,7 +14,7 @@ make_helper(rep) {
 	else {
 		while(cpu.ecx) {
 			printf ("rep\n");
-			exec(eip + 1);
+			exec(eip + 2);
 			count ++;
 			cpu.ecx --;
 			assert(ops_decoded.opcode == 0xa4	// movsb
