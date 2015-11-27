@@ -17,7 +17,7 @@ make_helper(rep) {
 			exec(eip + 2);
 			count ++;
 			cpu.ecx --;
-			assert(ops_decoded.opcode == 0xa4	// movsb
+			/*assert(ops_decoded.opcode == 0xa4	// movsb
 				|| ops_decoded.opcode == 0xa5	// movsw
 				|| ops_decoded.opcode == 0xaa	// stosb
 				|| ops_decoded.opcode == 0xab	// stosw
@@ -25,7 +25,7 @@ make_helper(rep) {
 				|| ops_decoded.opcode == 0xa7	// cmpsw
 				|| ops_decoded.opcode == 0xae	// scasb
 				|| ops_decoded.opcode == 0xaf	// scasw
-				);
+				);*/
 			if ((ops_decoded.opcode == 0xa4	
 				|| ops_decoded.opcode == 0xa5	
 				|| ops_decoded.opcode == 0xaa	
