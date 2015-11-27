@@ -4,7 +4,7 @@
 
 static void do_execute() {
 	DATA_TYPE_S result = op_src->val;
-	if (op_src->size == 1)result &= 0xffff;
+	if (op_src->size == 1)result &= 0xff;
 	printf ("%d : %x -> %x\n",DATA_BYTE,op_src->val,result);
 	OPERAND_W(op_dest, result);
 	print_asm_template2();
