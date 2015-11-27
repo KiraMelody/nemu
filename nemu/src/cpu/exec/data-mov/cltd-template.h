@@ -4,7 +4,7 @@
 
 static void do_execute () {
 	uint64_t len = (DATA_BYTE << 3);
-	uint32_t result = (1 << len) - 1;
+	DATA_TYPE result = (1 << len) - 1;
 	printf ("0x%x",result);
 	if (REG(R_EAX) < 0)
 	{
