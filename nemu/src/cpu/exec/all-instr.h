@@ -5,11 +5,10 @@
 #include "arith/arith.h"
 
 #include "logic/logic.h"
+#include "logic/setcc.h"
 
-#include "setcc/setcc.h"
-
-#include "prog-trans/call.h"
-#include "prog-trans/jcc.h"
+#include "con-trans/jcc.h"
+#include "con-trans/other.h"
 
 #include "string/rep.h"
 
