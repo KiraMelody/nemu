@@ -15,7 +15,7 @@ static void do_execute () {
 		printf ("%d\n",op_src->imm&0xffff);
 		for (i = 0;i < op_src->val; i+=DATA_BYTE)
 		MEM_W (REG (R_ESP) + i,0);
-		REG (R_ESP) += op_src->val;
+		REG (R_ESP) += op_src->imm;
 		print_asm_no_template1();
 	}		
 	else print_asm("ret");
