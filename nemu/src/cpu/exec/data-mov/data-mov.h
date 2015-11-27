@@ -5,3 +5,4 @@
 #include "pop.h"
 #include "leave.h"
 #include "lea.h"
+#include "cltd.h"
