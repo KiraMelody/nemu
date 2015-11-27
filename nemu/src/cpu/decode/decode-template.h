@@ -93,12 +93,7 @@ make_helper(concat(decode_r2rm_, SUFFIX)) {
 /* Gb <- Eb
  * Gv <- Ev
  */
- //this has change
 make_helper(concat(decode_rm2r_, SUFFIX)) {
-	/*int len = ;
-	int si = op_src->size;
-	op_src->size = op_dest->size;
-	op_dest->size = si;*/
 	return decode_rm_internal(eip, op_src, op_dest);
 }
 
