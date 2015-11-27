@@ -10,6 +10,7 @@
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
 
 make_helper(concat(decode_n_, SUFFIX)) {
+	op_src->type = OP_TYPE_NO;
 	return 0;
 }
 /* Ib, Iv */

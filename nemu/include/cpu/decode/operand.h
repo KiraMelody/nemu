@@ -1,7 +1,7 @@
 #ifndef __OPERAND_H__
 #define __OPERAND_H__
 
-enum { OP_TYPE_REG, OP_TYPE_MEM, OP_TYPE_IMM };
+enum { OP_TYPE_REG, OP_TYPE_MEM, OP_TYPE_IMM,OP_TYPE_NO };
 
 #define OP_STR_SIZE 40
 
