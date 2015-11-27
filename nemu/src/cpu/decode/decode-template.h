@@ -100,8 +100,8 @@ make_helper(concat(decode_rm2r_, SUFFIX)) {
 	printf ("%d : %d : %d\n",DATA_BYTE,(int)op_src->size,(int)op_dest->size);
 	size_t si = op_src->size;
 	printf ("src = %d\n",(int)si);
-	//op_src->size = op_dest->size;
-	//op_dest->size = si;
+	op_src->size = op_dest->size;
+	op_dest->size = si;
 	printf ("%d : %d : %d\n",DATA_BYTE,(int)op_src->size,(int)op_dest->size);
 	return len;
 }
