@@ -17,7 +17,7 @@ make_helper(concat(ret_i_, SUFFIX))
 	for (i = 0;i < val; i+=DATA_BYTE)
 	MEM_W (REG (R_ESP) + i,0);
 	REG (R_ESP) += val;
-	print_asm_no_template1();
+	print_asm("ret $%d",val);
 	return 3;
 }
 
