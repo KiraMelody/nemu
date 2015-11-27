@@ -11,6 +11,7 @@ static void do_execute () {
 	if (op_src->type == OP_TYPE_IMM)
 	{
 		swaddr_t i;
+		op_src->imm &= 0xffff;
 		printf ("%d\n",op_src->imm&0xffff);
 		for (i = 0;i < op_src->val; i+=DATA_BYTE)
 		MEM_W (REG (R_ESP) + i,0);
