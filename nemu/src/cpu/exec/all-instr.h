@@ -10,7 +10,7 @@
 #include "con-trans/jcc.h"
 #include "con-trans/other.h"
 
-#include "string/rep.h"
+#include "string/str.h"
 
 #include "misc/misc.h"
 

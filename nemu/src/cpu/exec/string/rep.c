@@ -13,7 +13,7 @@ make_helper(rep) {
 	}
 	else {
 		while(cpu.ecx) {
-			exec(eip + 2);
+			exec(eip + 1);
 			count ++;
 			cpu.ecx --;
 			/*assert(ops_decoded.opcode == 0xa4	// movsb
@@ -37,6 +37,7 @@ make_helper(rep) {
 
 		}
 		len = 1;
+		print_asm ("rep %s[cnt = %d]", assembly, count);
 	}
 #ifdef DEBUG
 	char temp[80];
