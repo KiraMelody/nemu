@@ -3,7 +3,6 @@
 #define instr cmp
 
 static void do_execute() {
-	printf ("cmp %d %d\n",op_dest->val , op_src->val);
 	DATA_TYPE result = op_dest->val - op_src->val;
 	int len = (DATA_BYTE << 3) - 1;
 	cpu.CF = op_dest->val < op_src->val;

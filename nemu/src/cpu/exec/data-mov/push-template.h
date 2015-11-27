@@ -3,12 +3,9 @@
 #define instr push
 
 static void do_execute () {
-	printf("push byte %d\n", DATA_BYTE);
 	if (DATA_BYTE == 1)
 	{
-		printf ("%x",reg_l (R_ESP));
 		reg_l (R_ESP) -= 4;
-		printf ("%x",reg_l (R_ESP));
 		MEM_W (reg_l (R_ESP) , op_src->val);
 	}
 	else
