@@ -60,6 +60,9 @@ static int concat(decode_a_, SUFFIX) (swaddr_t eip, Operand *op) {
 /* eXX: eAX, eCX, eDX, eBX, eSP, eBP, eSI, eDI */
 static int concat3(decode_r_, SUFFIX, _internal) (swaddr_t eip, Operand *op) {
 	op->type = OP_TYPE_REG;
+	//change this one
+	op->size = DATA_BYTE;
+	//
 	op->reg = ops_decoded.opcode & 0x7;
 	op->val = REG(op->reg);
 
@@ -90,8 +93,13 @@ make_helper(concat(decode_r2rm_, SUFFIX)) {
 /* Gb <- Eb
  * Gv <- Ev
  */
+ //this has change
 make_helper(concat(decode_rm2r_, SUFFIX)) {
-	return decode_rm_internal(eip, op_src, op_dest);
+	int len = decode_rm_internal(eip, op_src, op_dest);
+	int si = op_src->size;
+	op_src->size = op_dest->size;
+	op_dest->size = si;
+	return len;
 }
 
 
