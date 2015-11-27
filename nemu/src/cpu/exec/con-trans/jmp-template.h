@@ -6,9 +6,15 @@
 static void do_execute() {
 	DATA_TYPE_S displacement = op_src->val;
 	if (op_src->type == OP_TYPE_REG || op_src->type == OP_TYPE_MEM)
-		printf ("0x%x\n",op_src->val);
+	{
+		cpu.eip =displacement;
+		print_asm_no_template1();
+	}
+	else
+	{
 	print_asm("jmp %x",cpu.eip + 1 + DATA_BYTE + displacement);
 	cpu.eip +=displacement;
+	}
 }
 make_instr_helper(i)
 make_instr_helper(rm)
