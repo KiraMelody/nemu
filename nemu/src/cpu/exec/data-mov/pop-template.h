@@ -5,7 +5,7 @@
 static void do_execute () {
 	if (DATA_BYTE == 1)
 	{
-		OPERAND_W (op_src, MEM_R(reg_l (R_ESP)));
+		swaddr_write (op_src->addr, 4 ,MEM_R(reg_l (R_ESP)));
 		MEM_W(reg_l (R_ESP) , 0);
 		reg_l (R_ESP) += 4;
 	}
