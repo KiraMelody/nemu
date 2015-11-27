@@ -3,10 +3,11 @@
 #define instr movzx
 
 static void do_execute() {
-	//printf ("%d : %d\n",op_src->val,op_dest->val);
-	DATA_TYPE result = op_src->val;
+	DATA_TYPE_S result;
+	if (op_dest->size == 1)result = (uint8_t)(op_src->val & 0xff);
+	else if (op_dest->size == 2)result = (uint16_t)(op_src->val &0xffff);
+	else result = (uint32_t)op_src->val;
 	OPERAND_W(op_dest, result);
-	printf ("%d : %d : %d\n",DATA_BYTE,(int)op_src->size,(int)op_dest->size);
 	print_asm_template2();
 }
 
