@@ -3,9 +3,11 @@
 #define instr movsx
 
 static void do_execute() {
-	DATA_TYPE_S result = op_dest->val;
+	DATA_TYPE_S result;
 	printf ("src.size = %d,dest.size = %d\n",(int)op_src->size,(int)op_dest->size);
-	if (op_dest->size == 1)result &= 0xff;
+	if (op_dest->size == 1)result = op_dest->val &0xff;
+	else if (op_dest->size == 2)result = op_dest->val &0xffff;
+	else result = op_dest->val;
 	printf ("%d : %x -> %x\n",DATA_BYTE,op_dest->val,result);
 	OPERAND_W(op_src, result);
 	print_asm_template2();
