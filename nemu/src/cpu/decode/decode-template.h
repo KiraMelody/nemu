@@ -96,9 +96,12 @@ make_helper(concat(decode_r2rm_, SUFFIX)) {
  //change from return decode_rm_internal(eip, op_src, op_dest);
 make_helper(concat(decode_rm2r_, SUFFIX)) {
 	int len = decode_rm_internal(eip, op_src, op_dest);
-	//size_t si = op_src->size;
-	//op_src->size = op_dest->size;
-	//op_dest->size = si;
+	printf ("rm2r\n");
+	printf ("%d : %d : %d\n",DATA_BYTE,(int)op_src->size,(int)op_dest->size);
+	size_t si = op_src->size;
+	op_src->size = op_dest->size;
+	op_dest->size = si;
+	printf ("%d : %d : %d\n",DATA_BYTE,(int)op_src->size,(int)op_dest->size);
 	return len;
 }
 
