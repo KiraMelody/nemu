@@ -5,7 +5,7 @@
 static void do_execute() {
 	DATA_TYPE result = op_src->val;
 	OPERAND_W(op_dest, result);
-	printf ("%d : %x -> %x\n",DATA_BYTE,op_src->val,result);
+	printf ("%d : %d\n",(int)op_src->size,(int)op_dest->size);
 	print_asm_template2();
 }
 
