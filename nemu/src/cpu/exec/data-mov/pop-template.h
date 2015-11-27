@@ -3,9 +3,18 @@
 #define instr pop
 
 static void do_execute () {
-	OPERAND_W (op_src, MEM_R(REG (R_ESP)));
-	MEM_W(REG (R_ESP) , 0);
-	REG (R_ESP) += DATA_BYTE;
+	if (DATA_BYTE == 1)
+	{
+		OPERAND_W (op_src, MEM_R(REG (R_ESP)));
+		MEM_W(reg_l (R_ESP) , 0);
+		REG (R_ESP) += 4;
+	}
+	else
+	{
+		OPERAND_W (op_src, MEM_R(REG (R_ESP)));
+		MEM_W(REG (R_ESP) , 0);
+		REG (R_ESP) += DATA_BYTE;
+	}
 	print_asm_no_template1();
 }
 
