@@ -3,7 +3,7 @@
 #define instr cwtl
 
 static void do_execute () {
-	if (REG(R_EAX)>>15 == 1)
+	if ((REG(R_EAX)>>15) & 1)
 	{
 		REG (R_EAX) |= 0xffff0000;
 	}
