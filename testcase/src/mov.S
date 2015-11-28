@@ -210,8 +210,6 @@ jmp_test0:
 call_ret_pos:
   jmp bad
   // ret
-  lea ret_ret_pos, %ebx
-  push %ebx
   jmp ret_test0
   jmp bad
   jmp bad
