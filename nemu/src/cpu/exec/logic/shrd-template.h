@@ -78,7 +78,7 @@ make_helper(concat(shrd_i_, SUFFIX)) {
 static void do_execute_cl_l () {
 	DATA_TYPE in = op_src->val;
 	DATA_TYPE out = op_dest->val;
-	uint8_t count = MEM_R (reg_b (R_CL));
+	uint8_t count = swaddr_read (reg_b (R_CL),1);
 	printf ("%x %x %d\n",in,out,count);
 	count &= 0x1f;
 
