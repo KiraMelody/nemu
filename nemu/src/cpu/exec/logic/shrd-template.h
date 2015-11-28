@@ -79,9 +79,8 @@ static void do_execute_cl_l () {
 	DATA_TYPE in = op_src->val;
 	DATA_TYPE out = op_dest->val;
 	uint8_t count = reg_b (R_CL);
-	printf ("%x %x %d\n",in,out,count);
 	count &= 0x1f;
-
+printf ("%x %x %d\n",in,out,count);
 	while(count != 0) {
 		out >>= 1;
 		out |= (in & 1) << ((DATA_BYTE << 3) - 1);
@@ -89,7 +88,7 @@ static void do_execute_cl_l () {
 		count --;
 	}
 
-	OPERAND_W(op_dest, out);
+	OPERAND_W(op_src, out);
 
 	print_asm("shrd" str(SUFFIX) " $cl,%s,%s", op_dest->str, op_src->str);
 }
