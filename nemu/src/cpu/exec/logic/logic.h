@@ -5,5 +5,6 @@
 #include "sar.h"
 #include "shl.h"
 #include "shr.h"
+#include "shld.h"
 #include "shrd.h"
 #include "test.h"
