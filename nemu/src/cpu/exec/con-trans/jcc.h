@@ -1,5 +1,6 @@
 #include "ja.h"
 #include "jae.h"
+#include "jb.h"
 #include "jbe.h"
 #include "je.h"
 #include "jg.h"
