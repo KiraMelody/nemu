@@ -13,4 +13,5 @@
 #undef DATA_BYTE
 
 /* for instruction encoding overloading */
-make_helper_v(shrdi)
+make_helper_v(shrd_i)
+make_helper_v(shrd_cl)

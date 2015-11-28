@@ -5,7 +5,7 @@
 #if DATA_BYTE == 2 || DATA_BYTE == 4
 static void do_execute () {
 	DATA_TYPE in = op_dest->val;
-	DATA_TYPE out = op_src2->val;
+	DATA_TYPE out = MEM_R (reg_b (R_CL));
 	uint8_t count = op_src->val;
 	count &= 0x1f;
 	while(count != 0) {
@@ -20,8 +20,15 @@ static void do_execute () {
 	print_asm("shrd" str(SUFFIX) " %s,%s,%s", op_src->str, op_dest->str, op_src2->str);
 }
 
-make_helper(concat(shrdi_, SUFFIX)) {
+make_helper(concat(shrd_i_, SUFFIX)) {
 	int len = concat(decode_si_rm2r_, SUFFIX) (eip + 1);  /* use decode_si_rm2r to read 1 byte immediate */
+	op_dest->val = REG(op_dest->reg);
+	do_execute();
+	return len + 1;
+}
+
+make_helper(concat(shrd_cl_, SUFFIX)) {
+	int len = concat(decode_rm2r_, SUFFIX) (eip + 1);
 	op_dest->val = REG(op_dest->reg);
 	do_execute();
 	return len + 1;
