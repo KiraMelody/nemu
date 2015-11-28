@@ -55,6 +55,7 @@ static void do_execute_l () {
 	DATA_TYPE in = op_dest->val;
 	DATA_TYPE out = op_src2->val;
 	uint8_t count = op_src->val;
+	printf ("%x %x %d\n",in,out,count);
 	count &= 0x1f;
 	while(count != 0) {
 		out >>= 1;
