@@ -10,7 +10,7 @@ static void do_execute_w () {
 	count &= 0x1f;
 	int tmp;
 	while(count != 0) {
-		tmp = in & (1 << ((DATA_BYTE << 3) - 1));
+		tmp = in >> ((DATA_BYTE << 3) - 1);
 		in<<=1;
 		in |= out & (1 << ((DATA_BYTE << 3) - 1));
 		out <<=1;
@@ -37,7 +37,7 @@ static void do_execute_cl_w () {
 	count &= 0x1f;
 	int tmp;
 	while(count != 0) {
-		tmp = in & (1 << ((DATA_BYTE << 3) - 1));
+		tmp = in >> ((DATA_BYTE << 3) - 1);
 		in<<=1;
 		in |= out & (1 << ((DATA_BYTE << 3) - 1));
 		out <<=1;
@@ -64,7 +64,7 @@ static void do_execute_l () {
 	count &= 0x1f;
 	int tmp;
 	while(count != 0) {
-		tmp = in & (1 << ((DATA_BYTE << 3) - 1));
+		tmp = in >> ((DATA_BYTE << 3) - 1);
 		in<<=1;
 		in |= out & (1 << ((DATA_BYTE << 3) - 1));
 		out <<=1;
@@ -91,7 +91,7 @@ static void do_execute_cl_l () {
 	count &= 0x1f;
 	int tmp;
 	while(count != 0) {
-		tmp = in & (1 << ((DATA_BYTE << 3) - 1));
+		tmp = in >> ((DATA_BYTE << 3) - 1);
 		in<<=1;
 		in |= out & (1 << ((DATA_BYTE << 3) - 1));
 		out <<=1;
