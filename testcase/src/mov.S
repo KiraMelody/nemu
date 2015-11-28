@@ -220,6 +220,7 @@ ret_ret_pos:
   ret
 call_test0:
   pop %eax
+  add $1,%eax
   lea call_ret_pos, %edx
   cmp %eax, %edx
   jne bad
