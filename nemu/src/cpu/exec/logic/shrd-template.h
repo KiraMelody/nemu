@@ -4,7 +4,8 @@
 
 #if DATA_BYTE == 2 || DATA_BYTE == 4
 static void do_execute () {
-	DATA_TYPE in = op_dest->val;
+	printf ("%d %d\n",op_dest->reg,op_src2->reg);
+;	DATA_TYPE in = op_dest->val;
 	DATA_TYPE out = op_src2->val;
 	uint8_t count = MEM_R (reg_b (R_CL));
 	count &= 0x1f;
