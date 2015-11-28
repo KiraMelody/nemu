@@ -6,7 +6,6 @@
 static void do_execute () {
 	DATA_TYPE in = op_dest->val;
 	DATA_TYPE out = op_src2->val;
-	printf ("%d",DATA_BYTE);
 	uint8_t count = op_src->val;
 	count &= 0x1f;
 	while(count != 0) {
