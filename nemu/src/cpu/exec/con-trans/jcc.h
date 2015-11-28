@@ -9,8 +9,9 @@
 #include "jle.h"
 #include "jne.h"
 #include "jo.h"
+#include "jno.h"
 #include "jp.h"
 #include "jnp.h"
 #include "js.h"
-
+#include "jns.h"
 
