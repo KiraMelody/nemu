@@ -5,7 +5,7 @@
 static void do_execute () {
 	uint64_t len = (DATA_BYTE << 3);
 	DATA_TYPE result = (1 << len) - 1;
-	if (REG(R_EAX) < 0)
+	if (REG(R_EAX)>>len == 1)
 	{
 		REG (R_EDX) = result;
 	}
