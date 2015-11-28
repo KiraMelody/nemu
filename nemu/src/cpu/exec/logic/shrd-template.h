@@ -5,8 +5,8 @@
 #if DATA_BYTE == 2 || DATA_BYTE == 4
 static void do_execute () {
 	DATA_TYPE in = op_dest->val;
-	DATA_TYPE out = MEM_R (reg_b (R_CL));
-	uint8_t count = op_src->val;
+	DATA_TYPE out = op_src2->val;
+	uint8_t count = MEM_R (reg_b (R_CL));
 	count &= 0x1f;
 	while(count != 0) {
 		out >>= 1;
@@ -30,6 +30,10 @@ make_helper(concat(shrd_i_, SUFFIX)) {
 make_helper(concat(shrd_cl_, SUFFIX)) {
 	int len = concat(decode_rm2r_, SUFFIX) (eip + 1);
 	op_dest->val = REG(op_dest->reg);
+	op_src->str [0] ='%';
+	op_src->str [1] ='c';
+	op_src->str [2] ='l';
+	op_src->str [3] ='\0';
 	do_execute();
 	return len + 1;
 }
