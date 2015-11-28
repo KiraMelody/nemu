@@ -3,9 +3,10 @@
 #define instr cltd
 
 static void do_execute () {
-	uint64_t len = (DATA_BYTE << 3);
+	DATA_TYPE len = DATA_BYTE << 3;
 	DATA_TYPE result = (1 << len) - 1;
-	if (REG(R_EAX)>>len == 1)
+	printf ("%x",result);
+	if (REG(R_EAX)>>(len-1) == 1)
 	{
 		REG (R_EDX) = result;
 	}
