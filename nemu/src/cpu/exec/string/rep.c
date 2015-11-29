@@ -24,14 +24,10 @@ make_helper(rep) {
 				|| ops_decoded.opcode == 0xae	// scasb
 				|| ops_decoded.opcode == 0xaf	// scasw
 				);*/
-			if ((ops_decoded.opcode == 0xa4	
-				|| ops_decoded.opcode == 0xa5	
-				|| ops_decoded.opcode == 0xaa	
-				|| ops_decoded.opcode == 0xab	
-				|| ops_decoded.opcode == 0xa6	
+			if ((ops_decoded.opcode == 0xa6	
 				|| ops_decoded.opcode == 0xa7	
 				|| ops_decoded.opcode == 0xae	
-				|| ops_decoded.opcode == 0xaf) && cpu.ZF == 1)break;
+				|| ops_decoded.opcode == 0xaf) && cpu.ZF == 0)break;
 			/* TODO: Jump out of the while loop if necessary. */
 
 		}
