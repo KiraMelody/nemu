@@ -3,12 +3,21 @@
 #define instr cmps
 
 static void do_execute () {
-	DATA_TYPE src = MEM_R (REG (R_ESI));
-	DATA_TYPE dest = MEM_R (REG (R_EDI));
+	DATA_TYPE src,dest;
+	if (ops_decoded.is_stack_size_16)
+	{
+		src = swaddr_read (reg_w (R_SI),DATA_BYTE);
+		dest = swaddr_read (reg_w (R_DI),DATA_BYTE);
+	}
+	else
+	{
+		src = swaddr_read (reg_l (R_ESI),DATA_BYTE);
+		dest = swaddr_read (reg_l (R_EDI),DATA_BYTE);
+	}
 	DATA_TYPE result = dest - src;
 	int len = (DATA_BYTE << 3) - 1;
 	cpu.CF = dest < src;
-	cpu.SF=result >> len;
+	cpu.SF= result >> len;
     	int s1,s2;
 	s1=dest>>len;
 	s2=src>>len;
