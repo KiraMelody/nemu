@@ -3,23 +3,35 @@
 #define instr shld
 
 #if DATA_BYTE == 2 
-static void do_execute_w () {
-	DATA_TYPE in = op_dest->val;
-	DATA_TYPE out = op_src2->val;
-	uint8_t count = op_src->val;
+static DATA_TYPE shld_do_loop_w (DATA_TYPE in,DATA_TYPE out,uint8_t count)
+{
 	count &= 0x1f;
 	int tmp;
+	int len = (DATA_BYTE << 3) - 1;
 	while(count != 0) {
-		tmp = in >> ((DATA_BYTE << 3) - 1);
+		tmp = in >> len;
 		in<<=1;
-		in |= out & (1 << ((DATA_BYTE << 3) - 1));
+		in |= out & (1 << len);
 		out <<=1;
 		out |= tmp;
 		count --;
 	}
-
+	cpu.CF=0;
+	cpu.OF=0;
+	cpu.SF=out >> len;
+    	cpu.ZF=!out;
+    	return out;
+}
+static void do_execute_w () {
+	DATA_TYPE in = op_dest->val;
+	DATA_TYPE out = op_src2->val;
+	uint8_t count = op_src->val;
+	out = shld_do_loop_w (in,out,count);
 	OPERAND_W(op_src2, out);
-
+	out ^= out >>4;
+	out ^= out >>2;
+	out ^= out >>1;
+	cpu.PF=!(out & 1);
 	print_asm("shld" str(SUFFIX) " %s,%s,%s", op_src->str, op_dest->str, op_src2->str);
 }
 
@@ -34,19 +46,12 @@ static void do_execute_cl_w () {
 	DATA_TYPE in = op_dest->val;
 	DATA_TYPE out = op_src->val;
 	uint8_t count = reg_b (R_CL);
-	count &= 0x1f;
-	int tmp;
-	while(count != 0) {
-		tmp = in >> ((DATA_BYTE << 3) - 1);
-		in<<=1;
-		in |= out & (1 << ((DATA_BYTE << 3) - 1));
-		out <<=1;
-		out |= tmp;
-		count --;
-	}
-
+	out = shld_do_loop_w (in,out,count);
 	OPERAND_W(op_src, out);
-
+	out ^= out >>4;
+	out ^= out >>2;
+	out ^= out >>1;
+	cpu.PF=!(out & 1);
 	print_asm("shld" str(SUFFIX) " $cl,%s,%s", op_dest->str, op_src->str);
 }
 make_helper(concat(shld_cl_, SUFFIX)) {
@@ -57,23 +62,35 @@ make_helper(concat(shld_cl_, SUFFIX)) {
 #endif
 
 #if DATA_BYTE == 4
-static void do_execute_l () {
-	DATA_TYPE in = op_dest->val;
-	DATA_TYPE out = op_src2->val;
-	uint8_t count = op_src->val;
+static DATA_TYPE shld_do_loop_l (DATA_TYPE in,DATA_TYPE out,uint8_t count)
+{
 	count &= 0x1f;
 	int tmp;
+	int len = (DATA_BYTE << 3) - 1;
 	while(count != 0) {
-		tmp = in >> ((DATA_BYTE << 3) - 1);
+		tmp = in >> len;
 		in<<=1;
-		in |= out & (1 << ((DATA_BYTE << 3) - 1));
+		in |= out & (1 << len);
 		out <<=1;
 		out |= tmp;
 		count --;
 	}
-
+	cpu.CF=0;
+	cpu.OF=0;
+	cpu.SF=out >> len;
+    	cpu.ZF=!out;
+    	return out;
+}
+static void do_execute_l () {
+	DATA_TYPE in = op_dest->val;
+	DATA_TYPE out = op_src2->val;
+	uint8_t count = op_src->val;
+	out = shld_do_loop_l (in,out,count);
 	OPERAND_W(op_src2, out);
-
+	out ^= out >>4;
+	out ^= out >>2;
+	out ^= out >>1;
+	cpu.PF=!(out & 1);
 	print_asm("shld" str(SUFFIX) " %s,%s,%s", op_src->str, op_dest->str, op_src2->str);
 }
 
@@ -88,19 +105,12 @@ static void do_execute_cl_l () {
 	DATA_TYPE in = op_dest->val;
 	DATA_TYPE out = op_src->val;
 	uint8_t count = reg_b (R_CL);
-	count &= 0x1f;
-	int tmp;
-	while(count != 0) {
-		tmp = in >> ((DATA_BYTE << 3) - 1);
-		in<<=1;
-		in |= out & (1 << ((DATA_BYTE << 3) - 1));
-		out <<=1;
-		out |= tmp;
-		count --;
-	}
-
+	out = shld_do_loop_l (in,out,count);
 	OPERAND_W(op_src, out);
-
+	out ^= out >>4;
+	out ^= out >>2;
+	out ^= out >>1;
+	cpu.PF=!(out & 1);
 	print_asm("shld" str(SUFFIX) " $cl,%s,%s", op_dest->str, op_src->str);
 }
 make_helper(concat(shld_cl_, SUFFIX)) {
