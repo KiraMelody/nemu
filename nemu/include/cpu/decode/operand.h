@@ -21,6 +21,7 @@ typedef struct {
 typedef struct {
 	uint32_t opcode;
 	bool is_data_size_16;
+	bool is_stack_size_16;
 	Operand src, dest, src2;
 } Operands;
 
