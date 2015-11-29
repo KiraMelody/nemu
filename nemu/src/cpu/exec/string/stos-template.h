@@ -3,9 +3,18 @@
 #define instr stos
 
 static void do_execute () {
-	MEM_W (REG (R_EDI),REG (R_EAX));
-	if (cpu.DF == 0)REG (R_EDI) += DATA_BYTE;
-	else REG (R_EDI) -= DATA_BYTE;
+	if (ops_decoded.is_stack_size_16)
+	{
+		swaddr_write (reg_w(R_DI),2,reg_w(R_AX));
+		if (cpu.DF == 0)reg_w (R_DI) += DATA_BYTE;
+		else reg_w (R_DI) -= DATA_BYTE;
+	}
+	else
+	{
+		swaddr_write (reg_l(R_EDI),4,reg_l(R_EAX));
+		if (cpu.DF == 0)reg_l (R_EDI) += DATA_BYTE;
+		else reg_l (R_EDI) -= DATA_BYTE;
+	}
 	print_asm("stos");
 }
 
