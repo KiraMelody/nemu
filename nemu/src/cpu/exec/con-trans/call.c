@@ -15,4 +15,4 @@
 /* for instruction encoding overloading */
 
 make_helper_v(call_i)
-
+make_helper_v(call_rm)
