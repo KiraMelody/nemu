@@ -6,4 +6,12 @@ $(FLOAT): $(FLOAT_OBJ)
 	ar r $(FLOAT) $(FLOAT_OBJ)
 
 # TODO: write a rule for generating $(FLOAT_OBJ)
+FLOAT_CFLAGS := -c -m32 -msoft-float -mno-sse -fno-builtin -fno-stack-protector
+
+$(FLOAT): % : $(FLOAT_OBJ)
+	$(call make_command, @ar r, , ar $<, $^)
+
+$(FLOAT_OBJ): % : $(LIB_COMMON_DIR)/FLOAT.c
+	@mkdir -p obj/$(LIB_COMMON_DIR)
+	$(call make_command, $(CC), $(FLOAT_CFLAGS), cc $<, $^)
 
