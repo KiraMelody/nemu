@@ -6,7 +6,6 @@
 static void do_execute() {
 	REG (R_ESP) -= DATA_BYTE;
 	MEM_W (REG (R_ESP) , cpu.eip + DATA_BYTE);
-	printf ("push %x\n",cpu.eip + DATA_BYTE);
 	DATA_TYPE_S displacement = op_src->val;
 	if (op_src->type == OP_TYPE_IMM)
 	{
@@ -16,7 +15,7 @@ static void do_execute() {
 	else
 	{
 		print_asm("call %x",displacement);
-		cpu.eip =displacement - DATA_BYTE;
+		cpu.eip =displacement - 2;
 		printf ("%x\n",cpu.eip);
 	}
 }
