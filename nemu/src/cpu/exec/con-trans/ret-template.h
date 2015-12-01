@@ -3,7 +3,7 @@
 #define instr ret
 
 static void do_execute () {
-	cpu.eip = MEM_R (REG (R_ESP));
+	cpu.eip = MEM_R (REG (R_ESP)) - 1;
 	if (DATA_BYTE == 2)cpu.eip &= 0xffff;
 	REG (R_ESP) += DATA_BYTE;
 	print_asm("ret");
