@@ -15,7 +15,7 @@ static void do_execute() {
 	else
 	{
 		print_asm("call %x",displacement);
-		cpu.eip =displacement - 2;
+		cpu.eip =displacement - 3;
 		printf ("%x\n",cpu.eip);
 	}
 }
