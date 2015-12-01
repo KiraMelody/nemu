@@ -6,6 +6,7 @@
 static void do_execute() {
 	REG (R_ESP) -= DATA_BYTE;
 	MEM_W (REG (R_ESP) , cpu.eip + DATA_BYTE);
+	printf ("call push %d\n",cpu.eip + DATA_BYTE);
 	DATA_TYPE_S displacement = op_src->val;
 	if (op_src->type == OP_TYPE_IMM)
 	{
