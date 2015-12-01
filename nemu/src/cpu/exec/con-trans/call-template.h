@@ -17,6 +17,7 @@ static void do_execute() {
 	{
 		print_asm("call %x",displacement);
 		cpu.eip =displacement - 1;
+		printf ("%x\n",cpu.eip);
 	}
 }
 make_instr_helper(i)
