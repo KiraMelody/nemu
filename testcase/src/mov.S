@@ -1,5 +1,3 @@
-
-
 #include "trap.h"
 
 // about 325 instrs per round
@@ -210,6 +208,8 @@ jmp_test0:
 call_ret_pos:
   jmp bad
   // ret
+  lea ret_ret_pos, %ebx
+  push %ebx
   jmp ret_test0
   jmp bad
   jmp bad
@@ -218,7 +218,6 @@ ret_ret_pos:
   ret
 call_test0:
   pop %eax
-  add $1,%eax
   lea call_ret_pos, %edx
   cmp %eax, %edx
   jne bad
@@ -365,6 +364,4 @@ set_of:
 
 bad:
   HIT_BAD_TRAP
-
-	HIT_GOOD_TRAP
 
