@@ -52,7 +52,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/integral
+USERPROG := obj/testcase/float-test
 ENTRY := $(USERPROG)
 
 entry: $(ENTRY)
