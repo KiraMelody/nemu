@@ -3,15 +3,17 @@
 #define instr push
 
 static void do_execute () {
+	DATA_TYPE_S result = op_src->val;
 	if (DATA_BYTE == 1)
 	{
+		printf ("push data %d",DATA_BYTE);
 		reg_l (R_ESP) -= 4;
-		swaddr_write (reg_l (R_ESP) , 4 ,op_src->val );
+		swaddr_write (reg_l (R_ESP) , 4 ,result );
 	}
 	else
 	{
 		REG (R_ESP) -= DATA_BYTE;
-		MEM_W (REG (R_ESP) , op_src->val);
+		MEM_W (REG (R_ESP) , result);
 	}
 	print_asm_no_template1();
 }
