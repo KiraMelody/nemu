@@ -3,7 +3,8 @@
 #define instr push
 
 static void do_execute () {
-	int32_t result = (int32_t)op_src->val;
+	int32_t result = op_src->val;
+	if (DATA_BYTE == 1)result = (int8_t)op_src->val;
 	printf ("0x%08x\n",result);
 	reg_l (R_ESP) -= 4;
 	swaddr_write (reg_l (R_ESP) , 4 ,result);
