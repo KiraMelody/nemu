@@ -3,12 +3,11 @@
 #define instr push
 
 static void do_execute () {
-	DATA_TYPE_S result = op_src->val;
+	int32_t result = op_src->val;
 	if (DATA_BYTE == 1)
 	{
-		printf ("push data %d",DATA_BYTE);
 		reg_l (R_ESP) -= 4;
-		swaddr_write (reg_l (R_ESP) , 4 ,result );
+		swaddr_write (reg_l (R_ESP) , 4 ,result);
 	}
 	else
 	{
