@@ -4,16 +4,9 @@
 
 static void do_execute () {
 	int32_t result = op_src->val;
-	if (DATA_BYTE == 1)
-	{
-		reg_l (R_ESP) -= 4;
-		swaddr_write (reg_l (R_ESP) , 4 ,result);
-	}
-	else
-	{
-		REG (R_ESP) -= DATA_BYTE;
-		MEM_W (REG (R_ESP) , result);
-	}
+	printf ("%x",result);
+	reg_l (R_ESP) -= 4;
+	swaddr_write (reg_l (R_ESP) , 4 ,result);
 	print_asm_no_template1();
 }
 
