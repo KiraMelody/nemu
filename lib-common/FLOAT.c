@@ -6,8 +6,27 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
-	FLOAT c = a / b;
-	return c * (1 << 16);
+	int sign = 1;
+	if (a < 0) {
+		sign *= -1;
+		a = -a;
+	}
+	if (b < 0) {
+		sign *= -1;
+		b = -b;
+	}
+	int res = a / b;
+	a = a % b;
+	int i;
+	for (i = 0; i < 16; i++) {
+		a <<= 1;
+		res <<= 1;
+		if (a >= b) {
+			a -= b;
+			res++;
+		}
+	}
+	return res * sign;
 }
 
 FLOAT f2F(float a) {
