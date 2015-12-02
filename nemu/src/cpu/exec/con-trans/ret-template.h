@@ -2,13 +2,14 @@
 
 #define instr ret
 
-static void do_execute () {
-	cpu.eip = MEM_R (REG (R_ESP));
-	if (DATA_BYTE == 2)cpu.eip &= 0xffff;
-	REG (R_ESP) += DATA_BYTE;
+make_helper(concat(ret_n_, SUFFIX))
+{
+	cpu.eip = MEM_R (reg_l (R_ESP));
+	//if (DATA_BYTE == 2)cpu.eip &= 0xffff;
+	reg_l (R_ESP) += DATA_BYTE;
 	print_asm("ret");
+	return 0;
 }
-make_instr_helper(n)
 
 make_helper(concat(ret_i_, SUFFIX))
 {
@@ -21,7 +22,7 @@ make_helper(concat(ret_i_, SUFFIX))
 	MEM_W (REG (R_ESP) + i,0);
 	REG (R_ESP) += val;
 	print_asm("ret $%d",val);
-	return 1;
+	return 0;
 }
 
 #include "cpu/exec/template-end.h"

@@ -2,26 +2,27 @@
 
 #define instr call
 
-
-static void do_execute() {
-	REG (R_ESP) -= DATA_BYTE;
-	MEM_W (REG (R_ESP) , cpu.eip + DATA_BYTE);
-	printf ("call push %x\n",cpu.eip + DATA_BYTE);
+make_helper (concat(call_i_, SUFFIX))
+{
+	int len = concat(decode_i_, SUFFIX) (eip + 1);
+	reg_l (R_ESP) -= DATA_BYTE;
+	swaddr_write (reg_l (R_ESP) , 4 , cpu.eip + len + 1);
 	DATA_TYPE_S displacement = op_src->val;
-	if (op_src->type == OP_TYPE_IMM)
-	{
-		print_asm("call %x",cpu.eip + 1 + DATA_BYTE + displacement);
-		cpu.eip +=displacement;
-	}
-	else
-	{
-		print_asm("call %x",displacement);
-		cpu.eip =displacement - 2;
-		printf ("%x\n",cpu.eip);
-	}
+	print_asm("call %x",cpu.eip + 1 + len + displacement);
+	cpu.eip +=len + 1 + displacement;
+	return 0;
 }
-make_instr_helper(i)
-make_instr_helper(rm)
+make_helper (concat(call_rm_, SUFFIX))
+{
+	int len = concat(decode_rm_, SUFFIX) (eip + 1);
+	reg_l (R_ESP) -= DATA_BYTE;
+	swaddr_write (reg_l (R_ESP) , 4 , cpu.eip + len + 1);
+	DATA_TYPE_S displacement = op_src->val;
+	print_asm("call %x",displacement);
+	cpu.eip = displacement;
+	return 0;
+}
+
 
 
 #include "cpu/exec/template-end.h"
