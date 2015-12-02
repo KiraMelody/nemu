@@ -4,7 +4,7 @@
 
 static void do_execute () {
 	int32_t result = op_src->val;
-	printf ("%x\n",op_src->simm);
+	printf ("0x%08x\n",op_src->simm);
 	reg_l (R_ESP) -= 4;
 	swaddr_write (reg_l (R_ESP) , 4 ,result);
 	print_asm_no_template1();
