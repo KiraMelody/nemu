@@ -34,6 +34,7 @@ uint32_t loader() {
 	//7f 45 4c 46 02 01 01
 	const uint32_t elf_magic = 0x7f;
 	uint32_t *p_magic = (void *)buf;
+	panic("please implement me %x",elf_magic);
 	nemu_assert(*p_magic == elf_magic);
 
 	/* Load each program segment */
