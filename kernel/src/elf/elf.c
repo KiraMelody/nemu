@@ -20,7 +20,6 @@ uint32_t loader() {
 	Elf32_Ehdr *elf;
 	Elf32_Phdr *ph = NULL;
 
-
 	uint8_t buf[4096];
 
 #ifdef HAS_DEVICE
@@ -28,7 +27,7 @@ uint32_t loader() {
 #else
 	ramdisk_read(buf, ELF_OFFSET_IN_DISK, 4096);
 #endif
-
+	panic("please implement me");
 	elf = (void*)buf;
 
 	/* TODO: fix the magic number with the correct one */
