@@ -15,7 +15,7 @@ static void do_execute () {
 	result ^= result >>1;
 	cpu.PF=!(result & 1);
 	/* TODO: Update EFLAGS. */
-	panic("please implement me");
+	//panic("please implement me");
 	print_asm_template2();
 }
 
