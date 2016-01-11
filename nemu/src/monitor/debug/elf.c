@@ -15,7 +15,7 @@ void load_elf_tables(int argc, char *argv[]) {
 
 	FILE *fp = fopen(exec_file, "rb");
 	Assert(fp, "Can not open '%s'", exec_file);
-	Log ("%s\n",exec_file);
+
 	uint8_t buf[sizeof(Elf32_Ehdr)];
 	/* Read the first 4096 bytes from the exec_file.
 	 * They should contain the ELF header and program headers. */
