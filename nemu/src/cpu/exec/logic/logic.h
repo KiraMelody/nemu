@@ -8,3 +8,4 @@
 #include "shld.h"
 #include "shrd.h"
 #include "test.h"
+#include "std.h"
