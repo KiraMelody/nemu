@@ -30,6 +30,6 @@ void init_mm() {
 	memcpy(&updir[KOFFSET / PT_SIZE], &kpdir[KOFFSET / PT_SIZE], 
 			(PHY_MEM / PT_SIZE) * sizeof(PDE));
 
-	ucr3.val = (uint32_t)va_to_pa((uint32_t)updir) & ~0x3ff;
+	ucr3.val = (uint32_t)va_to_pa((uint32_t)updir) & ~0xfff;
 }
 
