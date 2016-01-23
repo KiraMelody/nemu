@@ -20,6 +20,7 @@ void init_cond();
  * The assembly code in start.S will finally jump here.
  */
 void init() {
+	panic("should not reach here");
 //#ifdef IA32_PAGE
 	/* We must set up kernel virtual memory first because our kernel thinks it 
 	 * is located at 0xc0100000, which is set by the linking options in Makefile.
@@ -30,7 +31,7 @@ void init() {
 //#endif
 
 	/* Jump to init_cond() to continue initialization. */
-	panic();
+	panic("should not reach here");
 	asm volatile("jmp *%0" : : "r"(init_cond));
 
 	panic("should not reach here");
