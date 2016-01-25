@@ -9,12 +9,12 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	int sign = 1;
 	if (a < 0) 
 	{
-		sign *= -1;
+		sign = -sign;
 		a = -a;
 	}
 	if (b < 0) 
 	{
-		sign *= -1;
+		sign = -sign;
 		b = -b;
 	}
 	int res = a / b;
