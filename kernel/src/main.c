@@ -20,6 +20,7 @@ void init_cond();
  * The assembly code in start.S will finally jump here.
  */
 void init() {
+	asm ("nop");
 	panic("should not reach here");
 //#ifdef IA32_PAGE
 	/* We must set up kernel virtual memory first because our kernel thinks it 
