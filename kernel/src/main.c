@@ -21,7 +21,7 @@ void init_cond();
  */
 void init() {
 	asm ("nop");
-	panic("should not reach here");
+	//panic("should not reach here");
 //#ifdef IA32_PAGE
 	/* We must set up kernel virtual memory first because our kernel thinks it 
 	 * is located at 0xc0100000, which is set by the linking options in Makefile.
@@ -29,11 +29,11 @@ void init() {
 	//init_page();
 	asm ("nop");
 	/* After paging is enabled, transform %esp to virtual address. */
-	asm volatile("addl %0, %%esp" : : "i"(KOFFSET));
+	//asm volatile("addl %0, %%esp" : : "i"(KOFFSET));
 //#endif
 	asm ("nop");
 	/* Jump to init_cond() to continue initialization. */
-	panic("should not reach here");
+	//panic("should not reach here");
 	asm volatile("jmp *%0" : : "r"(init_cond));
 
 	panic("should not reach here");
