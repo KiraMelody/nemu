@@ -35,7 +35,6 @@ uint32_t loader() {
 	/* Load each program segment */
 	//panic("please implement me");
 	int cnt = 0;
-	asm ("nop");
 	for(; cnt < elf->e_phnum; cnt++) {
 		ph = (void *)elf->e_phoff + cnt * elf->e_phentsize;
 		/* Scan the program header table, load each segment into memory */
@@ -44,10 +43,11 @@ uint32_t loader() {
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-#ifndef HAS_DEVICE			
+#ifndef HAS_DEVICE	
+			asm ("nop");		
 			ramdisk_read((void *)ph->p_vaddr,ELF_OFFSET_IN_DISK + ph->p_offset,ph->p_filesz);
 #else
-			panic("not implemented");			 
+			//panic("not implemented");			 
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
