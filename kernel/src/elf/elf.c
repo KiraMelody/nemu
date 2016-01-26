@@ -13,6 +13,7 @@ void ramdisk_read(uint8_t *, uint32_t, uint32_t);
 
 #define STACK_SIZE (1 << 20)
 int cntph = 0;
+int ephnum = 0;
 void create_video_mapping();
 uint32_t get_ucr3();
 
@@ -34,7 +35,7 @@ uint32_t loader() {
 	nemu_assert(*p_magic == elf_magic);
 	/* Load each program segment */
 	//panic("please implement me");
-	
+	ephnum = elf->e_phnum;
 	for(; cntph < elf->e_phnum; cntph++) {
 		asm ("nop");
 		ph = (void *)elf->e_phoff + cntph * elf->e_phentsize;
@@ -46,18 +47,12 @@ uint32_t loader() {
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
 #ifndef HAS_DEVICE			
-			//ramdisk_read((void *)ph->p_vaddr,ELF_OFFSET_IN_DISK + ph->p_offset,ph->p_filesz);
-			/* TODO: zero the memory region 
-			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
-			 */
-#else
-			//panic("not implemented");			 
-			
+			ramdisk_read((void *)ph->p_vaddr,ELF_OFFSET_IN_DISK + ph->p_offset,ph->p_filesz);			
 #endif			 
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-			 //memset ((void *)ph->p_vaddr+ph->p_filesz,0,ph->p_memsz-ph->p_filesz);
+			 memset ((void *)ph->p_vaddr+ph->p_filesz,0,ph->p_memsz-ph->p_filesz);
 
 
 #ifdef IA32_PAGE
