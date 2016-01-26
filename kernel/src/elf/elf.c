@@ -46,7 +46,7 @@ uint32_t loader() {
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
 #ifndef HAS_DEVICE			
-			ramdisk_read((void *)ph->p_vaddr,ELF_OFFSET_IN_DISK + ph->p_offset,ph->p_filesz);
+			//ramdisk_read((void *)ph->p_vaddr,ELF_OFFSET_IN_DISK + ph->p_offset,ph->p_filesz);
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
@@ -57,7 +57,7 @@ uint32_t loader() {
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-			 memset ((void *)ph->p_vaddr+ph->p_filesz,0,ph->p_memsz-ph->p_filesz);
+			 //memset ((void *)ph->p_vaddr+ph->p_filesz,0,ph->p_memsz-ph->p_filesz);
 
 
 #ifdef IA32_PAGE
