@@ -71,7 +71,7 @@ static int cmd_p(char *args) {
 	bool suc;
 	num = expr (args,&suc);
 	if (suc)
-		printf ("%d\n",num);
+		printf ("0x%x:\t%d\n",num,num);
 	else assert (0);
 	return 0;
 }
