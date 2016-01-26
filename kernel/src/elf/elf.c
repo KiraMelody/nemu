@@ -34,11 +34,9 @@ uint32_t loader() {
 	nemu_assert(*p_magic == elf_magic);
 	/* Load each program segment */
 	//panic("please implement me");
-	int cntph = 0;
-	for(; cntph < elf->e_phnum && cntph < 10; cntph++) {
-		asm ("nop");
-		ph = (void *)(elf->e_phoff + cntph * elf->e_phentsize);
-		asm ("nop");
+	int i = 0;
+	ph = (void *)(buf+elf->e_phoff) ;
+	for(; i < elf->e_phnum ; i++,ph++) {
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
 
@@ -46,12 +44,12 @@ uint32_t loader() {
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
 #ifndef HAS_DEVICE			
-			ramdisk_read((uint8_t *)ph->p_vaddr,ph->p_offset,ph->p_filesz);			
+			ramdisk_read((void *)ph->p_vaddr,(void *)ph->p_offset,ph->p_filesz);			
 #endif			 
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-			 //memset ((void *)(ph->p_vaddr+ph->p_filesz),0,ph->p_memsz-ph->p_filesz);
+			 memset ((void *)(ph->p_vaddr+ph->p_filesz),0,ph->p_memsz-ph->p_filesz);
 
 
 #ifdef IA32_PAGE
