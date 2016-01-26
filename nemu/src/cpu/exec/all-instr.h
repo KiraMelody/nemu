@@ -15,3 +15,5 @@
 #include "misc/misc.h"
 
 #include "special/special.h"
+
+#include "CMOVcc/cmovcc.h"
