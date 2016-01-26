@@ -12,7 +12,7 @@ void ramdisk_read(uint8_t *, uint32_t, uint32_t);
 #endif
 
 #define STACK_SIZE (1 << 20)
-
+int cnt = 0;
 void create_video_mapping();
 uint32_t get_ucr3();
 
@@ -34,7 +34,7 @@ uint32_t loader() {
 	nemu_assert(*p_magic == elf_magic);
 	/* Load each program segment */
 	//panic("please implement me");
-	int cnt = 0;
+	
 	for(; cnt < elf->e_phnum; cnt++) {
 		asm ("nop");
 		ph = (void *)elf->e_phoff + cnt * elf->e_phentsize;
