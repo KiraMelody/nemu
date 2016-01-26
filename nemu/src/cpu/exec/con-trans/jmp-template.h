@@ -8,7 +8,8 @@ static void do_execute() {
 	if (op_src->type == OP_TYPE_REG || op_src->type == OP_TYPE_MEM)
 	{
 		printf ("dis: 0x%x\n",displacement);
-		cpu.eip = displacement - concat (decode_rm_,SUFFIX)(cpu.eip) - 1;
+		printf ("len:%d\n",concat (decode_rm_,SUFFIX)(cpu.eip+1));
+		cpu.eip = displacement - concat (decode_rm_,SUFFIX)(cpu.eip+1) - 1;
 		print_asm_no_template1();
 	}
 	else
