@@ -12,7 +12,7 @@ void ramdisk_read(uint8_t *, uint32_t, uint32_t);
 #endif
 
 #define STACK_SIZE (1 << 20)
-int cnt = 0;
+int cntph = 0;
 void create_video_mapping();
 uint32_t get_ucr3();
 
@@ -35,9 +35,9 @@ uint32_t loader() {
 	/* Load each program segment */
 	//panic("please implement me");
 	
-	for(; cnt < elf->e_phnum; cnt++) {
+	for(; cntph < elf->e_phnum; cntph++) {
 		asm ("nop");
-		ph = (void *)elf->e_phoff + cnt * elf->e_phentsize;
+		ph = (void *)elf->e_phoff + cntph * elf->e_phentsize;
 		asm ("nop");
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
