@@ -37,7 +37,7 @@ uint32_t loader() {
 	int cntph = 0;
 	for(; cntph < elf->e_phnum && cntph < 10; cntph++) {
 		asm ("nop");
-		ph = (void *)elf->e_phoff + cntph * elf->e_phentsize;
+		ph = (void *)(elf->e_phoff + cntph * elf->e_phentsize);
 		asm ("nop");
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
@@ -51,7 +51,7 @@ uint32_t loader() {
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-			 memset ((void *)ph->p_vaddr+ph->p_filesz,0,ph->p_memsz-ph->p_filesz);
+			 memset ((void *)(ph->p_vaddr+ph->p_filesz),0,ph->p_memsz-ph->p_filesz);
 
 
 #ifdef IA32_PAGE
