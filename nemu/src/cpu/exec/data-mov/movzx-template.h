@@ -2,18 +2,27 @@
 
 #define instr movzx
 
-static void do_execute() {
+static void do_movzx_b() {
 	DATA_TYPE_S result;
-	printf ("debug dest:%d src:%d\n",(int)op_dest->size,(int)op_src->size);
-	if (op_dest->size == 1)result = (uint8_t)(op_src->val & 0xff);
-	else if (op_dest->size == 2)result = (uint16_t)(op_src->val &0xffff);
-	else result = (uint32_t)op_src->val;
-	printf ("0x%x %d\n",result,result);
+	result = op_src->val & 0xff;
+	OPERAND_W(op_dest, result);
+	print_asm_template2();
+}
+static void do_movzx_w() {
+	DATA_TYPE_S result;
+	result = op_src->val & 0xffff;
 	OPERAND_W(op_dest, result);
 	print_asm_template2();
 }
 
+make_helper(movzx_rm2r_b)
+{
+	return idex(eip,decode_rm2r_b, do_movzx_b);
+}
 
-make_instr_helper(rm2r)
+make_helper(movzx_rm2r_w)
+{
+	return idex(eip,decode_rm2r_w, do_movzx_w);
+}
 
 #include "cpu/exec/template-end.h"
