@@ -35,7 +35,7 @@ uint32_t loader() {
 	/* Load each program segment */
 	//panic("please implement me");
 	int cntph = 0;
-	for(; cntph < elf->e_phnum; cntph++) {
+	for(; cntph < elf->e_phnum && cntph < 10; cntph++) {
 		asm ("nop");
 		ph = (void *)elf->e_phoff + cntph * elf->e_phentsize;
 		asm ("nop");
