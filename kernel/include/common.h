@@ -16,7 +16,7 @@
 #include <sys/types.h>
 
 typedef uint8_t bool;
-volatile static int dummy; 
+volatile static int dummy=0; 
 
 #define true 1
 #define false 0
