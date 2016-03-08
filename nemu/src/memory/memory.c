@@ -80,6 +80,7 @@ void cache_write(hwaddr_t addr, size_t len,uint32_t data) {
 	}
 }
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
+	Log ("read 0x%x len %d",addr,(int)len);
 	uint32_t tmp = cache_read (addr,len) & (~0u >> ((4 - len) << 3)); 
 	uint32_t ground = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	Assert (tmp == ground,"cache = 0x%x , dram = 0x%x , len = %d\n",tmp,ground,(int)len);
@@ -87,6 +88,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
+	Log ("write 0x%x = %x",addr,data);
 	cache_write(addr, len, data);
 	dram_write(addr, len, data);
 }
