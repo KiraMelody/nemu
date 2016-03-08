@@ -1,5 +1,6 @@
 #include "common.h"
 #include <stdlib.h>
+#include "burst.h"
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
 void ddr3_read(hwaddr_t, void *);
@@ -50,7 +51,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 		cache[g*8+i].tag = addr>>13;
 		int j;
 		for (j = 0;j < 8;j ++)
-		ddr3_read(addr , cache[i].data + j * 8);
+		ddr3_read(addr + j * BURST_LEN , cache[i].data + j * BURST_LEN);
 		
 	}
 	if (offset + len >=64 ) 
