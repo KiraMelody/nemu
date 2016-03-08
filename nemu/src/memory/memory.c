@@ -60,6 +60,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 	}
 	if (offset + len >=64 ) 
 	{
+		Log ("out of block!");
 		memcpy(temp,cache[i].data + offset, 64 - offset);
 		memcpy(temp + 64 - offset,cache[i + 1].data, len - (64 - offset));
 	}
