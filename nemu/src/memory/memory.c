@@ -1,7 +1,8 @@
 #include "common.h"
-
+#include <stdlib.h>
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
+void ddr3_read(hwaddr_t, void *);
 /*
 cache block存储空间的大小为64B
 cache存储空间的大小为64KB
@@ -15,81 +16,76 @@ struct Cache
 {
 	bool valid;
 	int tag;
-	int group;
 	uint8_t data[64];
 }cache[1024];
 
 
-/*uint32_t cache_read(hwaddr_t addr, size_t len) {
+uint32_t cache_read(hwaddr_t addr, size_t len) 
+{
 	uint32_t g = (addr>>6) & 0x7f; //group number
 	uint32_t offset = addr & 0x3f; // inside addr
-	uint8_t temp[50];
+	uint8_t temp[64];
 	int i;
 	bool v = false;
-	for (i = g * 8 ; i < (g+1)*8 ;i ++)
+	for (i = g * 8 ; i < (g+1) * 8 ;i ++)
 	{
-		if (cache[i].tag == (addr >> 13)&& valid)
+		if (cache[i].tag == (addr >> 13)&& cache[i].valid)
 			{
 				v = true;
-				memcpy (cache + offset,temp,BURST_LEN);
+				break;
 			}
 	}
-	if (!v)return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	if (offset + len > BURST_LEN) {
-		memcpy(cache + offset + BURST_LEN, temp + BURST_LEN,BURST_LEN);
+	if (!v)
+	{
+		for (i = g * 8 ; i < (g+1)*8 ;i ++)
+		{
+			if (!cache[i].valid)break;
+		}
+		if (i == (g + 1) * 8)//ramdom
+		{
+			srand (0);
+			i = rand()%8;
+		}
+		cache[g*8+i].valid = true;
+		cache[g*8+i].tag = addr>>13;
+		int j;
+		for (j = 0;j < 8;j ++)
+		ddr3_read(addr , cache[i].data + j * 8);
+		
 	}
-	return unalign_rw(temp + offset, 4);
-}*/
-// static void ddr3_write(hwaddr_t addr, void *data, uint8_t *mask) {
-// 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
+	if (offset + len >=64 ) 
+	{
+		memcpy(temp,cache[i].data + offset, 64 - offset);
+		memcpy(temp + 64 - offset,cache[i + 1].data, len - (64 - offset));
+	}
+	else{
+		memcpy(temp,cache[i].data + offset,len);
+	}
+	int zero = 0;
+	return unalign_rw(temp + zero, 4);
+}
 
-// 	dram_addr temp;
-// 	temp.addr = addr & ~BURST_MASK;
-// 	uint32_t rank = temp.rank;
-// 	uint32_t bank = temp.bank;
-// 	uint32_t row = temp.row;
-// 	uint32_t col = temp.col;
-
-// 	if(!(rowbufs[rank][bank].valid && rowbufs[rank][bank].row_idx == row) ) {
-// 		/* read a row into row buffer */
-// 		memcpy(rowbufs[rank][bank].buf, dram[rank][bank][row], NR_COL);
-// 		rowbufs[rank][bank].row_idx = row;
-// 		rowbufs[rank][bank].valid = true;
-// 	}
-
-// 	/* burst write */
-// 	memcpy_with_mask(rowbufs[rank][bank].buf + col, data, BURST_LEN, mask);
-
-// 	/* write back to dram */
-// 	memcpy(dram[rank][bank][row], rowbufs[rank][bank].buf, NR_COL);
-// }
-/*uint32_t cache_write(hwaddr_t addr, size_t len,uint32_t data) {
+void cache_write(hwaddr_t addr, size_t len,uint32_t data) {
 	uint32_t g = (addr>>6) & 0x7f; //group number
 	uint32_t offset = addr & 0x3f; // inside addr
-	uint8_t temp[50];
 	int i;
-	bool v = false;
 	for (i = g * 8 ; i < (g+1)*8 ;i ++)
 	{
-		if (!valid)
+		if (cache[i].tag == (addr >> 13)&& cache[i].valid)
 			{
-				v = true;
-				valid = true;
-				memcpy (cache + offset,temp,BURST_LEN);
+				memcpy (cache[i].data + offset , &data , len);
 			}
 	}
-	if (!v)return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	if (offset + len > BURST_LEN) {
-		memcpy(cache + offset + BURST_LEN, temp + BURST_LEN,BURST_LEN);
-	}
-	return unalign_rw(temp + offset, 4);
-}*/
+}
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-
+	uint32_t tmp = cache_read (addr,len); 
+	uint32_t ground = dram_read(addr, len);
+	Assert (tmp != ground,"fuck!");
 	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
+	cache_write(addr, len, data);
 	dram_write(addr, len, data);
 }
 

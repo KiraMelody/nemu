@@ -51,7 +51,7 @@ void init_ddr3() {
 	}
 }
 
-static void ddr3_read(hwaddr_t addr, void *data) {
+void ddr3_read(hwaddr_t addr, void *data) {
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
 
 	dram_addr temp;
@@ -101,7 +101,8 @@ uint32_t dram_read(hwaddr_t addr, size_t len) {
 	uint8_t temp[2 * BURST_LEN];
 	
 	ddr3_read(addr, temp);
-
+//BURST_LEN 8
+//BURST_MASK (BURST_LEN - 1)
 	if(offset + len > BURST_LEN) {
 		/* data cross the burst boundary */
 		ddr3_read(addr + BURST_LEN, temp + BURST_LEN);
