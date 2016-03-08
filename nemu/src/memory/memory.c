@@ -61,6 +61,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 	else{
 		memcpy(temp,cache[i].data + offset,len);
 	}
+	Log ("hello");
 	int zero = 0;
 	return unalign_rw(temp + zero, 4);
 }
