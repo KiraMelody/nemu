@@ -21,15 +21,12 @@ struct Cache
 }cache[1024];
 
 
-uint32_t cache_read(hwaddr_t addr, size_t len) 
+uint32_t cache_read(hwaddr_t addr) 
 {
 	uint32_t g = (addr>>6) & 0x7f; //group number
-	uint32_t offset = addr & 0x3f; // inside addr
 	uint32_t block = (addr >> 6)<<6;
-	uint8_t temp[4];
 	int i;
 	bool v = false;
-	memset (temp,0,sizeof (temp));
 	for (i = g * 8 ; i < (g+1) * 8 ;i ++)
 	{
 		if (cache[i].tag == (addr >> 13)&& cache[i].valid)
@@ -46,7 +43,6 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 		}
 		if (i == (g + 1) * 8)//ramdom
 		{
-			Log ("block full!");
 			srand (0);
 			i = g * 8 + rand()%8;
 		}
@@ -56,19 +52,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 		for (j = 0;j < 8;j ++)
 		ddr3_read(block + j * BURST_LEN , cache[i].data + j * BURST_LEN);
 	}
-	Log ("offset = 0x%x",offset);
-	if (offset + len >=64 ) 
-	{
-		Log ("out of block!");
-		memcpy(temp,cache[i].data + offset, 64 - offset);
-		memcpy(temp + 64 - offset,cache[i + 1].data, len - (64 - offset));
-	}
-	else{
-		memcpy(temp,cache[i].data + offset,len);
-	}
-	Log ("temp %x %x %x %x",temp[0],temp[1],temp[2],temp[3]);
-	int zero = 0;
-	return unalign_rw(temp + zero, 4);
+	return i;
 }
 
 void cache_write(hwaddr_t addr, size_t len,uint32_t data) {
@@ -84,8 +68,26 @@ void cache_write(hwaddr_t addr, size_t len,uint32_t data) {
 	}
 }
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
+	uint32_t offset = addr & 0x3f; // inside addr
+	uint32_t block = cache_read(addr);
+	uint8_t temp[4];
+	memset (temp,0,sizeof (temp));
+	Log ("offset = 0x%x",offset);
+	if (offset + len >= 64) 
+	{
+		Log ("out of block!");
+		uint32_t _block = cache_read(addr + len);
+		memcpy(temp,cache[block].data + offset, 64 - offset);
+		memcpy(temp + 64 - offset,cache[_block].data, len - (64 - offset));
+	}
+	else
+	{
+		memcpy(temp,cache[block].data + offset,len);
+	}
+	Log ("temp %x %x %x %x",temp[0],temp[1],temp[2],temp[3]);
+	int zero = 0;
 	Log ("read 0x%x len %d",addr,(int)len);
-	uint32_t tmp = cache_read (addr,len) & (~0u >> ((4 - len) << 3)); 
+	uint32_t tmp = unalign_rw(temp + zero, 4) & (~0u >> ((4 - len) << 3)); 
 	uint32_t ground = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	Log ("cache = 0x%x , dram = 0x%x , len = %d\n",tmp,ground,(int)len);
 	Assert (tmp == ground,"cache = 0x%x , dram = 0x%x , len = %d\n",tmp,ground,(int)len);
