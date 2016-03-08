@@ -58,6 +58,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 			Log ("addr 0x%x : 0x%x",addr + j,cache[i].data[j]);
 		
 	}
+	Log ("offset = 0x%x",offset);
 	if (offset + len >=64 ) 
 	{
 		Log ("out of block!");
