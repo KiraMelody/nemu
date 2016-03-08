@@ -54,7 +54,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 		ddr3_read(addr + j * BURST_LEN , cache[i].data + j * BURST_LEN);
 		if (addr > 0x100010)
 		for (j = 0;j < 64;j ++)
-			Log ("0x%x",temp[j]);
+			Log ("addr 0x%x : 0x%x",addr + j,temp[j]);
 		
 	}
 	if (offset + len >=64 ) 
