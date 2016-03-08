@@ -25,6 +25,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 {
 	uint32_t g = (addr>>6) & 0x7f; //group number
 	uint32_t offset = addr & 0x3f; // inside addr
+	uint32_t block = (addr >> 6)<<6;
 	uint8_t temp[4];
 	int i;
 	bool v = false;
@@ -53,10 +54,10 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 		cache[i].tag = addr>>13;
 		int j;
 		for (j = 0;j < 8;j ++)
-		ddr3_read(addr + j * BURST_LEN , cache[i].data + j * BURST_LEN);
+		ddr3_read(block + j * BURST_LEN , cache[i].data + j * BURST_LEN);
 		if (addr > 0x100010)
 		for (j = 0;j < 64;j ++)
-			Log ("addr 0x%x : 0x%x",addr + j,cache[i].data[j]);
+			Log ("addr 0x%x : 0x%x",block + j,cache[i].data[j]);
 		
 	}
 	Log ("offset = 0x%x",offset);
