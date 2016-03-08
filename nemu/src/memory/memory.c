@@ -45,6 +45,7 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 		}
 		if (i == (g + 1) * 8)//ramdom
 		{
+			Log ("block full!");
 			srand (0);
 			i = g * 8 + rand()%8;
 		}
