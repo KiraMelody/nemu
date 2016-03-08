@@ -71,7 +71,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	uint32_t offset = addr & 0x3f; // inside addr
 	uint32_t block = cache_read(addr);
 	uint8_t temp[4];
-	memset (temp,0,sizeof (temp));;
+	memset (temp,0,sizeof (temp));
 	if (offset + len >= 64) 
 	{
 		uint32_t _block = cache_read(addr + len);
@@ -90,7 +90,6 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
-	Log ("write 0x%x = %x",addr,data);
 	cache_write(addr, len, data);
 	dram_write(addr, len, data);
 }
