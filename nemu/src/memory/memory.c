@@ -61,7 +61,6 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 	else{
 		memcpy(temp,cache[i].data + offset,len);
 	}
-	Log ("addr = 0x%x",addr);
 	Log ("temp %x %x %x %x",temp[0],temp[1],temp[2],temp[3]);
 	int zero = 0;
 	return unalign_rw(temp + zero, 4);
