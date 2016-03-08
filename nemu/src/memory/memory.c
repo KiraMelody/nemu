@@ -46,10 +46,10 @@ uint32_t cache_read(hwaddr_t addr, size_t len)
 		if (i == (g + 1) * 8)//ramdom
 		{
 			srand (0);
-			i = rand()%8;
+			i = g * 8 + rand()%8;
 		}
-		cache[g*8+i].valid = true;
-		cache[g*8+i].tag = addr>>13;
+		cache[i].valid = true;
+		cache[i].tag = addr>>13;
 		int j;
 		for (j = 0;j < 8;j ++)
 		ddr3_read(addr + j * BURST_LEN , cache[i].data + j * BURST_LEN);
