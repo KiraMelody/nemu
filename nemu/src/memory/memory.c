@@ -71,11 +71,9 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	uint32_t offset = addr & 0x3f; // inside addr
 	uint32_t block = cache_read(addr);
 	uint8_t temp[4];
-	memset (temp,0,sizeof (temp));
-	Log ("offset = 0x%x",offset);
+	memset (temp,0,sizeof (temp));;
 	if (offset + len >= 64) 
 	{
-		Log ("out of block!");
 		uint32_t _block = cache_read(addr + len);
 		memcpy(temp,cache[block].data + offset, 64 - offset);
 		memcpy(temp + 64 - offset,cache[_block].data, len - (64 - offset));
@@ -84,12 +82,9 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	{
 		memcpy(temp,cache[block].data + offset,len);
 	}
-	Log ("temp %x %x %x %x",temp[0],temp[1],temp[2],temp[3]);
 	int zero = 0;
-	Log ("read 0x%x len %d",addr,(int)len);
 	uint32_t tmp = unalign_rw(temp + zero, 4) & (~0u >> ((4 - len) << 3)); 
 	uint32_t ground = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	Log ("cache = 0x%x , dram = 0x%x , len = %d\n",tmp,ground,(int)len);
 	Assert (tmp == ground,"cache = 0x%x , dram = 0x%x , len = %d\n",tmp,ground,(int)len);
 	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
