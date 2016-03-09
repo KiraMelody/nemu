@@ -8,6 +8,14 @@
 #include <readline/history.h>
 void cpu_exec(uint32_t);
 int breakpoint_counter = 1;
+extern struct Cache
+{
+	bool valid;
+	int tag;
+	uint8_t data[64];
+}cache[1024];
+uint32_t cache_read(hwaddr_t);
+//extern struct Cache cache[1024];
 typedef struct {
     swaddr_t prev_ebp;
     swaddr_t ret_addr;
@@ -165,7 +173,17 @@ static int cmd_bt(char *args) {
 	}
 	return 0;
 }
-
+static int cmd_cache(char *args) {
+	swaddr_t addr;
+	sscanf (args,"%x",&addr);
+	int i = cache_read(addr);
+	printf ("addr = 0x%x\nlocation = %d\ntag = 0x%x\n",addr,i,cache[i].tag);
+	int j = 0;
+	for (;j < 64;j++)
+		printf ("%x ",cache[i].data[j]);
+	printf ("\n");
+	return 0;
+}
 static struct {
 	char *name;
 	char *description;
@@ -181,7 +199,8 @@ static struct {
 	{ "x", "Calculate the value of the expression and regard the result as the starting memory address.", cmd_x},
 	{ "w", "Stop the execution of the program if the result of the expression has changed.", cmd_w},
 	{ "d", "Delete the Nth watchpoint", cmd_d},
-	{ "bt", "Print stack frame chain", cmd_bt}
+	{ "bt", "Print stack frame chain", cmd_bt},
+	{ "cache", "Print cache block infomation", cmd_cache}
 	/* TODO: Add more commands */
 
 };
