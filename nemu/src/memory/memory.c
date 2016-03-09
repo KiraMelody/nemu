@@ -6,8 +6,8 @@
 #define STORAGE_SIZE_L2 4*1024*1024
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
-void ddr3_read(hwaddr_t, void *);
-void ddr3_write(hwaddr_t, void *, uint8_t *);
+void ddr3_read(hwaddr_t, void*);
+void ddr3_write(hwaddr_t, void*,uint8_t*);
 /*
 cache block存储空间的大小为64B
 cache存储空间的大小为64KB
@@ -82,10 +82,10 @@ uint32_t secondarycache_read(hwaddr_t addr)
 			i = g * 16 + rand() % 16;
 			if (cache2[i].dirty)
 			{
-				uint8_t mask[BURST_LEN];
-				memset(mask, 1, BURST_LEN);
-				for (j = 0;j < BLOCK_SIZE/BURST_LEN;j ++);
-				//ddr3_write(block + j * BURST_LEN, cache2[i].data + j * BURST_LEN,mask);
+				uint8_t mask[BURST_LEN * 2];
+				memset(mask, 1, BURST_LEN * 2);
+				for (j = 0;j < BLOCK_SIZE/BURST_LEN;j ++)
+				ddr3_write(block + j * BURST_LEN, cache2[i].data + j * BURST_LEN, mask);
 			}
 		}
 		cache2[i].valid = true;
