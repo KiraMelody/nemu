@@ -48,6 +48,33 @@ typedef union {
 			};
 		uint32_t eflags;
 		};
+	struct {
+		uint16_t cs,ss,ds,es,fs,gs;
+		union {
+			struct {
+				uint32_t gda: 32;
+				uint32_t gdl: 16;
+				uint32_t : 16;
+			};
+			uint64_t gdtr;
+		};
+	};
+	struct {
+		uint32_t PE:1;
+		uint32_t MP:1;
+		uint32_t EM:1;
+		uint32_t TS:1;
+		uint32_t ET:1;
+		uint32_t NE:1;
+		uint32_t :10;
+		uint32_t WP:1;
+		uint32_t :1;
+		uint32_t AM:1;
+		uint32_t :10;
+		uint32_t NW:1;
+		uint32_t CD:1;
+		uint32_t PG:1;
+		};
 	};
 } CPU_state;
 
