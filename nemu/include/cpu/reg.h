@@ -25,6 +25,7 @@ typedef union {
     	struct {
 		uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
 		swaddr_t eip;
+		uint16_t cs,ss,ds,es,fs,gs;
 	union{
 		struct{
 			uint32_t CF:1;
@@ -49,26 +50,28 @@ typedef union {
 		uint32_t eflags;
 		};
 	struct {
-		uint16_t cs,ss,ds,es,fs,gs;
 		uint32_t gdl: 16;
 		uint32_t gda: 32;
 	}GDTR;
-	struct {
-		uint32_t PE:1;
-		uint32_t MP:1;
-		uint32_t EM:1;
-		uint32_t TS:1;
-		uint32_t ET:1;
-		uint32_t NE:1;
-		uint32_t :10;
-		uint32_t WP:1;
-		uint32_t :1;
-		uint32_t AM:1;
-		uint32_t :10;
-		uint32_t NW:1;
-		uint32_t CD:1;
-		uint32_t PG:1;
-		}CR0;
+	union {
+		struct {
+			uint32_t PE:1;
+			uint32_t MP:1;
+			uint32_t EM:1;
+			uint32_t TS:1;
+			uint32_t ET:1;
+			uint32_t NE:1;
+			uint32_t :10;
+			uint32_t WP:1;
+			uint32_t :1;
+			uint32_t AM:1;
+			uint32_t :10;
+			uint32_t NW:1;
+			uint32_t CD:1;
+			uint32_t PG:1;
+			};
+			uint32_t CR0;
+		};
 	};
 } CPU_state;
 
