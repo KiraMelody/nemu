@@ -14,7 +14,7 @@ static void do_execute () {
 		cpu.GDTR.gdl = swaddr_read (op_src->val,2);
 		cpu.GDTR.gda = swaddr_read (op_src->val + 16,4);
 	}
-	printf ("fuck!!!")
+	printf ("gdl = 0x%x gda = 0x%x\n",cpu.GDTR.gdl,cpu.GDTR.gda);
 	print_asm("lgdt");
 }
 make_instr_helper(rm)
