@@ -50,15 +50,9 @@ typedef union {
 		};
 	struct {
 		uint16_t cs,ss,ds,es,fs,gs;
-		union {
-			struct {
-				uint32_t gda: 32;
-				uint32_t gdl: 16;
-				uint32_t : 16;
-			};
-			uint64_t gdtr;
-		};
-	};
+		uint32_t gdl: 16;
+		uint32_t gda: 32;
+	}GDTR;
 	struct {
 		uint32_t PE:1;
 		uint32_t MP:1;
@@ -74,7 +68,7 @@ typedef union {
 		uint32_t NW:1;
 		uint32_t CD:1;
 		uint32_t PG:1;
-		};
+		}CR0;
 	};
 } CPU_state;
 
