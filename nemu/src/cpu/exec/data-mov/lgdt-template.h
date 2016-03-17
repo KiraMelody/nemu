@@ -4,11 +4,11 @@
 
 static void do_execute () {
 	printf ("val = %x\n",op_src->val);
-	printf ("%x\n",op_src->imm);
+	printf ("%x\n",op_src->addr);
 	if (op_src->size == 2)
 	{
-		cpu.GDTR.gdl = swaddr_read (op_src->val,2);
-		cpu.GDTR.gda = swaddr_read (op_src->val + 16,3);
+		cpu.GDTR.gdl = swaddr_read (op_src->addr,2);
+		cpu.GDTR.gda = swaddr_read (op_src->addr + 16,3);
 	}
 	else if (op_src->size == 4)
 	{
