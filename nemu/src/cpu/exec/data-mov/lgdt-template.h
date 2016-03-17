@@ -4,6 +4,7 @@
 
 static void do_execute () {
 	printf ("val = %x\n",op_src->val);
+	printf ("%x\n",op_src->imm);
 	if (op_src->size == 2)
 	{
 		cpu.GDTR.gdl = swaddr_read (op_src->val,2);
