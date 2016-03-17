@@ -6,7 +6,7 @@ make_helper(movsr) {
 	write_operand_l(op_src, cpu.CR0);
 	printf ("movsr %x\n",cpu.CR0);
 	print_asm("mov CR0,%s",op_src->str);
-	return 5;
+	return 6;
 }
 
 make_helper(movsw) {
@@ -16,5 +16,5 @@ make_helper(movsw) {
 
 	}
 	print_asm("mov %s,CR0",op_src->str);
-	return 5;
+	return 6;
 }
