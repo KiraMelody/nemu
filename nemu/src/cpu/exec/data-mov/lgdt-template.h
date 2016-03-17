@@ -3,7 +3,7 @@
 #define instr lgdt
 
 static void do_execute () {
-
+	printf ("val = %x\n",op_src->val);
 	if (op_src->size == 2)
 	{
 		cpu.GDTR.gdl = swaddr_read (op_src->val,2);
