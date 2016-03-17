@@ -3,7 +3,6 @@
 #define instr lgdt
 
 static void do_execute () {
-	printf ("val = %x\n",op_src->val);
 	printf ("%x\n",op_src->addr);
 	if (op_src->size == 2)
 	{
@@ -12,8 +11,8 @@ static void do_execute () {
 	}
 	else if (op_src->size == 4)
 	{
-		cpu.GDTR.gdl = swaddr_read (op_src->val,2);
-		cpu.GDTR.gda = swaddr_read (op_src->val + 16,4);
+		cpu.GDTR.gdl = swaddr_read (op_src->addr,2);
+		cpu.GDTR.gda = swaddr_read (op_src->addr + 16,4);
 	}
 	printf ("gdl = 0x%x gda = 0x%x\n",cpu.GDTR.gdl,cpu.GDTR.gda);
 	print_asm_template1();
