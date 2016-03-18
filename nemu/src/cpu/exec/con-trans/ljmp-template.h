@@ -6,7 +6,7 @@
 static void do_execute() {
 	cpu.cs = op_src->imm;
 	cpu.eip = op_dest->imm;
-	print_asm("ljmp $%x,$%x",op_src->imm,op_dest->imm);
+	print_asm("ljmp $%x,$%x",op_dest->imm,op_src->imm);
 }
 make_instr_helper(ii)
 
