@@ -5,8 +5,9 @@
 
 static void do_execute() {
 	printf ("val = %x\n",op_src->imm);
+	printf ("ppos = %x\n",cpu.eip+1+DATA_BYTE);
 	int dis = concat (decode_i_,w)(cpu.eip+1+DATA_BYTE);
-	printf ("dis = %d",dis);
+	printf ("dis = %x\n",dis);
 	print_asm("ljmp");
 }
 make_instr_helper(i)
