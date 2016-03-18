@@ -5,7 +5,7 @@
 
 static void do_execute() {
 	cpu.cs = op_dest->imm;
-	cpu.eip = op_src->imm - 6;
+	cpu.eip = op_src->imm - 7;
 	printf ("%x\n",cpu.eip);
 	print_asm("ljmp $%x,$%x",op_dest->imm,op_src->imm);
 }
