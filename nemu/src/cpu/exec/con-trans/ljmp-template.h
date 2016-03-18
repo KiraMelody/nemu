@@ -4,6 +4,7 @@
 
 
 static void do_execute() {
+	printf ("val = %x\n",op_src->imm);
 	cpu.eip = concat (decode_i_,SUFFIX)(cpu.eip+1) - 1;
 	printf ("eip = %d",cpu.eip);
 	print_asm("ljmp");
