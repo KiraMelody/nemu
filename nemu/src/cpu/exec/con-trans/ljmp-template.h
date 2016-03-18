@@ -5,7 +5,7 @@
 
 static void do_execute() {
 	printf ("val = %x\n",op_src->imm);
-	int dis = concat (decode_i_,w)(cpu.eip+1);
+	int dis = concat (decode_i_,w)(cpu.eip+1+DATA_BYTE);
 	printf ("dis = %d",dis);
 	print_asm("ljmp");
 }
