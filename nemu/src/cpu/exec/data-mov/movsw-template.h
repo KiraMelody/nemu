@@ -5,7 +5,7 @@
 static void do_execute() {
 	cpu.CR0 = op_src->val;
 	printf ("movsr %x\n",cpu.CR0);
-	print_asm("mov %%CR0,%s",op_src->str);
+	print_asm("mov %s,%%CR0",op_src->str);
 }
 
 make_instr_helper(r2rm)
