@@ -223,7 +223,8 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
 }
 
 lnaddr_t seg_translate(swaddr_t addr, size_t len, SELECTOR current_sreg) {
-	if (cpu.cr0.protect_enable == 0)return addr;		
+	if (cpu.cr0.protect_enable == 0)return addr;
+	printf ("%x\n",cpu.cr0.val);	
 	if (current_sreg.val == cpu.cs.selector) 
 	{
 		Assert(addr+len < cpu.cs.seg_limit, "segment out limit, %x, %d, %x", addr, (int)len, cpu.cs.seg_limit);
