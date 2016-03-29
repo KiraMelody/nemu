@@ -29,7 +29,7 @@ make_helper(concat(mov_moffs2a_, SUFFIX)) {
 }
 
 #if DATA_BYTE == 4
-make_helper(mov_cr2r) {
+make_helper(mov_r2cr) {
 	uint8_t opcode = instr_fetch(eip + 1, 1);
 	switch (opcode) {
 		case 0xc0:
@@ -50,7 +50,7 @@ make_helper(mov_cr2r) {
 	}
 	return 2;
 }
-make_helper(mov_r2cr) {
+make_helper(mov_cr2r) {
 	uint8_t opcode = instr_fetch(eip + 1, 1);
 	switch (opcode) {
 		case 0xc0:
