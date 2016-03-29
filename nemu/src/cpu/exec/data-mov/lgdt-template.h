@@ -6,15 +6,15 @@ static void do_execute () {
 	printf ("%x\n",op_src->addr);
 	if (op_src->size == 2)
 	{
-		cpu.GDTR.gdl = swaddr_read (op_src->addr,2);
-		cpu.GDTR.gda = swaddr_read (op_src->addr + 16,3);
+		cpu.gdtr.seg_limit = swaddr_read (op_src->addr , 2);
+		cpu.gdtr.base_addr = swaddr_read (op_src->addr + 2,3);
 	}
 	else if (op_src->size == 4)
 	{
-		cpu.GDTR.gdl = swaddr_read (op_src->addr,2);
-		cpu.GDTR.gda = swaddr_read (op_src->addr + 16,4);
+		cpu.gdtr.seg_limit = swaddr_read (op_src->addr , 2);
+		cpu.gdtr.base_addr = swaddr_read (op_src->addr + 2,4);
 	}
-	printf ("gdl = 0x%x gda = 0x%x\n",cpu.GDTR.gdl,cpu.GDTR.gda);
+	printf ("limit = 0x%x base = 0x%x\n",cpu.gdtr.seg_limit,cpu.gdtr.base_addr);
 	print_asm_template1();
 }
 make_instr_helper(rm)

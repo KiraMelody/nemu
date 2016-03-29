@@ -1,13 +1,20 @@
 #include "common.h"
 #include <stdlib.h>
 #include "burst.h"
+#include "cpu/reg.h"
 #define BLOCK_SIZE 64
 #define STORAGE_SIZE_L1 64*1024
 #define STORAGE_SIZE_L2 4*1024*1024
+#define EIGHT_WAY 8
+#define SIXTEEN_WAY 16
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
 void ddr3_read(hwaddr_t, void*);
 void ddr3_write(hwaddr_t, void*,uint8_t*);
+lnaddr_t seg_translate(swaddr_t, size_t, SELECTOR);
+CPU_state cpu;
+SELECTOR current_sreg;
+DESCRIPTOR *seg_des;
 /*
 cache block存储空间的大小为64B
 cache存储空间的大小为64KB
@@ -41,13 +48,13 @@ struct SecondaryCache
 void init_cache()
 {
 	int i;
-	for (i = 0;i < 1024;i ++)
+	for (i = 0;i < STORAGE_SIZE_L1/BLOCK_SIZE;i ++)
 	{
 		cache[i].valid = false;
 		cache[i].tag = 0;
 		memset (cache[i].data,0,BLOCK_SIZE);
 	}
-	for (i = 0;i < 65536;i ++)
+	for (i = 0;i < STORAGE_SIZE_L2/BLOCK_SIZE;i ++)
 	{
 		cache2[i].valid = false;
 		cache2[i].dirty = false;
@@ -61,7 +68,7 @@ uint32_t secondarycache_read(hwaddr_t addr)
 	uint32_t block = (addr >> 6)<<6;
 	int i;
 	bool v = false;
-	for (i = g * 16 ; i < (g + 1) * 16 ;i ++)
+	for (i = g * SIXTEEN_WAY ; i < (g + 1) * SIXTEEN_WAY ;i ++)
 	{
 		if (cache2[i].tag == (addr >> 18)&& cache2[i].valid)
 			{
@@ -72,14 +79,14 @@ uint32_t secondarycache_read(hwaddr_t addr)
 	if (!v)
 	{
 		int j;
-		for (i = g * 16 ; i < (g + 1) * 16 ;i ++)
+		for (i = g * SIXTEEN_WAY ; i < (g + 1) * SIXTEEN_WAY ;i ++)
 		{
 			if (!cache2[i].valid)break;
 		}
-		if (i == (g + 1) * 16)//ramdom
+		if (i == (g + 1) * SIXTEEN_WAY)//ramdom
 		{
 			srand (0);
-			i = g * 16 + rand() % 16;
+			i = g * SIXTEEN_WAY + rand() % SIXTEEN_WAY;
 			if (cache2[i].dirty)
 			{
 				uint8_t mask[BURST_LEN * 2];
@@ -102,7 +109,7 @@ uint32_t cache_read(hwaddr_t addr)
 	//uint32_t block = (addr >> 6)<<6;
 	int i;
 	bool v = false;
-	for (i = g * 8 ; i < (g + 1) * 8 ;i ++)
+	for (i = g * EIGHT_WAY ; i < (g + 1) * EIGHT_WAY ;i ++)
 	{
 		if (cache[i].tag == (addr >> 13)&& cache[i].valid)
 			{
@@ -113,14 +120,14 @@ uint32_t cache_read(hwaddr_t addr)
 	if (!v)
 	{
 		int j = secondarycache_read (addr);
-		for (i = g * 8 ; i < (g+1)*8 ;i ++)
+		for (i = g * EIGHT_WAY ; i < (g+1) * EIGHT_WAY ;i ++)
 		{
 			if (!cache[i].valid)break;
 		}
-		if (i == (g + 1) * 8)//ramdom
+		if (i == (g + 1) * EIGHT_WAY)//ramdom
 		{
 			srand (0);
-			i = g * 8 + rand() % 8;
+			i = g * EIGHT_WAY + rand() % EIGHT_WAY;
 		}
 		cache[i].valid = true;
 		cache[i].tag = addr >> 13;
@@ -133,7 +140,7 @@ void secondarycache_write(hwaddr_t addr, size_t len,uint32_t data) {
 	uint32_t offset = addr & (BLOCK_SIZE - 1); // inside addr
 	int i;
 	bool v = false;
-	for (i = g * 16 ; i < (g + 1) * 16 ;i ++)
+	for (i = g * SIXTEEN_WAY ; i < (g + 1) * SIXTEEN_WAY ;i ++)
 	{
 		if (cache2[i].tag == (addr >> 13)&& cache2[i].valid)
 			{
@@ -150,7 +157,7 @@ void cache_write(hwaddr_t addr, size_t len,uint32_t data) {
 	uint32_t offset = addr & (BLOCK_SIZE - 1); // inside addr
 	int i;
 	bool v = false;
-	for (i = g * 8 ; i < (g + 1) * 8 ;i ++)
+	for (i = g * EIGHT_WAY ; i < (g + 1) * EIGHT_WAY ;i ++)
 	{
 		if (cache[i].tag == (addr >> 13)&& cache[i].valid)
 			{
@@ -203,13 +210,40 @@ uint32_t swaddr_read(swaddr_t addr, size_t len) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
-	return lnaddr_read(addr, len);
+	lnaddr_t lnaddr = seg_translate(addr, len, current_sreg);
+	return lnaddr_read(lnaddr, len);
 }
 
 void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
-	lnaddr_write(addr, len, data);
+	lnaddr_t lnaddr = seg_translate(addr, len, current_sreg);
+	return lnaddr_write(lnaddr, len, data);
 }
 
+lnaddr_t seg_translate(swaddr_t addr, size_t len, SELECTOR current_sreg) {
+	if (cpu.cr0.protect_enable == 0)return addr;		
+	if (current_sreg.val == cpu.cs.selector) 
+	{
+		Assert(addr+len < cpu.cs.seg_limit, "segment out limit, %x, %d, %x", addr, (int)len, cpu.cs.seg_limit);
+		return cpu.cs.seg_base+ addr;
+	}
+	else if (current_sreg.val == cpu.ds.selector) 
+	{
+		Assert(addr+len < cpu.ds.seg_limit, "segment out limit, %x, %d, %x", addr, (int)len, cpu.ds.seg_limit);
+		return cpu.ds.seg_base+ addr;
+	}
+	else if (current_sreg.val == cpu.es.selector) 
+	{
+		Assert(addr+len < cpu.es.seg_limit, "segment out limit, %x, %d, %x", addr, (int)len, cpu.es.seg_limit);
+		return cpu.es.seg_base+ addr;
+	}
+	else if (current_sreg.val == cpu.ss.selector) 
+	{
+		Assert(addr+len < cpu.ss.seg_limit, "segment out limit, %x, %d, %x", addr, (int)len, cpu.ss.seg_limit);
+		return cpu.ss.seg_base+ addr;
+	}
+	else return addr;
+	
+}

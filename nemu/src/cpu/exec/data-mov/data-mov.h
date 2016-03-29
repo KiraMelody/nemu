@@ -1,8 +1,6 @@
 #include "mov.h"
 #include "movzx.h"
 #include "movsx.h"
-#include "movsr.h"
-#include "movsw.h"
 #include "lgdt.h"
 #include "xchg.h"
 #include "push.h"
