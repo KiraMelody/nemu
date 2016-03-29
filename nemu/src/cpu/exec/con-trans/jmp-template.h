@@ -38,7 +38,7 @@ make_helper(ljmp) {
 	cpu.cs.seg_limit1 = seg_des->seg_limit1;
 	cpu.cs.seg_limit2 = seg_des->seg_limit2;
 	cpu.cs.seg_limit3 = 0xfff;
-	print_asm("ljmp %x, %x\n", op2, op1+7);
+	print_asm("ljmp %x,%x", op2, op1+7);
 	return 7;
 }
 #endif
