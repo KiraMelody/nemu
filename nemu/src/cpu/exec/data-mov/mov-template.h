@@ -31,7 +31,6 @@ make_helper(concat(mov_moffs2a_, SUFFIX)) {
 #if DATA_BYTE == 4
 make_helper(mov_r2cr) {
 	uint8_t opcode = instr_fetch(eip + 1, 1);
-	printf ("%x\n",opcode);
 	switch (opcode) {
 		case 0xc0:
 		cpu.eax = cpu.cr0.val;
