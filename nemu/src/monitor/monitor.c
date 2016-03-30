@@ -24,7 +24,7 @@ static void welcome() {
 			exec_file);
 }
 static void init_eflags() {
-	cpu.eflags = 0x00000002;
+	cpu.eflags = 2;
 }
 
 static void init_cr0() {

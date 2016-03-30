@@ -22,24 +22,24 @@ union {
 		swaddr_t eip;
 	union{
 		struct{
-			uint32_t CF:1;
-			uint32_t :1;
-			uint32_t PF:1;
-			uint32_t :1;
-			uint32_t AF:1;
-			uint32_t :1;
-			uint32_t ZF:1;
-			uint32_t SF:1;
-			uint32_t TF:1;
-			uint32_t IF:1;
-			uint32_t DF:1;
-			uint32_t OF:1;
-			uint32_t IOPL:2;
-			uint32_t NT:1;
-			uint32_t :1;
-			uint32_t RF:1;
-			uint32_t VM:1;
-			uint32_t :14;
+			uint32_t CF:	1;
+			uint32_t :	1;
+			uint32_t PF:	1;
+			uint32_t :	1;
+			uint32_t AF:	1;
+			uint32_t :	1;
+			uint32_t ZF:	1;
+			uint32_t SF:	1;
+			uint32_t TF:	1;
+			uint32_t IF:	1;
+			uint32_t DF:	1;
+			uint32_t OF:	1;
+			uint32_t IOPL:	2;
+			uint32_t NT:	1;
+			uint32_t :	1;
+			uint32_t RF:	1;
+			uint32_t VM:	1;
+			uint32_t :	14;
 			};
 		uint32_t eflags;
 		};
@@ -104,11 +104,28 @@ typedef struct {
 		};
 		uint32_t second_part;
 	};
-}DESCRIPTOR;
+}SEG_descriptor;
+typedef struct {
+	union {
+		struct {
+			uint32_t p 	:1;
+			uint32_t rw	:1;
+			uint32_t us	:1;
+			uint32_t 	:2;
+			uint32_t a	:1;
+			uint32_t d 	:1;
+			uint32_t 	:2;
+			uint32_t avail	:3;
+			uint32_t addr 	:20;
+		};
+		uint32_t page_val;
+	};
+}PAGE_descriptor;
+
 
 extern CPU_state cpu;
 extern SELECTOR current_sreg;
-extern DESCRIPTOR *seg_des;
+extern SEG_descriptor *seg_des;
 
 static inline int check_reg_index(int index) {
 	assert(index >= 0 && index < 8);

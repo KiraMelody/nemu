@@ -12,9 +12,10 @@ void dram_write(hwaddr_t, size_t, uint32_t);
 void ddr3_read(hwaddr_t, void*);
 void ddr3_write(hwaddr_t, void*,uint8_t*);
 lnaddr_t seg_translate(swaddr_t, size_t, SELECTOR);
+hwaddr_t page_translate(lnaddr_t);
 CPU_state cpu;
 SELECTOR current_sreg;
-DESCRIPTOR *seg_des;
+SEG_descriptor *seg_des;
 /*
 cache block存储空间的大小为64B
 cache存储空间的大小为64KB
@@ -199,11 +200,13 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
-	return hwaddr_read(addr, len);
+	hwaddr_t hwaddr = page_translate(addr);
+	return hwaddr_read(hwaddr, len);
 }
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
-	hwaddr_write(addr, len, data);
+	hwaddr_t hwaddr = page_translate(addr);
+	hwaddr_write(hwaddr, len, data);
 }
 
 uint32_t swaddr_read(swaddr_t addr, size_t len) {
@@ -220,30 +223,4 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
 #endif
 	lnaddr_t lnaddr = seg_translate(addr, len, current_sreg);
 	return lnaddr_write(lnaddr, len, data);
-}
-
-lnaddr_t seg_translate(swaddr_t addr, size_t len, SELECTOR current_sreg) {
-	if (cpu.cr0.protect_enable == 0)return addr;
-	if (current_sreg.val == cpu.cs.selector) 
-	{
-		Assert(addr+len < cpu.cs.seg_limit, "cs segment out limit");
-		return cpu.cs.seg_base + addr;
-	}
-	else if (current_sreg.val == cpu.ds.selector) 
-	{
-		Assert(addr+len < cpu.ds.seg_limit, "ds segment out limit");
-		return cpu.ds.seg_base + addr;
-	}
-	else if (current_sreg.val == cpu.es.selector) 
-	{
-		Assert(addr+len < cpu.es.seg_limit, "es segment out limit");
-		return cpu.es.seg_base + addr;
-	}
-	else if (current_sreg.val == cpu.ss.selector) 
-	{
-		Assert(addr+len < cpu.ss.seg_limit, "ss segment out limit");
-		return cpu.ss.seg_base + addr;
-	}
-	else return addr;
-	
 }

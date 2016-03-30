@@ -21,8 +21,8 @@ make_instr_helper(rm)
 
 #if DATA_BYTE == 4
 make_helper(ljmp) {
-	extern DESCRIPTOR *seg_des;
-	DESCRIPTOR seg;
+	extern SEG_descriptor *seg_des;
+	SEG_descriptor seg;
 	seg_des = &seg;
 	uint32_t op1 = instr_fetch(eip+1, 4)-7;
 	uint16_t op2 = instr_fetch(eip +5, 2);
