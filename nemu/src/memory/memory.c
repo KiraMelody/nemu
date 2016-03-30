@@ -223,6 +223,7 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
 }
 
 lnaddr_t seg_translate(swaddr_t addr, size_t len, SELECTOR current_sreg) {
+	printf ("%d\n",cpu.cr0.protect_enable);
 	if (cpu.cr0.protect_enable == 0)return addr;
 	if (current_sreg.val == cpu.cs.selector) 
 	{
