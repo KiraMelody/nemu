@@ -232,7 +232,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, SELECTOR current_sreg) {
 	}
 	else if (current_sreg.val == cpu.ds.selector) 
 	{
-		//printf ("ds 0x%x\n",cpu.ds.seg_limit);
+		printf ("ds 0x%x\n",cpu.ds.seg_limit);
 		Assert(addr+len < cpu.ds.seg_limit, "segment out limit, %x, %d, %x", addr, (int)len, cpu.ds.seg_limit);
 		return cpu.ds.seg_base+ addr;
 	}
