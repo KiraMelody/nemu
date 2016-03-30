@@ -3,7 +3,6 @@
 #define instr lgdt
 
 static void do_execute () {
-	printf ("%x\n",op_src->addr);
 	if (op_src->size == 2)
 	{
 		cpu.gdtr.seg_limit = swaddr_read (op_src->addr , 2);
@@ -16,7 +15,6 @@ static void do_execute () {
 	}
 	printf ("limit = 0x%x base = 0x%x\n",cpu.gdtr.seg_limit,cpu.gdtr.base_addr);
 	print_asm_template1();
-	printf ("over\n");
 }
 make_instr_helper(rm)
 
