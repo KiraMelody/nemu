@@ -87,7 +87,7 @@ void restart() {
 	/* Set the initial instruction pointer. */
 	cpu.eip = ENTRY_START;
 	cpu.eflags = 2;
-	cpu.cr0.protect_enable = 0;
+	cpu.cr0.val = 0;
 	current_sreg.val = 0;
 	/* Initialize CACHE. */
 	init_cache();
