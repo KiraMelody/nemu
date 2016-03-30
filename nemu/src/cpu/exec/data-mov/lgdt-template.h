@@ -16,6 +16,7 @@ static void do_execute () {
 	}
 	printf ("limit = 0x%x base = 0x%x\n",cpu.gdtr.seg_limit,cpu.gdtr.base_addr);
 	print_asm_template1();
+	printf ("over\n");
 }
 make_instr_helper(rm)
 
