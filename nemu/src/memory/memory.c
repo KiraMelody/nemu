@@ -195,7 +195,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	cache_write(addr, len, data);
-	//dram_write(addr, len, data);//cache fail
+	dram_write(addr, len, data);//cache fail
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
