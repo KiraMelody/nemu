@@ -11,7 +11,7 @@ hwaddr_t page_translate(lnaddr_t addr) {
 	if (cpu.cr0.paging == 0)return addr;
 	//if ((hwaddr = readTLB(addr)) != -1)return hwaddr + OFFSET(addr);
 	dir.page_val = hwaddr_read((cpu.cr3.page_directory_base<<12)+(DIR(addr)<<2), 4);
-	Assert(dir.p, "dir do not exist at %x", cpu.eip);
+	Assert(dir.p, "pagevalue = %x eip = %x", dir.page_val,cpu.eip);
 	page.page_val = hwaddr_read((dir.addr<<12)+(PAGE(addr)<<2), 4);
 	Assert(page.p, "page do not exist at %x", cpu.eip);
 	hwaddr = (page.addr<<12)+OFFSET(addr);
