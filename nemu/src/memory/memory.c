@@ -204,7 +204,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 	assert(len == 1 || len == 2 || len == 4);
 #endif
 	hwaddr_t hwaddr = page_translate(addr);
-	Log ("lnaddr = %x hwaddr = %x\n",addr,hwaddr);
+	//Log ("lnaddr = %x hwaddr = %x\n",addr,hwaddr);
 	return hwaddr_read(hwaddr, len);
 }
 
@@ -213,7 +213,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 	assert(len == 1 || len == 2 || len == 4);
 #endif
 	hwaddr_t hwaddr = page_translate(addr);
-	Log ("lnaddr = %x hwaddr = %x\n",addr,hwaddr);
+	//Log ("lnaddr = %x hwaddr = %x\n",addr,hwaddr);
 	hwaddr_write(hwaddr, len, data);
 }
 

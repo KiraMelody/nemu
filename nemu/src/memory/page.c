@@ -17,5 +17,6 @@ hwaddr_t page_translate(lnaddr_t addr) {
 	hwaddr = (page.addr<<12)+OFFSET(addr);
 	//Assert(0,"value = %x",hwaddr);
 	//writeTLB(addr, hwaddr);
+	if (hwaddr != (addr &0xffffff)) Log ("dir = %x page = %x\n",dir.page_val,page.page_val);
 	return hwaddr;
 }
