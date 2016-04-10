@@ -70,6 +70,10 @@ static int cmd_info(char *args) {
  	else if (args[0] == 'w') {
 		info_wp();	
 	}
+	else if (args[0] == 'c') {
+		printf ("cr0 = %x\n",cpu.cr0.val);
+		printf ("cr3 = %x\n",cpu.cr3.val);	
+	}
 	else assert (0);
 	return 0;
 }
