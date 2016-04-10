@@ -4,15 +4,12 @@
 
 make_helper (concat(call_i_, SUFFIX))
 {
-	printf ("databype = %d\n",DATA_BYTE);
 	int len = concat(decode_i_, SUFFIX) (eip + 1);
 	reg_l (R_ESP) -= DATA_BYTE;
-	printf ("swaddr_write\n");
 	swaddr_write (reg_l (R_ESP) , 4 , cpu.eip + len);
 	DATA_TYPE_S displacement = op_src->val;
 	print_asm("call %x",cpu.eip + 1 + len + displacement);
 	cpu.eip +=displacement;
-	printf ("over");
 	return len + 1;
 }
 make_helper (concat(call_rm_, SUFFIX))
@@ -23,6 +20,7 @@ make_helper (concat(call_rm_, SUFFIX))
 	DATA_TYPE_S displacement = op_src->val;
 	print_asm("call %x",displacement);
 	cpu.eip = displacement - len - 1;
+	printf ("over");
 	return len + 1;
 }
 
