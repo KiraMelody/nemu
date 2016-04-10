@@ -20,7 +20,6 @@ make_helper (concat(call_rm_, SUFFIX))
 	DATA_TYPE_S displacement = op_src->val;
 	print_asm("call %x",displacement);
 	cpu.eip = displacement - len - 1;
-	printf ("over");
 	return len + 1;
 }
 
