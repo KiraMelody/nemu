@@ -5,6 +5,13 @@
 extern uint8_t entry [];
 extern uint32_t entry_len;
 extern char *exec_file;
+#define TLB_SIZE 64
+extern struct Tlb
+{
+	bool valid;
+	int tag;
+	int page_number;
+}tlb[TLB_SIZE];
 
 void load_elf_tables(int, char *[]);
 void init_regex();
@@ -35,6 +42,14 @@ static void init_cr0() {
 static void init_seg() {
 	cpu.cs.seg_base = 0x0;
 	cpu.cs.seg_limit = 0xffffffff;
+}
+
+static void init_tlb() {
+	int i;
+	for (i = 0;i < TLB_SIZE;i ++) 
+	{
+	 	tlb[i].valid = false;
+	}
 }
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
@@ -101,6 +116,7 @@ void restart() {
 	init_eflags();
 	init_cr0();
 	init_seg();
+	init_tlb();
 	/* Initialize CACHE. */
 	init_cache();
 	/* Initialize DRAM. */
