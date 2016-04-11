@@ -15,12 +15,14 @@ void ramdisk_read(uint8_t *, uint32_t, uint32_t);
 
 void create_video_mapping();
 uint32_t get_ucr3();
+PDE* get_updir();
+PDE* get_kpdir();
 
 uint32_t loader() {
 	Elf32_Ehdr *elf;
 	Elf32_Phdr *ph = NULL;
 	uint8_t buf[4096];
-
+	PDE *updir , *kpdir;
 #ifdef HAS_DEVICE
 	ide_read(buf, ELF_OFFSET_IN_DISK, 4096);
 #else
@@ -39,7 +41,10 @@ uint32_t loader() {
 	for(; i < elf->e_phnum ; ++i,++ph) {
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
-
+			mm_malloc(ph->p_vaddr, ph->p_memsz);
+			kpdir = get_kpdir();
+			updir = get_updir();
+			kpdir[32].val = updir[32].val;
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */		
