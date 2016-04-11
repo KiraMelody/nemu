@@ -11,12 +11,12 @@ hwaddr_t page_translate(lnaddr_t addr) {
 	if (!cpu.cr0.paging || !cpu.cr0.protect_enable)return addr;
 	//if ((hwaddr = readTLB(addr)) != -1)return hwaddr + OFFSET(addr);
 	dir.page_val = hwaddr_read((cpu.cr3.page_directory_base<<12)+(DIR(addr)<<2), 4);
-	//Assert(dir.p, "pagevalue = %x eip = %x", dir.page_val,cpu.eip);
+	Assert(dir.p, "pagevalue = %x eip = %x", dir.page_val,cpu.eip);
 	page.page_val = hwaddr_read((dir.addr<<12)+(PAGE(addr)<<2), 4);
-	//Assert(page.p, "page do not exist at %x", cpu.eip);
+	Assert(page.p, "page do not exist at %x", cpu.eip);
 	hwaddr = (page.addr<<12)+OFFSET(addr);
 	//Assert(0,"value = %x",hwaddr);
 	//writeTLB(addr, hwaddr);
-	if (hwaddr != (addr &0xffffff)) Log ("dir = %x page = %x\n",dir.page_val,page.page_val);
+	if (page.page_val > 0xfffffff) Log ("eip = %x,dir = %x page = %x\n",cpu.eip,dir.page_val,page.page_val);
 	return hwaddr;
 }
