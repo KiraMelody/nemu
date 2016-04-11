@@ -1,4 +1,13 @@
 #include "cpu/exec/template-start.h"
+#if DATA_BYTE == 1
+#define TLB_SIZE 64
+extern struct Tlb
+{
+	bool valid;
+	int tag;
+	int page_number;
+}tlb[TLB_SIZE];
+#endif
 
 #define instr mov
 
@@ -38,9 +47,11 @@ make_helper(mov_cr2r) {
 		break;
 		case 0xd8:
 		cpu.eax = cpu.cr3.val;
-		// for (i=0;i<TLB_NUM;i++) {
-		// 	tlb[i].valid = false;
-		// }
+		int i;
+		for (i = 0;i < TLB_SIZE;i ++) 
+		{
+		 	tlb[i].valid = false;
+		}
 		print_asm("mov %%cr3,%%%s", REG_NAME(R_EAX));
 		break;
 		default:

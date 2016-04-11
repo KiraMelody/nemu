@@ -15,7 +15,7 @@ extern struct Cache
 	uint8_t data[64];
 }cache[1024];
 uint32_t cache_read(hwaddr_t);
-//extern struct Cache cache[1024];
+
 typedef struct {
     swaddr_t prev_ebp;
     swaddr_t ret_addr;
