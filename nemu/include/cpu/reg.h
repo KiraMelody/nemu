@@ -49,7 +49,7 @@ union {
 struct GDTR{
 		uint32_t base_addr;
 		uint16_t seg_limit;
-	}gdtr;
+}gdtr;
 	CR0 cr0;
 	CR3 cr3;
 	struct {
@@ -71,6 +71,11 @@ struct GDTR{
 			uint32_t seg_limit;
 		};
 	}cs, ds, es, ss;
+struct IDTR{
+		uint32_t base_addr;
+		uint16_t seg_limit;
+}idtr;
+
 } CPU_state;
 
 typedef  union {

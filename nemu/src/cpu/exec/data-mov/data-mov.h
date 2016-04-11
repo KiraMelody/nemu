@@ -2,6 +2,7 @@
 #include "movzx.h"
 #include "movsx.h"
 #include "lgdt.h"
+#include "lidt.h"
 #include "xchg.h"
 #include "push.h"
 #include "pop.h"
