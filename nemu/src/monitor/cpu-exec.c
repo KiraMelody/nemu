@@ -35,7 +35,7 @@ void raise_intr(uint8_t NO) {
 	Assert(cpu.cs.selector <= cpu.cs.seg_limit, "segment out limit %d, %d", cpu.cs.selector, cpu.cs.seg_limit);
 	seg_des->first_part = instr_fetch(cpu.gdtr.base_addr + cpu.cs.selector, 4);
 	seg_des->second_part = instr_fetch(cpu.gdtr.base_addr + cpu.cs.selector + 4, 4);
-	Assert(seg_des->p == 1, "segment error");
+	//Assert(seg_des->p == 1, "segment error");
 	cpu.cs.seg_base1 = seg_des->seg_base1;
 	cpu.cs.seg_base2 = seg_des->seg_base2;
 	cpu.cs.seg_base3 = seg_des->seg_base3;
