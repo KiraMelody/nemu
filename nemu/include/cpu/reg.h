@@ -145,7 +145,7 @@ typedef struct GateDescriptor {
 	};
 }GATE_descriptor;
 
-extern CPU_state cpu;
+CPU_state cpu;
 SELECTOR current_sreg;
 SEG_descriptor *seg_des;
 GATE_descriptor *idt_des;
