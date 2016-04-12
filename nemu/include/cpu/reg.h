@@ -148,7 +148,7 @@ typedef struct GateDescriptor {
 extern CPU_state cpu;
 extern SELECTOR current_sreg;
 extern SEG_descriptor *seg_des;
-extern GATE_descriptor *idt_des;
+GATE_descriptor *idt_des;
 
 static inline int check_reg_index(int index) {
 	assert(index >= 0 && index < 8);

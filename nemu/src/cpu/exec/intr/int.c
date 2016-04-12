@@ -15,7 +15,7 @@ make_helper(intr) {
 	}
 	else
 	{
-		//if (idt_des->privilege_level <=3)printf ("dpl = %d\n",idt_des->privilege_level);
+		if (idt_des->privilege_level <=3)printf ("dpl = %d\n",idt_des->privilege_level);
 	}
 	print_asm("int %x",NO);
 	return 2;
