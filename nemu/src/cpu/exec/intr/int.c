@@ -1,8 +1,8 @@
 #include "cpu/exec/helper.h"
 #include <nemu.h>
-//void raise_intr(uint8_t);
+void raise_intr(uint8_t);
 make_helper(intr) {
-	//int NO = instr_fetch(eip + 1, 1);
+	int NO = instr_fetch(eip + 1, 1);
 	if (cpu.cr0.protect_enable == 0)
 	{
 		cpu.IF = 0;
@@ -11,7 +11,7 @@ make_helper(intr) {
 		swaddr_write (reg_l (R_ESP) , 4 , cpu.cs.selector);
 		reg_l (R_ESP) -= 4;
 		swaddr_write (reg_l (R_ESP) , 4 , cpu.eip + 2);
-		//raise_intr (NO);
+		raise_intr (NO);
 	}
 	else
 	{
