@@ -8,6 +8,8 @@ make_helper(intr) {
 	if (cpu.cr0.protect_enable == 0)
 	{
 		printf ("fuck2!\n");
+		reg_l (R_ESP) -= 4;
+		swaddr_write (reg_l (R_ESP) , 4 , cpu.eflags);
 		cpu.IF = 0;
 		cpu.TF = 0;
 		reg_l (R_ESP) -= 4;

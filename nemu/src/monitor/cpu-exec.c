@@ -24,13 +24,13 @@ void raise_intr(uint8_t NO) {
 	/* TODO: Trigger an interrupt/exception with ``NO''.
 	 * That is, use ``NO'' to index the IDT.
 	 */
-	Log ("eip = %x",cpu.eip);
+	Log ("eip = %x\n",cpu.eip);
 	GATE_descriptor gate;
 	idt_des = &gate;
 	idt_des->first_part = instr_fetch(cpu.idtr.base_addr + (NO << 3), 4);/*8 bytes*/
 	idt_des->second_part = instr_fetch(cpu.idtr.base_addr + (NO << 3) + 4, 4);
 	Assert ((NO << 3) <= cpu.idtr.seg_limit,"idt out limit %hd, %d", (NO<<3), cpu.idtr.seg_limit);
-	Log ("selector = %x dpl = %d type = %x",idt_des -> segment,idt_des->privilege_level,idt_des->type);
+	Log ("selector = %x dpl = %d type = %x\n",idt_des -> segment,idt_des->privilege_level,idt_des->type);
 	cpu.cs.selector = idt_des -> segment;
 	Assert(((cpu.cs.selector>>3)<<3) <= cpu.gdtr.seg_limit, "segment out limit %d, %d", ((cpu.cs.selector>>3)<<3), cpu.gdtr.seg_limit);
 	seg_des->first_part = instr_fetch(cpu.gdtr.base_addr + ((cpu.cs.selector>>3)<<3), 4);
@@ -43,7 +43,7 @@ void raise_intr(uint8_t NO) {
 	cpu.cs.seg_limit2 = seg_des->seg_limit2;
 	cpu.cs.seg_limit3 = 0xfff;
 	cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0;
-	Log ("eip = %d",cpu.eip);
+	Log ("eip = %d\n",cpu.eip);
 	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);
 }
