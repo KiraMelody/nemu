@@ -74,6 +74,14 @@ static int cmd_info(char *args) {
 		printf ("cr0 = %x\n",cpu.cr0.val);
 		printf ("cr3 = %x\n",cpu.cr3.val);	
 	}
+	else if (args[0] == 'i') {
+		printf ("idtr.base = %x\n",cpu.idtr.base_addr);
+		printf ("idtr.limit = %x\n",cpu.idtr.seg_limit);	
+	}
+	else if (args[0] == 'g') {
+		printf ("gdtr.base = %x\n",cpu.gdtr.base_addr);
+		printf ("gdtr.limit = %x\n",cpu.gdtr.seg_limit);	
+	}
 	else assert (0);
 	return 0;
 }
