@@ -32,6 +32,7 @@ void raise_intr(uint8_t NO) {
 	Assert ((NO << 3) <= cpu.idtr.seg_limit,"idt out limit %hd, %d", (NO<<3), cpu.idtr.seg_limit);
 	Log ("selector = %x dpl = %d type = %x\n",idt_des -> segment,idt_des->privilege_level,idt_des->type);
 	Log ("cs.selector = %x\n",cpu.cs.selector);
+	Log ("idtr.base = %x\n",cpu.idtr.base_addr);
 	cpu.cs.selector = idt_des -> segment;
 	Assert(cpu.cs.selector <= cpu.cs.seg_limit, "segment out limit %d, %d", cpu.cs.selector, cpu.cs.seg_limit);
 	seg_des->first_part = instr_fetch(cpu.gdtr.base_addr + cpu.cs.selector, 4);
