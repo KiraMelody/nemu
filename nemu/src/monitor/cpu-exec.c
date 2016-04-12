@@ -2,7 +2,7 @@
 #include "cpu/helper.h"
 #include <setjmp.h>
 #include "monitor/watchpoint.h"
-
+#include "cpu/reg.h"
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
  * This is useful when you use the ``si'' command.
@@ -13,12 +13,39 @@
 int nemu_state = STOP;
 
 int exec(swaddr_t);
-
+void raise_intr(uint8_t);
 char assembly[80];
 char asm_buf[128];
 
 /* Used with exception handling. */
 jmp_buf jbuf;
+
+// void raise_intr(uint8_t NO) {
+// 	/* TODO: Trigger an interrupt/exception with ``NO''.
+// 	 * That is, use ``NO'' to index the IDT.
+// 	 */
+// 	extern GATE_descriptor *idt_des;
+// 	GATE_descriptor gate;
+// 	idt_des = &gate;
+// 	idt_des->first_part = instr_fetch(cpu.idtr.base_addr + (NO << 3), 4);/*8 bytes*/
+// 	idt_des->second_part = instr_fetch(cpu.idtr.base_addr + (NO << 3) + 4, 4);
+// 	Assert ((NO << 3) <= cpu.idtr.seg_limit,"idt out limit %hd, %d", (NO<<3), cpu.idtr.seg_limit);
+// 	Log ("selector = %x dpl = %d type = %x",idt_des -> segment,idt_des->privilege_level,idt_des->type);
+// 	cpu.cs.selector = idt_des -> segment;
+// 	Assert(((cpu.cs.selector>>3)<<3) <= cpu.gdtr.seg_limit, "segment out limit %d, %d", ((cpu.cs.selector>>3)<<3), cpu.gdtr.seg_limit);
+// 	seg_des->first_part = instr_fetch(cpu.gdtr.base_addr + ((cpu.cs.selector>>3)<<3), 4);
+// 	seg_des->second_part = instr_fetch(cpu.gdtr.base_addr + ((cpu.cs.selector>>3)<<3)+4, 4);
+// 	Assert(seg_des->p == 1, "segment error");
+// 	cpu.cs.seg_base1 = seg_des->seg_base1;
+// 	cpu.cs.seg_base2 = seg_des->seg_base2;
+// 	cpu.cs.seg_base3 = seg_des->seg_base3;
+// 	cpu.cs.seg_limit1 = seg_des->seg_limit1;
+// 	cpu.cs.seg_limit2 = seg_des->seg_limit2;
+// 	cpu.cs.seg_limit3 = 0xfff;
+// 	cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0;
+// 	/* Jump back to cpu_exec() */
+// 	longjmp(jbuf, 1);
+// }
 
 void print_bin_instr(swaddr_t eip, int len) {
 	int i;

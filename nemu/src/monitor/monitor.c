@@ -51,6 +51,12 @@ static void init_tlb() {
 	 	tlb[i].valid = false;
 	}
 }
+
+static void init_lidt() {
+	cpu.idtr.base_addr = 0;
+	cpu.idtr.seg_limit = 0x3ff;
+}
+
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
 
@@ -117,6 +123,7 @@ void restart() {
 	init_cr0();
 	init_seg();
 	init_tlb();
+	init_lidt();
 	/* Initialize CACHE. */
 	init_cache();
 	/* Initialize DRAM. */

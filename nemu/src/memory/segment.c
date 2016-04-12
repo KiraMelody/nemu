@@ -4,6 +4,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, SELECTOR current_sreg) {
 	if (cpu.cr0.protect_enable == 0)return addr;
 	if (current_sreg.val == cpu.cs.selector) 
 	{
+		Log ("seg_base = %x",cpu.cs.seg_base);
 		Assert(addr+len < cpu.cs.seg_limit, "cs segment out limit");
 		return cpu.cs.seg_base + addr;
 	}

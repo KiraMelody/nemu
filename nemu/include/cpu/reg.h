@@ -50,6 +50,10 @@ struct GDTR{
 		uint32_t base_addr;
 		uint16_t seg_limit;
 }gdtr;
+struct IDTR{
+		uint32_t base_addr;
+		uint16_t seg_limit;
+}idtr;
 	CR0 cr0;
 	CR3 cr3;
 	struct {
@@ -71,10 +75,7 @@ struct GDTR{
 			uint32_t seg_limit;
 		};
 	}cs, ds, es, ss;
-struct IDTR{
-		uint32_t base_addr;
-		uint16_t seg_limit;
-}idtr;
+
 
 } CPU_state;
 
@@ -127,10 +128,27 @@ typedef struct {
 	};
 }PAGE_descriptor;
 
+typedef struct GateDescriptor {
+	union {
+		struct {
+			uint32_t offset_15_0      : 16;
+			uint32_t segment          : 16;
+			uint32_t pad0             : 8;
+			uint32_t type             : 4;
+			uint32_t system           : 1;
+			uint32_t privilege_level  : 2;
+			uint32_t present          : 1;
+			uint32_t offset_31_16     : 16;
+		};
+		uint32_t first_part;
+		uint32_t second_part;
+	};
+}GATE_descriptor;
 
 extern CPU_state cpu;
 extern SELECTOR current_sreg;
 extern SEG_descriptor *seg_des;
+extern GATE_descriptor *idt_des;
 
 static inline int check_reg_index(int index) {
 	assert(index >= 0 && index < 8);

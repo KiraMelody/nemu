@@ -17,3 +17,5 @@
 #include "special/special.h"
 
 #include "CMOVcc/cmovcc.h"
+
+#include "intr/intr.h"
