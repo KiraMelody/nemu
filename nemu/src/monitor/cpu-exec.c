@@ -26,8 +26,8 @@ void raise_intr(uint8_t NO) {
 	 */
 	//extern GATE_descriptor *idt_des;
 	Log ("eip = %x",cpu.eip);
-	// GATE_descriptor gate;
-	// idt_des = &gate;
+	GATE_descriptor gate;
+	idt_des = &gate;
 	// idt_des->first_part = instr_fetch(cpu.idtr.base_addr + (NO << 3), 4);/*8 bytes*/
 	// idt_des->second_part = instr_fetch(cpu.idtr.base_addr + (NO << 3) + 4, 4);
 	// Assert ((NO << 3) <= cpu.idtr.seg_limit,"idt out limit %hd, %d", (NO<<3), cpu.idtr.seg_limit);
