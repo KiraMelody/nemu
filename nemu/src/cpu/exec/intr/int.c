@@ -6,6 +6,7 @@ make_helper(intr) {
 	printf ("no = %d\n",NO);
 	if (cpu.cr0.protect_enable == 0)
 	{
+		printf ("fuck!");
 		cpu.IF = 0;
 		cpu.TF = 0;
 		reg_l (R_ESP) -= 4;
@@ -16,9 +17,10 @@ make_helper(intr) {
 	}
 	else
 	{
-		printf ("!!!");
+		printf ("fuck!");
 		if (idt_des->privilege_level <=3)printf ("dpl = %d\n",idt_des->privilege_level);
 	}
+	printf ("fuck!");
 	print_asm("int %x",NO);
 	return 2;
 }
