@@ -4,6 +4,7 @@ void raise_intr(uint8_t);
 make_helper(intr) {
 	int NO = instr_fetch(eip + 1, 1);
 	printf ("no = %d\n",NO);
+	printf ("fuck1!");
 	if (cpu.cr0.protect_enable == 0)
 	{
 		printf ("fuck!");
