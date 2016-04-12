@@ -45,7 +45,7 @@ void raise_intr(uint8_t NO) {
 	cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0;
 	Assert (0,"eip = %d\n",cpu.eip);
 	/* Jump back to cpu_exec() */
-	longjmp(jbuf, 1);
+	//longjmp(jbuf, 1);
 }
 
 void print_bin_instr(swaddr_t eip, int len) {
