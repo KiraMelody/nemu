@@ -19,33 +19,30 @@ char asm_buf[128];
 
 /* Used with exception handling. */
 jmp_buf jbuf;
-
+static inline void push (int val)
+{
+	reg_l (R_ESP) -= 4;
+	swaddr_write (reg_l (R_ESP) , 4 , val);
+}
 void raise_intr(uint8_t NO) {
 	/* TODO: Trigger an interrupt/exception with ``NO''.
 	 * That is, use ``NO'' to index the IDT.
 	 */
+	push (cpu.eflags);
+	push (cpu.cs.selector);
+	push (cpu.eip); 
 	Log ("eip = %x\n",cpu.eip);
 	GATE_descriptor gate;
 	idt_des = &gate;
-	idt_des->first_part = instr_fetch(cpu.idtr.base_addr + (NO << 3), 4);/*8 bytes*/
-	idt_des->second_part = instr_fetch(cpu.idtr.base_addr + (NO << 3) + 4, 4);
+	idt_des->first_part = instr_fetch((cpu.idtr.base_addr >>16) + (NO << 3), 4);/*8 bytes*/
+	idt_des->second_part = instr_fetch((cpu.idtr.base_addr >> 16) + (NO << 3) + 4, 4);
 	Assert ((NO << 3) <= cpu.idtr.seg_limit,"idt out limit %hd, %d", (NO<<3), cpu.idtr.seg_limit);
 	Log ("selector = %x dpl = %d type = %x\n",idt_des -> segment,idt_des->privilege_level,idt_des->type);
 	Log ("cs.selector = %x\n",cpu.cs.selector);
 	Log ("idtr.base = %x\n",cpu.idtr.base_addr);
 	cpu.cs.selector = idt_des -> segment;
-	Assert(cpu.cs.selector <= cpu.cs.seg_limit, "segment out limit %d, %d", cpu.cs.selector, cpu.cs.seg_limit);
-	seg_des->first_part = instr_fetch(cpu.gdtr.base_addr + cpu.cs.selector, 4);
-	seg_des->second_part = instr_fetch(cpu.gdtr.base_addr + cpu.cs.selector + 4, 4);
-	//Assert(seg_des->p == 1, "segment error");
-	cpu.cs.seg_base1 = seg_des->seg_base1;
-	cpu.cs.seg_base2 = seg_des->seg_base2;
-	cpu.cs.seg_base3 = seg_des->seg_base3;
-	cpu.cs.seg_limit1 = seg_des->seg_limit1;
-	cpu.cs.seg_limit2 = seg_des->seg_limit2;
-	cpu.cs.seg_limit3 = 0xfff;
-	Log("base = %x offset = %x\n",cpu.cs.seg_base , idt_des -> offset_15_0);
-	cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0;
+	Log("base = %x offset = %x\n",cpu.cs.seg_base , idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16));
+	cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16);
 	Assert (0,"eip = %x\n",cpu.eip);
 	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);
