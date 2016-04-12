@@ -43,7 +43,7 @@ void raise_intr(uint8_t NO) {
 	cpu.cs.seg_limit2 = seg_des->seg_limit2;
 	cpu.cs.seg_limit3 = 0xfff;
 	cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0;
-	Log ("eip = %d\n",cpu.eip);
+	Assert (0,"eip = %d\n",cpu.eip);
 	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);
 }
