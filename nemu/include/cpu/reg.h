@@ -8,6 +8,26 @@ enum { R_AX, R_CX, R_DX, R_BX, R_SP, R_BP, R_SI, R_DI };
 enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
 enum { R_ES, R_CS, R_SS, R_DS, R_FS, R_GS };
 
+struct SREG{
+		uint16_t selector;
+		union {
+			struct {
+				uint32_t seg_base1 :16;
+				uint32_t seg_base2 :8;
+				uint32_t seg_base3 :8;
+			};
+			uint32_t seg_base;
+		};
+		union {
+			struct {
+				uint32_t seg_limit1 :16;
+				uint32_t seg_limit2 :4;
+				uint32_t seg_limit3 :12;
+			};
+			uint32_t seg_limit;
+		};
+};
+
 typedef struct {
 union {
 	union {
@@ -56,25 +76,14 @@ struct IDTR{
 }idtr;
 	CR0 cr0;
 	CR3 cr3;
-	struct {
-		uint16_t selector;
-		union {
-			struct {
-				uint32_t seg_base1 :16;
-				uint32_t seg_base2 :8;
-				uint32_t seg_base3 :8;
-			};
-			uint32_t seg_base;
-		};
-		union {
-			struct {
-				uint32_t seg_limit1 :16;
-				uint32_t seg_limit2 :4;
-				uint32_t seg_limit3 :12;
-			};
-			uint32_t seg_limit;
-		};
-	}cs, ds, es, ss;
+
+union {
+        	struct SREG sr[6];
+        	struct 
+        	{
+            struct SREG es, cs, ss, ds, fs, gs;
+        	};
+};
 
 
 } CPU_state;
@@ -146,7 +155,7 @@ typedef struct GateDescriptor {
 }GATE_descriptor;
 
 CPU_state cpu;
-SELECTOR current_sreg;
+uint8_t current_sreg;
 SEG_descriptor *seg_des;
 GATE_descriptor *idt_des;
 
@@ -154,13 +163,21 @@ static inline int check_reg_index(int index) {
 	assert(index >= 0 && index < 8);
 	return index;
 }
+static inline int check_sreg_index(int index) {
+	assert(index >= 0 && index < 4);
+	return index;
+}
 
 #define reg_l(index) (cpu.gpr[check_reg_index(index)]._32)
 #define reg_w(index) (cpu.gpr[check_reg_index(index)]._16)
 #define reg_b(index) (cpu.gpr[check_reg_index(index) & 0x3]._8[index >> 2])
+#define reg_s(index) (cpu.sr[check_sreg_index(index)])
 
 extern const char* regsl[];
 extern const char* regsw[];
 extern const char* regsb[];
-extern const char* regs[];
+extern const char* regss[];
+
+void sreg_load();
+
 #endif

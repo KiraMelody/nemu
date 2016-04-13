@@ -98,6 +98,7 @@ int read_ModR_M(swaddr_t eip, Operand *rm, Operand *reg) {
 			case 4: rm->val = reg_l(m.R_M); break;
 			default: assert(0);
 		}
+
 #ifdef DEBUG
 		switch(rm->size) {
 			case 1: sprintf(rm->str, "%%%s", regsb[m.R_M]); break;
@@ -107,9 +108,17 @@ int read_ModR_M(swaddr_t eip, Operand *rm, Operand *reg) {
 #endif
 		return 1;
 	}
-	else {
+	else 
+	{
 		int instr_len = load_addr(eip, &m, rm);
-		current_sreg.val = cpu.ds.selector;
+		if(rm->reg == R_ESP || rm->reg == R_EBP)
+		{
+			current_sreg = R_SS;
+		}
+		else
+		{
+			current_sreg = R_DS;
+		}
 		rm->val = swaddr_read(rm->addr, rm->size);
 		return instr_len;
 	}
