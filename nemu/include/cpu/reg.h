@@ -97,6 +97,7 @@ typedef  union {
 	uint16_t val;
 }SELECTOR;
 typedef struct {
+	struct {
 	union {
 		struct {
 			uint32_t seg_limit1	:16;
@@ -119,6 +120,7 @@ typedef struct {
 		};
 		uint32_t second_part;
 	};
+};
 }SEG_descriptor;
 typedef struct {
 	union {
