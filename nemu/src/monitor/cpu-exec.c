@@ -41,7 +41,7 @@ void raise_intr(uint8_t NO) {
 	Log ("cs.selector = %x\n",cpu.cs.selector);
 	Log ("idtr.base = %x\n",cpu.idtr.base_addr);
 	cpu.cs.selector = idt_des -> segment;
-	Assert(((cpu.cs.selector>>3)<<3) <= cpu.gdtr.seg_limit, "segment out limit %d, %d", ((cpu.cs.selector>>3)<<3), cpu.gdtr.seg_limit);
+	//Assert(((cpu.cs.selector>>3)<<3) <= cpu.gdtr.seg_limit, "segment out limit %d, %d", ((cpu.cs.selector>>3)<<3), cpu.gdtr.seg_limit);
 	seg_des->first_part = instr_fetch(cpu.gdtr.base_addr + ((cpu.cs.selector>>3)<<3), 4);
 	seg_des->second_part = instr_fetch(cpu.gdtr.base_addr + ((cpu.cs.selector>>3)<<3)+4, 4);
 	Assert(seg_des->p == 1, "segment error");
