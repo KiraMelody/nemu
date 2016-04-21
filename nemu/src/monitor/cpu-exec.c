@@ -33,8 +33,8 @@ void raise_intr(uint8_t NO) {
     	GATE_descriptor gate;
 	idt_des = &gate;
    	lnaddr_t pidt = cpu.idtr.base_addr + NO * 8;
-   	idt_des->first_part = lnaddr_read(pidt, 4);
-	idt_des->second_part = lnaddr_read(pidt + 4, 4);
+   	idt_des->first_part = lnaddr_read(pidt + 4, 4);
+	idt_des->second_part = lnaddr_read(pidt, 4);
 	uint64_t idt_des2 = ((uint64_t) lnaddr_read(pidt + 4, 4) << 32) | lnaddr_read(pidt, 4); 
 	Log ("%ld %ld\n",(uint64_t)idt_des,(uint64_t)idt_des2);
     	//uint64_t idt_des = ((uint64_t) lnaddr_read(pidt + 4, 4) << 32) | lnaddr_read(pidt, 4); 
