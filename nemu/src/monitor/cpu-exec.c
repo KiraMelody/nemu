@@ -36,7 +36,9 @@ void raise_intr(uint8_t NO) {
    	idt_des->first_part = lnaddr_read(pidt + 4, 4);
 	idt_des->second_part = lnaddr_read(pidt, 4);
 	Log ("%x %x\n",idt_des->first_part ,idt_des->second_part);
+
 	uint64_t idt_des2 = ((uint64_t) lnaddr_read(pidt + 4, 4) << 32) | lnaddr_read(pidt, 4); 
+	Log ("%lx\n",idt_des2);
 	Log ("%x %lx\n",idt_des -> segment,((uint64_t)idt_des2 >> 16) & 0xFFFF);
     	//uint64_t idt_des = ((uint64_t) lnaddr_read(pidt + 4, 4) << 32) | lnaddr_read(pidt, 4); 
     	//Assert((idt_des >> 47) & 1, "IDT descripter does not present, Interrupt # = %#x", NO);
