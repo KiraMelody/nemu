@@ -45,8 +45,8 @@ void raise_intr(uint8_t NO) {
     	cpu.cs.selector = idt_des -> segment;
     	current_sreg = R_CS;
     	sreg_load();
-    	cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16);
-    	//cpu.eip = (idt_des & 0xFFFF) | ((idt_des >> 32LL) & 0xFFFF0000);
+    	//cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16);
+    	cpu.eip = ((uint64_t)idt_des & 0xFFFF) | (((uint64_t)idt_des >> 32LL) & 0xFFFF0000);
     /* Jump back to cpu_exec() */
     	longjmp(jbuf, 1);
 }
