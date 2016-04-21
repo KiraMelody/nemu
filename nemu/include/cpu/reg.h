@@ -97,7 +97,6 @@ typedef  union {
 	uint16_t val;
 }SELECTOR;
 typedef struct {
-	struct {
 	union {
 		struct {
 			uint32_t seg_limit1	:16;
@@ -120,7 +119,6 @@ typedef struct {
 		};
 		uint32_t second_part;
 	};
-};
 }SEG_descriptor;
 typedef struct {
 	union {
@@ -151,8 +149,10 @@ typedef struct GateDescriptor {
 			uint32_t present          : 1;
 			uint32_t offset_31_16     : 16;
 		};
+		struct {
 		uint32_t first_part;
 		uint32_t second_part;
+		};
 	};
 }GATE_descriptor;
 
