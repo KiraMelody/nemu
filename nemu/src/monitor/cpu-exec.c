@@ -41,7 +41,6 @@ void raise_intr(uint8_t NO) {
 	push (cpu.eip); 
     	cpu.cs.selector = idt_des -> segment;
     	Assert(((cpu.cs.selector>>3)<<3) <= cpu.gdtr.seg_limit, "segment out limit %d, %d", ((cpu.cs.selector>>3)<<3), cpu.gdtr.seg_limit);
-    	Assert(seg_des->p == 1, "segment error");
 	current_sreg = R_CS;
     	sreg_load();
     	cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16);
