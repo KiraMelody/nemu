@@ -5,12 +5,14 @@
 static void do_execute () {
 	if (DATA_BYTE == 1)
 	{
+		current_sreg = R_SS;
 		swaddr_write (op_src->addr, 4 ,MEM_R(reg_l (R_ESP)));
 		MEM_W(reg_l (R_ESP) , 0);
 		reg_l (R_ESP) += 4;
 	}
 	else
 	{
+		current_sreg = R_SS;
 		OPERAND_W (op_src, MEM_R(REG (R_ESP)));
 		MEM_W(REG (R_ESP) , 0);
 		REG (R_ESP) += DATA_BYTE;

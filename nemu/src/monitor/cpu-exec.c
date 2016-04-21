@@ -57,7 +57,6 @@ void raise_intr(uint8_t NO) {
 	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);
 }
-
 void print_bin_instr(swaddr_t eip, int len) {
 	int i;
 	int l = sprintf(asm_buf, "%8x:   ", eip);

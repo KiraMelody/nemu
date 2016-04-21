@@ -106,6 +106,7 @@ static int cmd_x(char *args) {
 	start_address = expr (args,&suc);
 	if (!suc)assert (1);
 	printf ("0x%08x: ",start_address);
+	current_sreg = R_DS;
 	for (i=1;i<=n;i++)
 	{
 		printf ("0x%08x ",swaddr_read (start_address,4));
@@ -148,6 +149,7 @@ static int cmd_d(char *args) {
 }
 static void read_ebp (swaddr_t addr , PartOfStackFrame *ebp)
 {
+	current_sreg = R_SS;
 	ebp -> prev_ebp = swaddr_read (addr , 4);
 	ebp -> ret_addr = swaddr_read (addr + 4 , 4);
 	int i;

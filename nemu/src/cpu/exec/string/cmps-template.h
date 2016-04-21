@@ -6,12 +6,16 @@ static void do_execute () {
 	DATA_TYPE src,dest;
 	if (ops_decoded.is_stack_size_16)
 	{
+		current_sreg = R_DS;
 		src = swaddr_read (reg_w (R_SI),DATA_BYTE);
+		current_sreg = R_ES;
 		dest = swaddr_read (reg_w (R_DI),DATA_BYTE);
 	}
 	else
 	{
+		current_sreg = R_DS;
 		src = swaddr_read (reg_l (R_ESI),DATA_BYTE);
+		current_sreg = R_ES;
 		dest = swaddr_read (reg_l (R_EDI),DATA_BYTE);
 	}
 	DATA_TYPE result = dest - src;

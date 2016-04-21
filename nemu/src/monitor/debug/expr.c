@@ -231,7 +231,7 @@ uint32_t eval(int l,int r) {
 //			printf ("val = %d\n",val);
 			switch (token[l].type)
  			{
-				case POINTOR:return swaddr_read (val,4);
+				case POINTOR:current_sreg = R_DS;return swaddr_read (val,4);
 				case MINUS:return -val;
 				case '!':return !val;
 				default :Assert (1,"default\n");

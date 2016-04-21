@@ -4,6 +4,7 @@
 
 static void do_execute () {
 	swaddr_t i;
+	current_sreg = R_SS;
 	for (i = REG(R_ESP);i < REG (R_EBP); i+=DATA_BYTE)
 		MEM_W (i,0);
 	REG(R_ESP) = REG (R_EBP);
