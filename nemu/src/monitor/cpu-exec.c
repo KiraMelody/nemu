@@ -21,6 +21,7 @@ char asm_buf[128];
 jmp_buf jbuf;
 static inline void push (int val)
 {
+	current_sreg = R_SS;
 	reg_l (R_ESP) -= 4;
 	swaddr_write (reg_l (R_ESP) , 4 , val);
 }
@@ -28,6 +29,25 @@ void raise_intr(uint8_t NO) {
 	/* TODO: Trigger an interrupt/exception with ``NO''.
 	 * That is, use ``NO'' to index the IDT.
 	 */
+    	Assert(NO * 8 <= cpu.idtr.seg_limit, "Interrupt number exceeded");
+   	 lnaddr_t pidt = cpu.idtr.base_addr + NO * 8;
+    	uint64_t idt_des = ((uint64_t) lnaddr_read(pidt + 4, 4) << 32) | lnaddr_read(pidt, 4); 
+    	Assert((idt_des >> 47) & 1, "IDT descripter does not present, Interrupt # = %#x", NO);
+    	//uint8_t gate_type = (idt_des >> 40) & 0x7;
+	push (cpu.eflags);
+	push (cpu.cs.selector);
+	push (cpu.eip); 
+    // long jump
+    	cpu.cs.selector = (idt_des >> 16) & 0xFFFF;
+    	current_sreg = R_CS;
+    	sreg_load();
+    	cpu.eip = (idt_des & 0xFFFF) | ((idt_des >> 32LL) & 0xFFFF0000);
+    /* Jump back to cpu_exec() */
+    	longjmp(jbuf, 1);
+}
+/*
+void raise_intr(uint8_t NO) {
+	
 	push (cpu.eflags);
 	push (cpu.cs.selector);
 	push (cpu.eip); 
@@ -54,9 +74,8 @@ void raise_intr(uint8_t NO) {
 	Log("base = %x offset = %x\n",cpu.cs.seg_base , idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16));
 	cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16);
 	Assert (0,"eip = %x\n",cpu.eip);
-	/* Jump back to cpu_exec() */
 	longjmp(jbuf, 1);
-}
+}*/
 void print_bin_instr(swaddr_t eip, int len) {
 	int i;
 	int l = sprintf(asm_buf, "%8x:   ", eip);
