@@ -30,18 +30,23 @@ void raise_intr(uint8_t NO) {
 	 * That is, use ``NO'' to index the IDT.
 	 */
     	Assert(NO * 8 <= cpu.idtr.seg_limit, "Interrupt number exceeded");
-   	 lnaddr_t pidt = cpu.idtr.base_addr + NO * 8;
-    	uint64_t idt_des = ((uint64_t) lnaddr_read(pidt + 4, 4) << 32) | lnaddr_read(pidt, 4); 
-    	Assert((idt_des >> 47) & 1, "IDT descripter does not present, Interrupt # = %#x", NO);
+    	GATE_descriptor gate;
+	idt_des = &gate;
+   	lnaddr_t pidt = cpu.idtr.base_addr + NO * 8;
+   	idt_des->first_part = lnaddr_read(pidt, 4);
+	idt_des->second_part = lnaddr_read(pidt + 4, 4);
+    	//uint64_t idt_des = ((uint64_t) lnaddr_read(pidt + 4, 4) << 32) | lnaddr_read(pidt, 4); 
+    	//Assert((idt_des >> 47) & 1, "IDT descripter does not present, Interrupt # = %#x", NO);
     	//uint8_t gate_type = (idt_des >> 40) & 0x7;
 	push (cpu.eflags);
 	push (cpu.cs.selector);
 	push (cpu.eip); 
     // long jump
-    	cpu.cs.selector = (idt_des >> 16) & 0xFFFF;
+    	cpu.cs.selector = idt_des -> segment;
     	current_sreg = R_CS;
     	sreg_load();
-    	cpu.eip = (idt_des & 0xFFFF) | ((idt_des >> 32LL) & 0xFFFF0000);
+    	cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16);
+    	//cpu.eip = (idt_des & 0xFFFF) | ((idt_des >> 32LL) & 0xFFFF0000);
     /* Jump back to cpu_exec() */
     	longjmp(jbuf, 1);
 }
