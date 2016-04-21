@@ -35,6 +35,8 @@ void raise_intr(uint8_t NO) {
    	lnaddr_t pidt = cpu.idtr.base_addr + NO * 8;
    	idt_des->first_part = lnaddr_read(pidt, 4);
 	idt_des->second_part = lnaddr_read(pidt + 4, 4);
+	uint64_t idt_des2 = ((uint64_t) lnaddr_read(pidt + 4, 4) << 32) | lnaddr_read(pidt, 4); 
+	Log ("%ld %ld\n",(uint64_t)idt_des,(uint64_t)idt_des2);
     	//uint64_t idt_des = ((uint64_t) lnaddr_read(pidt + 4, 4) << 32) | lnaddr_read(pidt, 4); 
     	//Assert((idt_des >> 47) & 1, "IDT descripter does not present, Interrupt # = %#x", NO);
     	//uint8_t gate_type = (idt_des >> 40) & 0x7;
@@ -43,6 +45,7 @@ void raise_intr(uint8_t NO) {
 	push (cpu.eip); 
     // long jump
     	cpu.cs.selector = idt_des -> segment;
+    	Log ("%ld %ld\n",((uint64_t)idt_des >> 16) & 0xFFFF,(uint64_t)cpu.cs.selector);
     	current_sreg = R_CS;
     	sreg_load();
     	//cpu.eip = cpu.cs.seg_base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16);
