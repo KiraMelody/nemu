@@ -35,7 +35,7 @@ void raise_intr(uint8_t NO) {
    	lnaddr_t pidt = cpu.idtr.base_addr + NO * 8;
    	idt_des->first_part = lnaddr_read(pidt, 4);
 	idt_des->second_part = lnaddr_read(pidt + 4, 4);
-	Log ("%x %x\n",idt_des->first_part,idt_des->second_part);
+	Log ("%x %x\n",lnaddr_read(pidt, 4),lnaddr_read(pidt + 4, 4));
 	uint64_t idt_des2 = ((uint64_t) lnaddr_read(pidt + 4, 4) << 32) | lnaddr_read(pidt, 4); 
 	Log ("%lx %lx\n",(uint64_t)idt_des,(uint64_t)idt_des2);
     	//uint64_t idt_des = ((uint64_t) lnaddr_read(pidt + 4, 4) << 32) | lnaddr_read(pidt, 4); 
