@@ -32,10 +32,10 @@ make_helper(nemu_trap) {
 		case 2:
 			//uint32_t addr = cpu.ecx;
  			// int len = cpu.edx;
- 			 current_sreg = R_DS;
- 			// int i;
- 			// for (i = 0;i < len;i ++);
- 			//putchar(swaddr_read (addr + i,1));
+ 			current_sreg = R_DS;
+ 			int i;
+ 			for (i = 0;i < cpu.edx;i ++)
+ 			putchar(swaddr_read (cpu.ecx + i,1));
 		   	break;
 
 		default:
