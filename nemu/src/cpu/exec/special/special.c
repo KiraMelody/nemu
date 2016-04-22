@@ -30,8 +30,6 @@ make_helper(nemu_trap) {
 	switch(cpu.eax) 
 	{
 		case 2:
-			//uint32_t addr = cpu.ecx;
- 			// int len = cpu.edx;
  			current_sreg = R_DS;
  			int i;
  			for (i = 0;i < cpu.edx;i ++)
