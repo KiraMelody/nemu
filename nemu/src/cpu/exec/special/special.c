@@ -27,8 +27,15 @@ make_helper(inv) {
 make_helper(nemu_trap) {
 	print_asm("nemu trap (eax = %d)", cpu.eax);
 
-	switch(cpu.eax) {
+	switch(cpu.eax) 
+	{
 		case 2:
+			//uint32_t addr = cpu.ecx;
+ 			// int len = cpu.edx;
+ 			// current_sreg = R_DS;
+ 			// int i;
+ 			// for (i = 0;i < len;i ++);
+ 			//putchar(swaddr_read (addr + i,1));
 		   	break;
 
 		default:
