@@ -18,6 +18,7 @@ static void do_execute () {
 	{
 		pop(i);
 	}
+	Log ("over");
 	print_asm_no_template1();
 }
 make_instr_helper(n)
