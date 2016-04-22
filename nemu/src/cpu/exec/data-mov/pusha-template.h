@@ -10,7 +10,7 @@ static void push2(int x)
 }
 static void push4(int x)
 {
-	Log ("push %s at %x\n",REG_NAME(x),reg_l (R_ESP));
+	Log ("push %x at %x\n",x,reg_l (R_ESP));
 	reg_l (R_ESP) -= 4;
 	swaddr_write (reg_l (R_ESP) , 4 , x);
 }
