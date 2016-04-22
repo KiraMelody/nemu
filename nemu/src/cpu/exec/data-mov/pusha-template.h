@@ -31,12 +31,12 @@ static void do_execute () {
 	}
 	else
 	{
-		DATA_TYPE temp = reg_l (R_ESP);
+		//DATA_TYPE temp = reg_l (R_ESP);
 		push4 (R_EAX);
 		push4 (R_ECX);
 		push4 (R_EDX);
 		push4 (R_EBX);
-		push4 (temp);
+		//push4 (temp);
 		push4 (R_EBP);
 		push4 (R_ESI);
 		push4 (R_EDI);
