@@ -4,10 +4,11 @@
 #if DATA_BYTE == 2
 static void pop(int x)
 {
-	printf ("pop %s\n",REG_NAME(x));
-	REG (x) = MEM_R(REG (R_ESP));
-	MEM_W(REG (R_ESP) , 0);
-	REG (R_ESP) += DATA_BYTE;
+	//Log ("pop %s as %x",regs[x],reg_l (R_ESP));
+	current_sreg = R_SS;
+	reg_l (x) = swaddr_read(reg_l (R_ESP) , 4);
+	swaddr_write (reg_l (R_ESP) , 4 , 0);
+	reg_l (R_ESP) += 4;
 }
 #endif
 static void do_execute () {
