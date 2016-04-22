@@ -33,8 +33,6 @@ void irq_handle(TrapFrame *tf) {
 	 * to match the trap frame built during ``do_irq.S''. Remove the 
 	 * following line after you are done.
 	 */
-	panic("Have you re-organized the ``TrapFrame'' structure?");
-
 	int irq = tf->irq;
 
 	if (irq < 0) {
