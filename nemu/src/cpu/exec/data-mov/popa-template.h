@@ -13,7 +13,6 @@ static void pop(int x)
 static void do_execute () {
 	current_sreg = R_SS;
 	int i;
-	printf ("data byte = %d",(int)DATA_BYTE);
 	for (i = 7;i >= 0;i --)
 	{
 		if (i == 4)continue;
