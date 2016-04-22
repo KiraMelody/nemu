@@ -4,7 +4,7 @@
 #if DATA_BYTE == 2
 static void pop(int x)
 {
-	MEM_W(REG (x) , MEM_R(REG (R_ESP)));
+	REG (x) = MEM_R(REG (R_ESP));
 	MEM_W(REG (R_ESP) , 0);
 	REG (R_ESP) += DATA_BYTE;
 }
