@@ -27,7 +27,7 @@ make_helper(iret)
 		printf ("eip = %x\n",cpu.eip);
 		printf ("cs = %x\n",cpu.cs.selector);
 		printf ("flag = %x\n",cpu.eflags);
-		sreg_load ();
+		//sreg_load ();
 	}
 	print_asm("iret");
 	return 1;
