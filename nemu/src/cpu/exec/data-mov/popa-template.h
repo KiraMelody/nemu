@@ -4,9 +4,9 @@
 #if DATA_BYTE == 2
 static void pop(int x)
 {
-	Log ("pop %s as %x",regsl[x],reg_l (R_ESP));
 	current_sreg = R_SS;
 	reg_l (x) = swaddr_read(reg_l (R_ESP) , 4);
+	Log ("pop %s = %x as %x",regsl[x],reg_l (x),reg_l (R_ESP));
 	swaddr_write (reg_l (R_ESP) , 4 , 0);
 	reg_l (R_ESP) += 4;
 }
