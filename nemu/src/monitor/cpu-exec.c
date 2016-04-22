@@ -37,6 +37,11 @@ void raise_intr(uint8_t NO) {
 	idt_des->second_part = lnaddr_read(pidt + 4, 4);
 	Assert ((NO << 3) <= cpu.idtr.seg_limit,"idt out limit %hd, %d", (NO<<3), cpu.idtr.seg_limit);
 	push (cpu.eflags);
+	if (cpu.cr0.protect_enable == 0)
+	{
+		cpu.IF = 0;
+		cpu.TF = 0;
+	}
 	push (cpu.cs.selector);
 	push (cpu.eip); 
     	cpu.cs.selector = idt_des -> segment;

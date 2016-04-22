@@ -13,7 +13,6 @@ static void do_execute () {
 		cpu.idtr.seg_limit = swaddr_read (op_src->addr , 2);
 		cpu.idtr.base_addr = swaddr_read (op_src->addr + 2,4);
 	}
-	printf ("idtr.limit = %x, base = %x\n",cpu.idtr.seg_limit,cpu.idtr.base_addr);
 	print_asm_template1();
 }
 make_instr_helper(rm)
