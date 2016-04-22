@@ -27,7 +27,7 @@ make_helper(iret)
 		Log ("eip = %x\n",cpu.eip);
 		Log ("cs = %x\n",cpu.cs.selector);
 		Log ("flag = %x\n",cpu.eflags);
-		//sreg_load ();
+		sreg_load ();
 	}
 	print_asm("iret");
 	return 1;
