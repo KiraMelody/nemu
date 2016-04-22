@@ -20,26 +20,26 @@ static void do_execute () {
 	if (DATA_BYTE == 2)
 	{
 		DATA_TYPE temp = reg_w (R_SP);
-		push2 (R_AX);
-		push2 (R_CX);
-		push2 (R_DX);
-		push2 (R_BX);
+		push2 (reg_w(R_AX));
+		push2 (reg_w(R_CX));
+		push2 (reg_w(R_DX));
+		push2 (reg_w(R_BX));
 		push2 (temp);
-		push2 (R_BP);
-		push2 (R_SI);
-		push2 (R_DI);
+		push2 (reg_w(R_BP));
+		push2 (reg_w(R_SI));
+		push2 (reg_w(R_DI));
 	}
 	else
 	{
-		//DATA_TYPE temp = reg_l (R_ESP);
-		push4 (R_EAX);
-		push4 (R_ECX);
-		push4 (R_EDX);
-		push4 (R_EBX);
-		//push4 (temp);
-		push4 (R_EBP);
-		push4 (R_ESI);
-		push4 (R_EDI);
+		DATA_TYPE temp = reg_l (R_ESP);
+		push4 (reg_l(R_EAX));
+		push4 (reg_l(R_ECX));
+		push4 (reg_l(R_EDX));
+		push4 (reg_l(R_EBX));
+		push4 (temp);
+		push4 (reg_l(R_EBP));
+		push4 (reg_l(R_ESI));
+		push4 (reg_l(R_EDI));
 	}
 	print_asm_no_template1();
 }
