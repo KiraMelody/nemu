@@ -6,7 +6,6 @@ static void pop(int x)
 {
 	current_sreg = R_SS;
 	if (x != 4)reg_l (x) = swaddr_read(reg_l (R_ESP) , 4);
-	Log ("pop %s = %x as %x",regsl[x],reg_l (x),reg_l (R_ESP));
 	swaddr_write (reg_l (R_ESP) , 4 , 0);
 	reg_l (R_ESP) += 4;
 }
