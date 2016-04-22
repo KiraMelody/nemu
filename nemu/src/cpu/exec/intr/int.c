@@ -6,5 +6,5 @@ make_helper(intr) {
 	cpu.eip += 2;
 	print_asm("int %x",NO);
 	raise_intr (NO);
-	return 2;
+	return 0;
 }
