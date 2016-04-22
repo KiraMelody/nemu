@@ -30,5 +30,5 @@ make_helper(iret)
 		sreg_load ();
 	}
 	print_asm("iret");
-	return 1;
+	return 0;
 }
