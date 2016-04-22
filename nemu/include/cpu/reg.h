@@ -64,6 +64,7 @@ union {
 		uint32_t eflags;
 		};
 	};
+	bool INTR;
 };
 	
 struct GDTR{
