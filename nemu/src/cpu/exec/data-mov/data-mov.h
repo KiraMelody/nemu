@@ -6,6 +6,8 @@
 #include "xchg.h"
 #include "push.h"
 #include "pop.h"
+#include "pusha.h"
+#include "popa.h"
 #include "leave.h"
 #include "cwtl.h"
 #include "cltd.h"
