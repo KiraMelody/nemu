@@ -18,7 +18,7 @@ static void do_execute () {
 	{
 		pop(i);
 	}
-	print_asm_no_template1();
+	print_asm("popa");
 }
 make_instr_helper(n)
 
