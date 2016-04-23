@@ -6,6 +6,12 @@ make_helper(nop) {
 	return 1;
 }
 
+make_helper(hlt) {
+	if (!cpu.INTR)cpu.eip--;
+	print_asm("hlt");
+	return 1;
+}
+
 make_helper(int3) {
 	void do_int3();
 	do_int3();
