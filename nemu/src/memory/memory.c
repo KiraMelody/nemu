@@ -13,6 +13,9 @@ void ddr3_read(hwaddr_t, void*);
 void ddr3_write(hwaddr_t, void*,uint8_t*);
 lnaddr_t seg_translate(swaddr_t, size_t, uint8_t);
 hwaddr_t page_translate(lnaddr_t);
+int is_mmio(hwaddr_t);
+uint32_t mmio_read(hwaddr_t, size_t, int);
+void mmio_write(hwaddr_t, size_t, uint32_t, int);
 CPU_state cpu;
 extern uint8_t current_sreg;
 SEG_descriptor *seg_des;
@@ -173,10 +176,16 @@ void cache_write(hwaddr_t addr, size_t len,uint32_t data) {
 	secondarycache_write(addr,len,data);
 }
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
+	int index = is_mmio(addr);
+	if ( index >= 0)
+	{
+		return mmio_read(addr, len, index);
+	}
 	uint32_t offset = addr & (BLOCK_SIZE - 1); // inside addr
 	uint32_t block = cache_read(addr);
 	uint8_t temp[4];
 	memset (temp,0,sizeof (temp));
+
 	if (offset + len >= BLOCK_SIZE) 
 	{
 		uint32_t _block = cache_read(addr + len);
@@ -189,14 +198,17 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	}
 	int zero = 0;
 	uint32_t tmp = unalign_rw(temp + zero, 4) & (~0u >> ((4 - len) << 3)); 
-	//uint32_t ground = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	//Assert (tmp == ground,"cache = 0x%x , dram = 0x%x , len = %d\n",tmp,ground,(int)len);
-	return tmp;//cache fail
+	return tmp;
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
+	int index = is_mmio(addr);
+	if ( index >= 0)
+	{
+		mmio_write(addr, len, data, index);
+		return ;
+	}
 	cache_write(addr, len, data);
-	//dram_write(addr, len, data);//cache fail
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
