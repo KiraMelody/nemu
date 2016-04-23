@@ -63,6 +63,7 @@ make_helper(mov_cr2r) {
 }
 make_helper(mov_r2cr) {
 	uint8_t opcode = instr_fetch(eip + 1, 1);
+	printf ("reg %d \n",op_dest->reg);
 	switch (opcode) {
 		case 0xc0:
 		cpu.cr0.val = cpu.eax;
