@@ -230,7 +230,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 	if(addr>0xc0000000)return hwaddr_write(addr-0xc0000000,len,data);
-	return lnaddr_write(addr,len,data);
+	return hwaddr_write(addr,len,data);
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
