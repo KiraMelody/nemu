@@ -14,7 +14,9 @@ hwaddr_t TLB_read(uint32_t addr)
 	for (i = 0;i < TLB_SIZE; i ++)
 	{
 		if (va == tlb[i].tag && tlb[i].valid)
+		{
 			return tlb[i].page_number;
+		}
 	}
 	return -1;
 }
@@ -25,7 +27,8 @@ void TLB_write(uint32_t addr,uint32_t num)
 	int i;
 	for (i = 0;i < TLB_SIZE; i ++)
 	{
-		if (!tlb[i].valid){
+		if (!tlb[i].valid)
+		{
 			tlb[i].valid = true;
 			tlb[i].tag = va;
 			tlb[i].page_number = na;

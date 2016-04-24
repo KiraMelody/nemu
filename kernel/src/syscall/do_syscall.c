@@ -4,7 +4,7 @@
 
 void add_irq_handle(int, void (*)(void));
 void mm_brk(uint32_t);
-
+void serial_printc(char);
 static void sys_brk(TrapFrame *tf) {
 #ifdef IA32_PAGE
 	mm_brk(tf->ebx);
@@ -20,8 +20,9 @@ static void sys_write(TrapFrame *tf)
  	uint32_t result = 0;
  	if (fd == 1 || fd == 2) 
  	{
- 	    	asm volatile (".byte 0xd6" : : "a"(2), "c"(buf), "d"(len));
- 	    	result = tf->edx;
+ 	    	while (len--) 
+ 	    		serial_printc(*(buf++));
+        		result = tf->edx;
  	} 
  	else 
  	{
