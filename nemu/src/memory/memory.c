@@ -72,6 +72,7 @@ uint32_t secondarycache_read(hwaddr_t addr)
 	uint32_t block = (addr >> 6)<<6;
 	int i;
 	bool v = false;
+	assert((g + 1) * SIXTEEN_WAY<STORAGE_SIZE_L2/BLOCK_SIZE);
 	for (i = g * SIXTEEN_WAY ; i < (g + 1) * SIXTEEN_WAY ;i ++)
 	{
 		if (cache2[i].tag == (addr >> 18)&& cache2[i].valid)
@@ -91,6 +92,7 @@ uint32_t secondarycache_read(hwaddr_t addr)
 		{
 			srand (0);
 			i = g * SIXTEEN_WAY + rand() % SIXTEEN_WAY;
+			assert(i<STORAGE_SIZE_L2/BLOCK_SIZE);
 			if (cache2[i].dirty)
 			{
 				uint8_t mask[BURST_LEN * 2];
@@ -99,6 +101,7 @@ uint32_t secondarycache_read(hwaddr_t addr)
 				ddr3_write(block + j * BURST_LEN, cache2[i].data + j * BURST_LEN, mask);
 			}
 		}
+		assert(i<STORAGE_SIZE_L2/BLOCK_SIZE);
 		cache2[i].valid = true;
 		cache2[i].tag = addr >> 18;
 		cache2[i].dirty = false;
@@ -135,6 +138,8 @@ uint32_t cache_read(hwaddr_t addr)
 		}
 		cache[i].valid = true;
 		cache[i].tag = addr >> 13;
+		assert(i<STORAGE_SIZE_L1/BLOCK_SIZE);
+		assert(j<STORAGE_SIZE_L2/BLOCK_SIZE);
 		memcpy (cache[i].data,cache2[j].data,BLOCK_SIZE);
 	}
 	return i;
@@ -153,6 +158,7 @@ void secondarycache_write(hwaddr_t addr, size_t len,uint32_t data) {
 			}
 	}
 	if (!v)i = secondarycache_read (addr);
+	assert(i<STORAGE_SIZE_L2/BLOCK_SIZE);
 	cache2[i].dirty = true;
 	memcpy (cache2[i].data + offset , &data , len);
 }
@@ -171,6 +177,7 @@ void cache_write(hwaddr_t addr, size_t len,uint32_t data) {
 	}
 	if (v)
 	{
+		assert(i<STORAGE_SIZE_L1/BLOCK_SIZE);
 		memcpy (cache[i].data + offset , &data , len);
 	}
 	secondarycache_write(addr,len,data);
@@ -189,6 +196,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	if (offset + len >= BLOCK_SIZE) 
 	{
 		uint32_t _block = cache_read(addr + len);
+		assert(block<STORAGE_SIZE_L1/BLOCK_SIZE);
 		memcpy(temp,cache[block].data + offset, BLOCK_SIZE - offset);
 		memcpy(temp + BLOCK_SIZE - offset,cache[_block].data, len - (BLOCK_SIZE - offset));
 	}
