@@ -9,7 +9,6 @@ struct Tlb
 }tlb[TLB_SIZE];
 hwaddr_t TLB_read(uint32_t addr)
 {
-	return -1;
 	int va = addr & 0xfffff000;
 	int i;
 	for (i = 0;i < TLB_SIZE; i ++)
@@ -23,7 +22,6 @@ hwaddr_t TLB_read(uint32_t addr)
 }
 void TLB_write(uint32_t addr,uint32_t num)
 {
-	return;
 	int va = addr & 0xfffff000;
 	int na = num & 0xfffff000;
 	int i;
