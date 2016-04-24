@@ -1,5 +1,5 @@
 #include "cpu/exec/template-start.h"
-#include <stdio.h>
+
 #define instr add
 
 static void do_execute() {
@@ -12,7 +12,6 @@ static void do_execute() {
 	s2=op_src->val>>len;
     	cpu.OF=(s1 == s2 && s1 != cpu.SF) ;
 	cpu.ZF=!result;
-	printf("%x=%x+%x\n",result,op_dest->val,op_src->val);
 	OPERAND_W(op_dest, result);
 	result ^= result >>4;
 	result ^= result >>2;
