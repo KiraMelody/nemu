@@ -22,6 +22,7 @@ hwaddr_t TLB_read(uint32_t addr)
 }
 void TLB_write(uint32_t addr,uint32_t num)
 {
+	return;
 	int va = addr & 0xfffff000;
 	int na = num & 0xfffff000;
 	int i;
