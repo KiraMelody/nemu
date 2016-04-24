@@ -251,7 +251,7 @@ uint32_t swaddr_read(swaddr_t addr, size_t len) {
 }
 
 void swaddr_write(swaddr_t addr, size_t len, uint32_t data) {
-	return swaddr_write(addr,len,data);
+	return lnaddr_write(addr,len,data);
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
