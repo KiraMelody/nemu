@@ -4,7 +4,6 @@
 uint32_t pio_read(ioaddr_t, size_t);
 
 static void do_execute() {
-	assert(0);
 	OPERAND_W(op_dest, pio_read (op_src->addr , DATA_BYTE));
 	print_asm("in");
 }

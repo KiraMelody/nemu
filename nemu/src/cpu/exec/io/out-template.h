@@ -4,7 +4,6 @@
 uint32_t pio_write(ioaddr_t, size_t,  uint32_t);
 
 static void do_execute() {
-	assert(0);
 	pio_write(op_dest -> addr, DATA_BYTE, op_src -> val);
 	print_asm("out");
 }
