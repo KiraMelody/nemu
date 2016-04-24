@@ -212,8 +212,6 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
-	if(addr>0xc0000000)return hwaddr_read(addr-0xc0000000,len);
-	return hwaddr_read(addr,len);
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
@@ -229,8 +227,6 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 }
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
-	if(addr>0xc0000000)return hwaddr_write(addr-0xc0000000,len,data);
-	return hwaddr_write(addr,len,data);
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
