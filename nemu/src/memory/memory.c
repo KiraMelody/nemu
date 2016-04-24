@@ -72,7 +72,6 @@ uint32_t secondarycache_read(hwaddr_t addr)
 	uint32_t block = (addr >> 6)<<6;
 	int i;
 	bool v = false;
-	assert((g + 1) * SIXTEEN_WAY<STORAGE_SIZE_L2/BLOCK_SIZE);
 	for (i = g * SIXTEEN_WAY ; i < (g + 1) * SIXTEEN_WAY ;i ++)
 	{
 		if (cache2[i].tag == (addr >> 18)&& cache2[i].valid)
