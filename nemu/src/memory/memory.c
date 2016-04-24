@@ -175,9 +175,8 @@ void cache_write(hwaddr_t addr, size_t len,uint32_t data) {
 	}
 	secondarycache_write(addr,len,data);
 }
-#define cache_read(a) dram_read(a,4)
-#define cache_write dram_write
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
+	return dram_read(addr,len)& (~0u >> ((4 - len) << 3)); 
 	int index = is_mmio(addr);
 	if ( index >= 0)
 	{
@@ -204,6 +203,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 }
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
+	dram_write(addr,len,data);
 	int index = is_mmio(addr);
 	if ( index >= 0)
 	{
